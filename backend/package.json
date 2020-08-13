@@ -7,16 +7,21 @@
     "@types/dotenv-safe": "^8.1.1",
     "@types/express": "^4.17.7",
     "@types/node": "^14.0.27",
-    "ts-node-dev": "^1.0.0-pre.56"
+    "ts-node-dev": "^1.0.0-pre.56",
+    "@types/jsonwebtoken": "^8.5.0",
+    "typescript": "^3.9.7"
   },
   "dependencies": {
-    "@types/jsonwebtoken": "^8.5.0",
     "dotenv-safe": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "typescript": "^3.9.7"
+    "knex": "^0.21.4",
+    "sqlite": "^4.0.14",
+    "sqlite3": "^5.0.0"
   },
   "scripts": {
-    "start": "tsnd --transpile-only --ignore-watch node_modules --respawn src/server.ts"
+    "start": "tsnd --transpile-only --ignore-watch node_modules --respawn src/server.ts",
+    "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
+    "knex:migrate:rollback": "knex --knexfile knexfile.ts migrate:rollback"
   }
 }
