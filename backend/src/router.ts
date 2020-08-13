@@ -4,4 +4,5 @@ const routes = express.Router();
 
 routes.post('/',new LoginController().validate)
 routes.post('/user/new',new LoginController().create)
+
 export default routes
