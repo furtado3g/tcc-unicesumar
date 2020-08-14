@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import crypto from "crypto";
 import jsonwebtoken from 'jsonwebtoken';
-import Knex from "knex";
 import UserModel from "../models/userModel";
 
 export default class LoginController {
@@ -16,13 +15,15 @@ export default class LoginController {
   }
 
   async create(req:Request,res:Response){
-    const {name,userName,password} = req.body
+    const {name,userName,password,email} = req.body
     const last_password = password
+    const created_at = Date.now()
     const userModel = new UserModel()
     const created = userModel.create({
       name,
       userName,
       password,
+      email,
       last_password
     })
     if(created != null){
