@@ -1,4 +1,4 @@
-import Knex from "knex";
+import Knex from 'knex';
 
 export async function up(knex: Knex) {
   return knex.schema.createTable("users", (table) => {
@@ -8,7 +8,8 @@ export async function up(knex: Knex) {
     table.string("password").notNullable();
     table.string("email").notNullable();
     table.string("last_password").nullable();
-    table.dateTime("created_at").defaultTo('now()')
+    table.string("userType").defaultTo("PRO")
+    table.dateTime("created_at").nullable().defaultTo('now()')
   });
 }
 
