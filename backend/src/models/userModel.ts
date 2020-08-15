@@ -13,5 +13,11 @@ export default class UserModel{
         const insertedRows = await db.insert(user).table('users')
         return insertedRows
     }
-
+    async verifyUser(username:string,password:string){
+        let is_valid:boolean
+        const search = await db('users')
+            .where('userName',username)
+            .where('password',password)
+        console.log(search)
+    }
 }

@@ -9,7 +9,7 @@ export async function up(knex: Knex) {
     table.string("email").notNullable();
     table.string("last_password").nullable();
     table.string("userType").defaultTo("PRO")
-    table.dateTime("created_at").nullable().defaultTo('now()')
+    table.dateTime("created_at").defaultTo(knex.fn.now())
   });
 }
 

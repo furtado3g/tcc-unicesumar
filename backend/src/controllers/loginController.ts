@@ -1,23 +1,34 @@
 import { Request, Response } from "express";
-import crypto from "crypto";
 import jsonwebtoken from 'jsonwebtoken';
 import UserModel from "../models/userModel";
+import digestHash from "../util/digestHash";
+import sessionController from "./sessionController";
 
 export default class LoginController {
+  
   async validate(req: Request, res: Response) {
-    const { username, password } = req.body;
-    const digestedPassword = crypto
-      .createHash("sha512")
-      .update(password)
-      .digest("hex");
-    const token = jsonwebtoken.sign({username},"A$N0tH1nG")
+    const { username} = req.body;
+    let {password} = req.body;
+    password = digestHash(password)
+    const session = new sessionController();
+    const model = new UserModel()
+    await model.verifyUser(username,password)
+    const token = await session.newSession(username)
     return res.json({ auth: true, token: token });
   }
 
+  /*
+    Desestrutura o corpo da requisição 
+    Criptografa a senha utilizando o salt definido em uma função do controller
+    Envia a solicitação ao banco de dados
+    Persiste os dados utilizando a model
+  */
   async create(req:Request,res:Response){
-    const {name,userName,password,email} = req.body
+    const {name,userName,email} = req.body
+    let {password} = req.body
+    const salt = "SistemaDeGerenciamento"
+    password = digestHash(password)
     const last_password = password
-    const created_at = Date.now()
     const userModel = new UserModel()
     const created = userModel.create({
       name,
