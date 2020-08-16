@@ -5,7 +5,14 @@ import digestHash from "../util/digestHash";
 import sessionController from "./sessionController";
 
 export default class LoginController {
-  
+
+  /*
+    Destruct the request body
+    Generates the user's password hash
+    Starts the session model
+    Checks whether user information exists in the bank
+    Creates the session and persists the session and its validity
+  */
   async validate(req: Request, res: Response) {
     const {username} = req.body;
     let {password} = req.body;
@@ -15,17 +22,17 @@ export default class LoginController {
     const verify = await model.verifyUser({username,password})
     if(verify == true){
       const token = await session.newSession(username)
-      return res.json({ auth: true, token: token });
+      return res.json({ auth: verify, token: token });
     }else{
       return res.json({message:"Username or password is invalid"})
     }
   }
 
   /*
-    Desestrutura o corpo da requisição 
-    Criptografa a senha utilizando o salt definido em uma função do controller
-    Envia a solicitação ao banco de dados
-    Persiste os dados utilizando a model
+    Destruct the request body
+    Encrypts the password using the salt defined in a controller function
+    Sends the request to the database
+    Persists the data using the model
   */
   async create(req:Request,res:Response){
     const {name,userName,email} = req.body
