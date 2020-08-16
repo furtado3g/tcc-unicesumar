@@ -1,4 +1,5 @@
 import db from "../database/connection";
+import { serialize } from "v8";
 
 interface userInterface{
     name:string;
@@ -8,16 +9,25 @@ interface userInterface{
     last_password:string;
 }
 
+interface authUser{
+    username:string;
+    password:string;
+}
+
 export default class UserModel{
     async create(user:userInterface){
         const insertedRows = await db.insert(user).table('users')
         return insertedRows
     }
-    async verifyUser(username:string,password:string){
-        let is_valid:boolean
+    async verifyUser(user:authUser){
+        let is_valid:boolean = true
         const search = await db('users')
-            .where('userName',username)
-            .where('password',password)
+            .whereRaw('`users`.`userName` = ?',user.username)
+            .whereRaw('`users`.`password` = ?',user.password)
         console.log(search)
+        if(search.length == 0){
+            is_valid = false
+        }
+        return is_valid
     }
 }

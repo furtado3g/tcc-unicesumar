@@ -7,14 +7,18 @@ import sessionController from "./sessionController";
 export default class LoginController {
   
   async validate(req: Request, res: Response) {
-    const { username} = req.body;
+    const {username} = req.body;
     let {password} = req.body;
     password = digestHash(password)
     const session = new sessionController();
     const model = new UserModel()
-    await model.verifyUser(username,password)
-    const token = await session.newSession(username)
-    return res.json({ auth: true, token: token });
+    const verify = await model.verifyUser({username,password})
+    if(verify == true){
+      const token = await session.newSession(username)
+      return res.json({ auth: true, token: token });
+    }else{
+      return res.json({message:"Username or password is invalid"})
+    }
   }
 
   /*
