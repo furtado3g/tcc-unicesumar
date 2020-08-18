@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 
 import "./styles.css";
 function Login() {
-  const logo =
-    "https://www.nicepng.com/png/detail/207-2074460_you-can-use-any-device-like-another-pc.png";
+  const logo = "";
 
-  const [login, loginState] = useState();
+  // const [login, loginState] = useState();
 
   return (
     <div id="login_box" className="container">
