@@ -22,9 +22,8 @@ export default class UserModel{
     async verifyUser(user:authUser){
         let is_valid:boolean = true
         const search = await db('users')
-            .whereRaw('`users`.`userName` = ?',user.username)
-            .whereRaw('`users`.`password` = ?',user.password)
-        console.log(search)
+            .whereRaw('userName = ?',user.username)
+            .whereRaw('password = ?',user.password)
         if(search.length == 0){
             is_valid = false
         }

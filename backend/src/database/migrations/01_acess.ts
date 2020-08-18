@@ -3,8 +3,8 @@ import Knex from "knex";
 export async function up(knex: Knex) {
   return knex.schema.createTable("access", (table) => {
     table.increments("id").primary();
-    table.dateTime("access_at").defaultTo('d')
-    table.dateTime("expires_at").defaultTo('now')
+    table.dateTime("access_at").defaultTo('now')
+    table.dateTime("expires_at").defaultTo(knex.raw("now() + '1 hour'::interval"))
     table.string("session_token").notNullable()
     table.string("auth_token").notNullable()
     table
