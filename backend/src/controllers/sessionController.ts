@@ -3,12 +3,12 @@ import db from "../database/connection"
 import SessionModel from "../models/sessionModel"
 
 export default class sessionController{
-    async newSession(username:string){
+    async newSession(userId:string){
         const model = new SessionModel()
-        const authToken = await createToken(username,'auth')
-        const sessionToken = await createToken(username,'session'+ Date.now())
+        const authToken = await createToken(userId,'auth')
+        const sessionToken = await createToken(userId,'session'+ Date.now())
         const token = {
-            userName : username, 
+            userId : userId, 
             authToken,
             sessionToken
         }

@@ -3,7 +3,7 @@ import { serialize } from "v8";
 
 interface userInterface{
     name:string;
-    userName:string;
+    username:string;
     email:string
     password:string;
     last_password:string;
@@ -22,11 +22,11 @@ export default class UserModel{
     async verifyUser(user:authUser){
         let is_valid:boolean = true
         const search = await db('users')
-            .whereRaw('userName = ?',user.username)
+            .whereRaw('username = ?',user.username)
             .whereRaw('password = ?',user.password)
         if(search.length == 0){
             is_valid = false
         }
-        return is_valid
+        return {is_valid,user:search[0]}
     }
 }

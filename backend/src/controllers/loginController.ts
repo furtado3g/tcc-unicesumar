@@ -20,8 +20,8 @@ export default class LoginController {
     const session = new sessionController();
     const model = new UserModel()
     const verify = await model.verifyUser({username,password})
-    if(verify == true){
-      const token = await session.newSession(username)
+    if(verify.is_valid == true){
+      const token = await session.newSession(verify.user['id'])
       return res.json({ auth: verify, token: token });
     }else{
       return res.json({message:"Username or password is invalid"})
@@ -35,7 +35,7 @@ export default class LoginController {
     Persists the data using the model
   */
   async create(req:Request,res:Response){
-    const {name,userName,email} = req.body
+    const {name,username,email} = req.body
     let {password} = req.body
     const salt = "SistemaDeGerenciamento"
     password = digestHash(password)
@@ -43,7 +43,7 @@ export default class LoginController {
     const userModel = new UserModel()
     const created = userModel.create({
       name,
-      userName,
+      username,
       password,
       email,
       last_password
