@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import jsonwebtoken from 'jsonwebtoken';
 import UserModel from "../models/userModel";
 import digestHash from "../util/digestHash";
 import sessionController from "./sessionController";
