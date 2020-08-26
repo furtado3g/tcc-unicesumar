@@ -3,13 +3,18 @@ import Knex from "knex";
 export async function up(knex: Knex) {
   return knex.schema.createTable("users_permissions", (table) => {
     table.increments("id").primary();
-    table.string('tp_user').notNullable()
     table
-        .integer('id_permission')
-        .references('id')
-        .inTable('permissions')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE')
+      .integer('tp_user')
+      .references('id')
+      .inTable('user_type')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
+    table
+      .integer('id_permission')
+      .references('id')
+      .inTable('permissions')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
     });
 }
 
