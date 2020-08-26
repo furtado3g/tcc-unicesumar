@@ -1,4 +1,5 @@
 import db from "../database/connection";
+import knex from "knex";
 
 interface authTokens {
   userId: string;
@@ -30,7 +31,15 @@ export default class SessionModel {
     return response;
   }
 
-  async renovation(userToken: authTokens) {}
+  async renew(userToken: authTokens) {
+    const updatedSession = await db.raw("update `access` set `access`.`expires_at` = `expires_at` + '5 minutes'::interval where `access`.`username` = "+userToken.userId+"and `access`.`auth_token` = "+userToken.authToken+" and `access`.`session_token` = "+userToken.sessionToken+" and datetime('now','localtime') between `access`.`access_at` and `access`.`expires_at`")
+    
+    if(updatedSession.length > 0){
+      
+    }else{
+
+    }
+  }
 
   async verify(userToken: authTokens) {
     let is_valid: boolean

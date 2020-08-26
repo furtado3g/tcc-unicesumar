@@ -1,6 +1,7 @@
 import createToken from "../util/createToken"
 import db from "../database/connection"
 import SessionModel from "../models/sessionModel"
+import {Request,Response} from 'express'
 
 export default class sessionController{
     async newSession(userId:string){
@@ -20,5 +21,14 @@ export default class sessionController{
                 message : "Erro ao persistir sessão no banco"
             }
         }
+    }
+
+    async extendSession(req:Request,res:Response){
+        const {userId,sessionToken,authToken} = req.body
+        return new SessionModel().renew({
+            userId,
+            sessionToken,
+            authToken
+        })
     }
 }
