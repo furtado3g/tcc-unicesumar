@@ -1,7 +1,7 @@
 import Knex from "knex";
 
 export async function up(knex: Knex) {
-  return knex.schema.createTable("reservations", (table) => {
+  return knex.schema.createTable("locations", (table) => {
     table.increments("id").primary();
     table.string("tp_location").notNullable();
     table.text("comments").nullable();
@@ -10,5 +10,5 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
-  return knex.schema.dropTable("reservations");
+  return knex.schema.dropTable("locations");
 }
