@@ -8,8 +8,13 @@ export async function up(knex: Knex) {
     table.string("password").notNullable();
     table.string("email").notNullable();
     table.string("last_password").nullable();
-    table.string("user_type").defaultTo("PRO")
     table.dateTime("created_at").defaultTo(knex.fn.now())
+    table
+      .integer("user_type")
+      .references('id')
+      .inTable('user_type')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
   });
 }
 
