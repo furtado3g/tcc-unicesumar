@@ -1,7 +1,7 @@
 import Knex from "knex";
 
 export async function up(knex: Knex) {
-  return knex.schema.createTable("users_permissions", (table) => {
+  return knex.schema.createTable("type_user_permisions", (table) => {
     table.increments("id").primary();
     table
       .integer('tp_user')
@@ -19,5 +19,5 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
-  return knex.schema.dropTable("users_permissions");
+  return knex.schema.dropTable("type_user_permisions");
 }
