@@ -2,7 +2,7 @@ import React from "react";
 
 import "./styles.css";
 function Login() {
-  const logo = "";
+  const logo = "https://create-react-app.dev/img/logo.svg";
 
   // const [login, loginState] = useState();
 
@@ -10,7 +10,6 @@ function Login() {
     <div id="login_box" className="container">
       <header className="logo-container">
         <img src={logo} alt="computer logo" />
-        <p>ReserLab</p>
       </header>
       <main>
         <div className="form-group">

@@ -4,16 +4,20 @@
     justify-content: center;
     align-content: center;
     width: 90vw;
-    
+    background: #ffffff;
+    border-radius: 1.6rem;
+    padding:3rem 1.5rem;
+    -webkit-box-shadow: -1px 3px 10px 1px rgba(0,0,0,0.31);
+    -moz-box-shadow: -1px 3px 10px 1px rgba(0,0,0,0.31);
+    box-shadow: -1px 3px 10px 1px rgba(0,0,0,0.31);
 }
 
 header {
     text-align: center;
-    
 }
 
 header img{
-    width: 30rem;
+    width: 20rem;
 }
 
 header p{
@@ -33,7 +37,7 @@ header p{
     font:300 2rem sans-serif;
     align-self: flex-start;
     color:var(--color-title);
-    margin-left: 2.4rem ;
+    margin-left: 3.6rem ;
 }
 
 .form-control{
@@ -45,8 +49,9 @@ header p{
 }
 
 ::placeholder {
-    margin-left: 1rem;
-    font: 300 solid sans-serif;
+    padding: 1rem;
+    font: 300 solid;
+    font-family: sans-serif;
     color : var(--color-title);
 }
 
