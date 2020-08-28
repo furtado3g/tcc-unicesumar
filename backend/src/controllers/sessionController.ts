@@ -31,11 +31,13 @@ export default class sessionController{
     }
 
     async extendSession(req:Request,res:Response){
-        const {userId,sessionToken,authToken} = req.body
+        const {userId,authToken} = req.body
+        const {Authorization} = req.headers
+        console.log(Authorization)
         return res.json(new SessionModel().renew({
-            userId,
-            sessionToken,
-            authToken
+            "userId":userId,
+            "sessionToken":Authorization,
+            "authToken":authToken
         }))
     }
 }

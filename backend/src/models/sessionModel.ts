@@ -25,7 +25,7 @@ export default class SessionModel {
       "auth_token":userToken.authToken,
       "session_token":userToken.sessionToken,
     });
-    console.log(insertedSession['rowCount'])
+    // tslint:disable-next-line
     if (insertedSession['rowCount'] > 0) {
       response.message = "Erro ao Autenticar, Tente Novamente Mais Tarde";
     }
@@ -33,12 +33,17 @@ export default class SessionModel {
   }
 
   async renew(userToken: authTokens) {
-    const updatedSession = await db.raw("update `access` set `access`.`expires_at` = `expires_at` + '5 minutes'::interval where `access`.`username` = "+userToken.userId+"and `access`.`auth_token` = "+userToken.authToken+" and `access`.`session_token` = "+userToken.sessionToken+" and datetime('now','localtime') between `access`.`access_at` and `access`.`expires_at`")
-    
-    if(updatedSession.length > 0){
-      
+    const sql = "update access"+
+                "set expires_at = expires_at + '5 minutes'::interval "+
+                "where username = '"+userToken.userId+"' "+
+                "and auth_token = '"+userToken.authToken+"' "+
+                "and session_token = '"+userToken.sessionToken+"' "+
+                "and datetime('now','localtime') between access_at and expires_at"
+    const updatedSession = await db.raw(sql)    
+    if(updatedSession.rowCount > 0){
+      return {status:"updated"}
     }else{
-
+      return {status:"fail"}
     }
   }
 
