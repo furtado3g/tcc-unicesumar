@@ -1,7 +1,7 @@
 import createToken from "../util/createToken"
-import db from "../database/connection"
 import SessionModel from "../models/sessionModel"
 import {Request,Response} from 'express'
+import db from "../database/connection"
 
 export default class sessionController{
     async newSession(userId:string){
@@ -14,8 +14,15 @@ export default class sessionController{
             sessionToken
         }
         const insertedSession = await model.create(token)
+        const data = await db('access').select('expires_at').where('session_token','=',sessionToken)
+        console.log(data)
+        const returnableToken = {
+            authToken : authToken,
+            sessionToken : sessionToken,
+            expires_at : data[0].expires_at
+        }
         if(insertedSession.message == 'Erro ao Autenticar, Tente Novamente Mais Tarde'){
-            return token
+            return returnableToken
         }else{
             return {
                 message : "Erro ao persistir sessão no banco"
@@ -25,10 +32,10 @@ export default class sessionController{
 
     async extendSession(req:Request,res:Response){
         const {userId,sessionToken,authToken} = req.body
-        return new SessionModel().renew({
+        return res.json(new SessionModel().renew({
             userId,
             sessionToken,
             authToken
-        })
+        }))
     }
 }

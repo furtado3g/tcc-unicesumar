@@ -25,7 +25,8 @@ export default class SessionModel {
       "auth_token":userToken.authToken,
       "session_token":userToken.sessionToken,
     });
-    if (insertedSession.length > 0) {
+    console.log(insertedSession['rowCount'])
+    if (insertedSession['rowCount'] > 0) {
       response.message = "Erro ao Autenticar, Tente Novamente Mais Tarde";
     }
     return response;

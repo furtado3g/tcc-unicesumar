@@ -4,7 +4,8 @@ export async function up(knex: Knex) {
   return knex.schema.createTable("reservations", (table) => {
     table.increments("id").primary();
     table.date("date").defaultTo("now").notNullable();
-    table.time("time").notNullable();
+    table.time("time_start").notNullable();
+    table.time("time_end").notNullable();
     table.string("class").nullable();
     table.string("discipline").nullable();
     table.text("comments").nullable();

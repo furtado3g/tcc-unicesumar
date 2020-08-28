@@ -26,4 +26,19 @@ SELECT *
  where locais.id = local_responsavel.location_id
    and local_responsavel.user_id = usuario.id; 
 
---SELECT de
+--SELEct de acessos por usuario
+select * 
+  from access as acessos
+where acessos.user_id = :pUSER_ID;
+
+--SELECT DE GERENCIAMENTO DE PERMISSOES por usuario
+SELECT * 
+FROM USER_TYPES AS TPUS
+   , type_user_permisions AS UPER
+   , permissions as perm
+   , users as usu
+WHERE TPUS.ID = UPER.tp_user
+  AND UPER.id_permission = perm.id 
+  and usu.tp_user = tpus.id
+  and usu.id = :pUSUID;
+
