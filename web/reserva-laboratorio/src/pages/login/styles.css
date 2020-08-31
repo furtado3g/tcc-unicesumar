@@ -32,6 +32,7 @@ header p{
     justify-content: center;
     align-items: center;
     margin-top: 3.2rem;
+    width: 90%;
 }
 
 .form-group label{
@@ -63,15 +64,17 @@ header p{
 footer {
     margin:3.2rem 0;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-self: center;
+    width: 100%;
 }
 
 .btn{
     padding:1rem 2rem;
     border-radius: .4rem;
     border:0;
-    font:300 2rem sans-serif;
+    font:300 16px sans-serif;
 }
 
 .btn-login{
@@ -86,7 +89,8 @@ footer {
 
 .btn-forgot{
     background-color:blueviolet;
-    margin:0 2rem;
+    margin-left:5px;
+    margin-top: 10px;
     color: whitesmoke;
     text-decoration: none;
     transition: 0.5s;

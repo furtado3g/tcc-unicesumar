@@ -80,7 +80,6 @@ footer button{
 }
 
 #critica{
-    display: none;
     border: 1px solid #7a4dee;
     padding :2rem;
     width: 90%;
@@ -88,4 +87,8 @@ footer button{
     font:700 solid;
     font-family: sans-serif;
     text-align: center;
+}
+
+.hide{
+    display: none;
 }
