@@ -2,7 +2,6 @@ import React,{useState}from "react";
 import { Link } from "react-router-dom";
 import "./styles.css";
 function Login() {
-  
   const [login, loginState] = useState('');
   const [password, passwordState] = useState('');
 

@@ -10,6 +10,7 @@
     -webkit-box-shadow: -1px 6px 19px -6px rgba(0,0,0,0.75);
     -moz-box-shadow: -1px 6px 19px -6px rgba(0,0,0,0.75);
     box-shadow: -1px 6px 19px -6px rgba(0,0,0,0.75);
+
 }
 
 header {
@@ -53,8 +54,9 @@ header p{
 ::placeholder {
     padding: 0.5rem 1rem;
     font: 300 solid sans-serif;
-    color : var(--color-title);
-
+    padding: 1rem;
+    font: 300 solid;
+    font-family: sans-serif;
 }
 
 .form-control:focus{
