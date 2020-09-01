@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "database": "rlab",
+            "driver": "PostgreSQL",
+            "name": "post",
+            "password": "Therev a7x",
+            "port": 5432,
+            "previewLimit": 50,
+            "server": "localhost",
+            "username": "postgres"
+        }
+    ]
+}

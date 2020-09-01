@@ -3,7 +3,7 @@ import UserModel from "../models/userModel";
 import digestHash from "../util/digestHash";
 import sessionController from "./sessionController";
 
-export default class LoginController {
+export default class userController {
 
   /*
     Destruct the request body
@@ -21,7 +21,7 @@ export default class LoginController {
     const verify = await model.verifyUser({username,password})
     if(verify.is_valid == true){
       const token = await session.newSession(verify.user['id'])
-      return res.json({ auth: verify, token: token });
+      return res.json({ auth: verify.user['id'], token: token });
     }else{
       return res.json({message:"Username or password is invalid"})
     }
@@ -41,6 +41,27 @@ export default class LoginController {
     const last_password = password
     const userModel = new UserModel()
     const created = userModel.create({
+      name,
+      username,
+      password,
+      email,
+      last_password
+    })
+    if(created != null){
+      return res.json({"message":"Usuario Criado Com Sucesso!"})
+    }else{
+      return res.status(404).json({"message":"Erro ao criar novo Usuario"})
+    }
+  }
+
+  async update(req:Request,res:Response){
+    const {name,username,email} = req.body
+    let {password} = req.body
+    const salt = "SistemaDeGerenciamento"
+    password = digestHash(password)
+    const last_password = password
+    const userModel = new UserModel()
+    const created = userModel.update({
       name,
       username,
       password,

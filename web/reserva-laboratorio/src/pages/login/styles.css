@@ -4,12 +4,13 @@
     justify-content: center;
     align-content: center;
     width: 90vw;
-    background: #ffffff;
-    border-radius: 1.6rem;
-    padding:3rem 1.5rem;
-    -webkit-box-shadow: -1px 3px 10px 1px rgba(0,0,0,0.31);
-    -moz-box-shadow: -1px 3px 10px 1px rgba(0,0,0,0.31);
-    box-shadow: -1px 3px 10px 1px rgba(0,0,0,0.31);
+    background : whitesmoke;
+    border-radius: 1.4rem;
+    border-color:transparent;    
+    -webkit-box-shadow: -1px 6px 19px -6px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 6px 19px -6px rgba(0,0,0,0.75);
+    box-shadow: -1px 6px 19px -6px rgba(0,0,0,0.75);
+
 }
 
 header {
@@ -17,7 +18,8 @@ header {
 }
 
 header img{
-    width: 20rem;
+    width: 30rem;
+    margin-top: 3rem;
 }
 
 header p{
@@ -31,17 +33,18 @@ header p{
     justify-content: center;
     align-items: center;
     margin-top: 3.2rem;
+    width: 90%;
 }
 
 .form-group label{
     font:300 2rem sans-serif;
     align-self: flex-start;
-    color:var(--color-title);
-    margin-left: 3.6rem ;
+    color:#7a4dee;
+    margin-left: 2.4rem ;
 }
 
 .form-control{
-    border: 1px solid var(--color-title);
+    border: 1px solid #7a4dee;
     width: 90%;
     line-height: 3rem;
     border-radius: 0.5rem;
@@ -49,37 +52,53 @@ header p{
 }
 
 ::placeholder {
+    padding: 0.5rem 1rem;
+    font: 300 solid sans-serif;
     padding: 1rem;
     font: 300 solid;
     font-family: sans-serif;
-    color : var(--color-title);
 }
 
 .form-control:focus{
-    border: 2px solid #4e2775;
+    border: 2px solid #7a4dee;
 }
 
 footer {
     margin:3.2rem 0;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-self: center;
+    width: 100%;
 }
 
 .btn{
     padding:1rem 2rem;
     border-radius: .4rem;
     border:0;
-    font:300 2rem sans-serif;
+    font:300 16px sans-serif;
 }
 
 .btn-login{
-    background-color: #4e2775;
+    background-color: #7a4dee;
     color:whitesmoke;
     transition: 0.5s;
 }
 
 .btn-login:hover{
+    opacity: 70%;
+}
+
+.btn-forgot{
+    background-color:blueviolet;
+    margin-left:5px;
+    margin-top: 10px;
+    color: whitesmoke;
+    text-decoration: none;
+    transition: 0.5s;
+}
+
+.btn-forgot:hover{
     opacity: 70%;
 }
 
