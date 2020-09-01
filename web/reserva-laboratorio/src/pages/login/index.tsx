@@ -1,42 +1,43 @@
 import React from "react";
-import './styles.css'
+
+import "./styles.css";
 function Login() {
-    const logo = "https://www.nicepng.com/png/detail/207-2074460_you-can-use-any-device-like-another-pc.png"
+  const logo = "https://create-react-app.dev/img/logo.svg";
+
+  // const [login, loginState] = useState();
+
   return (
-  <div id="login_box" className="container">
-    <header>
-        <img src={logo} alt="computer logo"/>
-        <p>ReserLab</p>
-    </header>
-    <main>
+    <div id="login_box" className="container">
+      <header className="logo-container">
+        <img src={logo} alt="computer logo" />
+      </header>
+      <main>
         <div className="form-group">
-            <label htmlFor="login">Login</label>
-            <input 
-                type="text" 
-                id="login"
-                className="form-control"
-                placeholder="login"
-            />
+          <label htmlFor="login">Login</label>
+          <input
+            type="text"
+            id="login"
+            className="form-control"
+            placeholder="login"
+            //onKeyUp={e=>loginState()}
+          />
         </div>
         <div className="form-group">
-            <label htmlFor="login">Senha</label>
-            <input 
-                type="password" 
-                id="login"
-                className="form-control"
-                placeholder="senha"
-            />
+          <label htmlFor="login">Senha</label>
+          <input
+            type="password"
+            id="login"
+            className="form-control"
+            placeholder="senha"
+          />
         </div>
-    </main>
-    <footer>
-        <button
-            type="button"
-            className="btn btn-login"
-        >
-            Entrar
+      </main>
+      <footer>
+        <button type="button" className="btn btn-login">
+          Entrar
         </button>
-    </footer>
-  </div>
+      </footer>
+    </div>
   );
 }
 
