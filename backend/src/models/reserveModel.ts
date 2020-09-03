@@ -1,6 +1,8 @@
 import db from "../database/connection";
 
- 
+import { attachPaginate } from 'knex-paginate' ;
+
+
 interface reserveInterface{
     "userId":number,
     "locationId":number,
@@ -29,9 +31,10 @@ class ReserveModel{
 
     }
 
-    async update (reserve:reserveInterface){
-        const sql = '';
-        const insertedRows = await db.raw(sql); 
+    async update (reserve:reserveInterface,reserveId:number){
+        const insertedRows = await db('reserve')
+            .where('id',reserveId)
+            .update(reserve); 
         const rowCount:any = insertedRows.rowCount
         if(rowCount > 0){
             return {
@@ -44,4 +47,35 @@ class ReserveModel{
         }
     }
 
+    async delete(reserveId:any){
+        const deletedRows = await db('reserve')
+            .where('id','=',reserveId)
+            .delete();
+        const rowCount:any = deletedRows.rowCount
+        if(rowCount > 0){
+            return {
+                message : "Reserva excluida com sucesso"
+            }
+        }else{
+            return {
+                error : "Erro ao excluir reserva"
+            }
+        }
+    }
+
+    async list(page:any,perPage:any){
+        attachPaginate();
+        const itens = await db('reserve').paginate({
+            perPage : perPage || 10,
+            currentPage : page || 1
+        })
+        return itens.data
+    }
+
+    async detail(reserveId:any){
+        const reserve = db('reserve').select('*').where('id',reserveId)
+        return reserve
+    }
 }
+
+export default ReserveModel
