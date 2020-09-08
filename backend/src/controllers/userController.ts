@@ -41,11 +41,11 @@ export default class userController {
     const last_password = password
     const userModel = new UserModel()
     const created = userModel.create({
-      name,
-      username,
-      password,
-      email,
-      last_password
+      name : name ,
+      username : username,
+      password : password,
+      email : email,
+      last_password : last_password
     })
     if(created != null){
       return res.json({"message":"Usuario Criado Com Sucesso!"})

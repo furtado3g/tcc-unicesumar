@@ -1,18 +1,28 @@
 import {Request,Response} from 'express'
 
+import LocationModel from '../models/locationModel'
 
 class LocationController{
-    
-    new(req:Request,res:Response){
 
+    model = new LocationModel()
+
+    async new(req:Request,res:Response){
+        const {tp_location,comments,capacity} = req.body
+        const {message,error} = await this.model.insert({tp_location,comments,capacity})        
+        return message ? res.json(message) : res.status(404).json(error)
     }
     
-    update(req:Request,res:Response){
-
+    async update(req:Request,res:Response){
+        const {tp_location,comments,capacity} = req.body
+        const {locationId} = req.params
+        const {message,error} = await this.model.update({tp_location,comments,capacity},Number(locationId))
+        return message ? res.json(message) : res.status(404).json(error)
     }
     
-    delete(req:Request,res:Response){
-
+    async delete(req:Request,res:Response){
+        const {locationId} = req.params
+        const {message,error} = await this.model.delete
+        return message ? res.json(message) : res.status(404).json(error)
     }
 
     list(req:Request,res:Response){

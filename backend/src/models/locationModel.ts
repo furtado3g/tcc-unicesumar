@@ -1,7 +1,7 @@
 import db from "../database/connection"
 
 interface ILocation{
-    "tpLocation":string,
+    "tp_location":string,
     "comments":string,
     "capacity":number
 }
@@ -13,10 +13,21 @@ class LocationModel{
     }
 
     async update(location:ILocation,locationId:number){
-        const updatedRows = await db('loation')
+        const updatedRows = await db('location')
             .where('id',locationId)
             .update(location)
-        return updatedRows.rowCount > 0 ? updatedRows : {"error":"Erro ao Atualizar Descrição do Local"}
+        return updatedRows.rowCount > 0 ? {message :"Local atualizado com sucesso"} : {"error":"Erro ao Atualizar Descrição do Local"}
+    }
+    
+    async delete(locationId:number){
+        const deletedRows = await db('location')
+        .where('id',locationId)
+        return deletedRows.rowCount  > 0 ? {"message":"Local Excluido com Sucesso"} : {"error" : "Erro ao Excluir Local"}
+    }
+
+    async getList(sql:string){
+        const response = db.raw(sql)
+        return response
     }
 }
 
