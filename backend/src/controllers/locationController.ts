@@ -21,12 +21,12 @@ class LocationController{
     
     async delete(req:Request,res:Response){
         const {locationId} = req.params
-        const {message,error} = await this.model.delete
+        const {message,error} = await this.model.delete(Number(locationId))
         return message ? res.json(message) : res.status(404).json(error)
     }
 
     list(req:Request,res:Response){
-
+        
     }
 
     detail(req:Request,res:Response){
