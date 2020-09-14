@@ -25,16 +25,24 @@ class LocationController{
         return message ? res.json(message) : res.status(404).json(error)
     }
 
-    list(req:Request,res:Response){
-        
+    async list(req:Request,res:Response){
+        const sql = "select * from locations"
+        return await this.model.getList(sql)
     }
 
-    detail(req:Request,res:Response){
-    
+    async detail(req:Request,res:Response){
+        const {locationId} = req.params
+        const sql = "select * from locations where id = '"+locationId+"'"
+        return await this.model.getList(sql)
     }
 
-    search(req:Request,res:Response){
-        
+    async search(req:Request,res:Response){
+        const {term,type} = req.query
+        const sql = "select *"+
+                    "  from locations"
+                    " where tp_location = '"+type+"'"+
+                    "   and comments like '%"+term+"%'"
+        return await this.model.getList(sql)
     }
 }
 export default LocationController
