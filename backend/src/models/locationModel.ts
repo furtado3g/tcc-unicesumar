@@ -8,25 +8,25 @@ interface ILocation{
 
 class LocationModel{
     async insert(location:ILocation){
-        const insertedRows = await db('location').insert(location)
+        const insertedRows = await db('locations').insert(location)
         return insertedRows.rowCount > 0 ?{"message":"Local Registrado Com Sucesso"} : {"error":"Erro ao Registrar Local"}
     }
 
     async update(location:ILocation,locationId:number){
-        const updatedRows = await db('location')
+        const updatedRows = await db('locations')
             .where('id',locationId)
             .update(location)
         return updatedRows.rowCount > 0 ? {message :"Local atualizado com sucesso"} : {"error":"Erro ao Atualizar Descrição do Local"}
     }
     
     async delete(locationId:number){
-        const deletedRows = await db('location')
+        const deletedRows = await db('locations')
         .where('id',locationId)
         return deletedRows.rowCount  > 0 ? {"message":"Local Excluido com Sucesso"} : {"error" : "Erro ao Excluir Local"}
     }
 
     async getList(sql:string){
-        const response = db.raw(sql)
+        const response = await db.raw(sql)
         return response
     }
 }
