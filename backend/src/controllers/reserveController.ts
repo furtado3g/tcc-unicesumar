@@ -14,32 +14,35 @@ interface reserveInterface{
 
 class ReserveController{
 
-    private reserveModel = new ReserveModel()
-
     async create(req:Request,res:Response){
+        const reserveModel = new ReserveModel()
         const {reserveInterface} = req.body; 
-        return await this.reserveModel.insert(reserveInterface)
+        return await reserveModel.insert(reserveInterface)
     }
 
     async update(req:Request,res:Response){
+        const reserveModel = new ReserveModel()
         const {reserveId} = req.params
         const {reserveInterface} = req.body;
-        return await this.reserveModel.update(reserveInterface,Number(reserveId))
+        return await reserveModel.update(reserveInterface,Number(reserveId))
     }
     
     async delete(req:Request,res:Response){
+        const reserveModel = new ReserveModel()
         const {reserveId} = req.params
-        return await this.reserveModel.delete(Number(reserveId))
+        return await reserveModel.delete(Number(reserveId))
     }
 
     async list(req:Request,res:Response){
+        const reserveModel = new ReserveModel()
         const {page,perPage} = req.query
-        return await this.reserveModel.list(Number(page),Number(perPage))
+        return await reserveModel.list(Number(page),Number(perPage))
     }
 
     async detail(req:Request,res:Response){
+        const reserveModel = new ReserveModel()
         const {reserveId} = req.params
-        return await this.reserveModel.detail
+        return await reserveModel.detail
     }
 
 }

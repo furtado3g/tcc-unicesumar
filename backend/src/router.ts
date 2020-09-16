@@ -5,6 +5,7 @@ import userController from "./controllers/userController";
 import ReserveModel from "./models/reserveModel";
 import ReserveController from "./controllers/reserveController";
 import LocationController from "./controllers/locationController";
+
 const routes = express.Router();
 //inicio das controllers 
 const users = new userController()
@@ -26,5 +27,6 @@ routes.get('/reserve/:reserveId',reserves.detail)
 //controle de locais
 routes.post('/location/',location.new)
 routes.get('/location/',location.list)
+
 
 export default routes

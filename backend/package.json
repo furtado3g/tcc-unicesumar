@@ -19,7 +19,8 @@
     "knex": "^0.21.4",
     "knex-paginate": "^1.2.3",
     "pg": "^8.3.0",
-    "sqlite3": "^5.0.0"
+    "sqlite3": "^5.0.0",
+    "swagger-ui-express": "^4.1.4"
   },
   "scripts": {
     "start": "tsnd --transpile-only --ignore-watch node_modules --respawn src/server.ts",
