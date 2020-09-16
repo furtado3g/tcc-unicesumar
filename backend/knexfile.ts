@@ -1,13 +1,13 @@
 import path from "path";
-
+import * as dbInfo from './db.json'
 module.exports = {
   client: "pg",
   version: "7.2",
   connection: {
-    host: "ec2-54-157-234-29.compute-1.amazonaws.com",
-    user: "gqadmcokjhvjsl",
-    password: "dd2ef01fa9bb49283a41e33e2a7e969df1aabc936f29560f944d8fe69060618f",
-    database: "d5dcfa6l46vilu",
+    host: dbInfo.host,
+    user: dbInfo.user,
+    password: dbInfo.password,
+    database: dbInfo.database,
     ssl: {
       rejectUnauthorized: false,
     },
