@@ -5,61 +5,74 @@ class PermissionModel{
     async assign(idUser:number,url:string){
         const tp_user = await this.getUserType(idUser);
         const id_permission = await this.getEndPointId(url);
-        const insertedRows = await db('type_user_permisions').insert({tp_user,id_permission})
-        if(insertedRows.length > 0){
-            return {insertedRows}
-        }else{
-            return {error:true}
-        }
+        let returnable 
+        const insertedRows = await db('type_user_permisions')
+        .insert({
+            id_permission : id_permission[0].id,
+            tp_user : tp_user[0].user_type
+        })
+        .then((data)=>{
+            console.log(data.values)
+            returnable = data
+        }).catch((e)=>{
+            returnable = {error:e}
+        })
+        return returnable
     }
 
     async verify(idUser:number,idPermission:number){
+        let returnable
         const result = await db('type_user_permisions')
-            .where("id_permission",idPermission)
-            .join("users","users.tp_user","type_user_permisions.tp_user")
-            .where("users.id",idUser)
-            .select('*')
-        if(result.length > 0){
-            return {
+        .where("id_permission",idPermission)
+        .join("users","users.user_type","type_user_permisions.tp_user")
+        .where("users.id",idUser)
+        .select('*')
+        .then(data=>{
+            returnable =  {
                 granted: true,
                 result : result
             }
-        }else{
-            return {
+
+        })
+        .catch(e=>{
+            returnable = {
                 granted: false
             }
-        }
+        })
+        return returnable
     }
 
     async newEndPoint(url:string){
+        let returnable
         const insertedRows = await db('permissions')
         .insert(
             {"endpoint":url}
-        );
-        console.log(insertedRows)
-        if(insertedRows.length > 0){
-            return {insertedRows}
-        }else{
-            return {error:true}
-        }
+        ).then(selectedTodo => {
+            console.log(selectedTodo)
+            returnable = {message:"Novo endpoint criado"}
+        })
+        .catch(e=>{
+            returnable = {error:e}
+        })
+        return returnable
     }
 
     async newUserType(description:string){
-        const insertedRows = await db('user_type').insert({description})
-        if(insertedRows.length > 0){
-            return{insertedRows}
-        }else{
-            return{error:true}
-        }
+        let returnable
+        const insertedRows = await db('user_type')
+        .insert({description})
+        .then(()=>{ returnable ={message:"Novo tipo de usuario cadastrado"} })
+        .catch((e)=>{returnable= {error:e}})
+        return returnable
     }
 
-    async getUserType(id:number){
-        const result = await db('users').where('id',id).select('users.tp_user')
+    private async getUserType(id:number){
+        const result = await db('users').where('id',id).select('users.user_type')
         return result
     }
 
-    async getEndPointId(url:string){
-        const result = await db('permission').where('endpoint',url).select('id')
+    private async getEndPointId(url:string){
+        const result = await db('permissions').where('endpoint',url).select('id')
         return result
     }
 

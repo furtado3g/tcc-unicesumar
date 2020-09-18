@@ -32,19 +32,20 @@ class ReserveModel{
     }
 
     async update (reserve:reserveInterface,reserveId:number){
+        let returnable        
         const insertedRows = await db('reserve')
-            .where('id',reserveId)
-            .update(reserve); 
-        const rowCount:any = insertedRows.rowCount
-        if(rowCount > 0){
-            return {
+        .where('id',reserveId)
+        .update(reserve)
+        .then(data=>{
+            returnable = {
                 message:"Reserva atualizada com sucesso"
             }
-        }else{
-            return {
+        }).catch(()=>{
+            returnable = {
                 error : "Erro ao atualizar reserva"
             }
-        }
+        }) 
+        return returnable
     }
 
     async delete(reserveId:any){
