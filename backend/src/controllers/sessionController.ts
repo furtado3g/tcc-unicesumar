@@ -36,7 +36,7 @@ export default class sessionController{
         console.log(Authorization)
         return res.json(new SessionModel().renew({
             "userId":userId,
-            "sessionToken":Authorization,
+            "sessionToken" : Authorization,
             "authToken":authToken
         }))
     }

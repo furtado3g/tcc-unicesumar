@@ -12,17 +12,16 @@ class LocationUserController{
     }
 
     async unassign(req:Request,res:Response){
-        const {id} = req.body
+        const {locationUserId} = req.params
         const model = new LocationUserModel()
-        const {message,error} = await model.delete(id)
+        const {message,error} = await model.delete(locationUserId)
         return error ? res.json(message) : res.status(404).json(error)
     }
 
     async listAssigns(req:Request,res:Response){
         const {userId} = req.params
-        const id = Number(userId )
         const model = new LocationUserModel()
-        const {listOfUserLocatios,error} = await model.list(id)
+        const {listOfUserLocatios,error} = await model.list(userId)
         return error ? res.status(404).json(error) : res.json(listOfUserLocatios)
     }
 }

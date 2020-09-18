@@ -17,18 +17,18 @@ interface reserveInterface{
 class ReserveModel{
     
     async insert (reserve:reserveInterface){
+        let returnable
         const insertedRows = await db('reserve').insert(reserve)
-        const rowCount:any = insertedRows.rowCount
-        if(rowCount > 0){
-            return {
+        .then(data=>{
+            returnable = {
                 message:"Reserva efetuada com sucesso"
             }
-        }else{
-            return {
+        }).catch(e=>{
+            returnable = {
                 error : "Erro ao reservar o espaço"
             }
-        }
-
+        })
+        return returnable
     }
 
     async update (reserve:reserveInterface,reserveId:number){
@@ -49,19 +49,20 @@ class ReserveModel{
     }
 
     async delete(reserveId:any){
+        let returnable 
         const deletedRows = await db('reserve')
-            .where('id','=',reserveId)
-            .delete();
-        const rowCount:any = deletedRows.rowCount
-        if(rowCount > 0){
-            return {
+        .where('id','=',reserveId)
+        .delete()
+        .then(data=>{
+            returnable = {
                 message : "Reserva excluida com sucesso"
             }
-        }else{
-            return {
+        }).catch(e=>{
+            returnable = {
                 error : "Erro ao excluir reserva"
             }
-        }
+        })
+        return returnable 
     }
 
     async list(page:any,perPage:any){

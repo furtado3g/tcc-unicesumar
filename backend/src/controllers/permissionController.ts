@@ -1,4 +1,4 @@
-import {Request,Response} from'express';
+import {json, Request,Response} from'express';
 import PermissionModel from '../models/permissionModel';
 
 const model = new PermissionModel()
@@ -21,6 +21,10 @@ class PermissionController{
         return res.json(await model.assign(idUser,url))
     }
     
+    async listUserPermissions(req:Request,res:Response){
+        const {idUser} = req.params
+        return res.json(await model.listUserPermissions(idUser))
+    }
 }
 
 export default PermissionController

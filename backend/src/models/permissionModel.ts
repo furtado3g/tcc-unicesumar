@@ -66,6 +66,18 @@ class PermissionModel{
         return returnable
     }
 
+    async listUserPermissions(idUser:any){
+        const result = await db('type_user_permisions')
+        .join("users","users.user_type","type_user_permisions.tp_user")
+        .join("permissions","permissions.id","type_user_permisions.id_permission")
+        .where("users.id",idUser)
+        .select(
+            'permissions.id',
+            'permissions.endpoint'
+        )
+        return result
+    }
+
     private async getUserType(id:number){
         const result = await db('users').where('id',id).select('users.user_type')
         return result
