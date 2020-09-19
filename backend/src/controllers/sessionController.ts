@@ -4,6 +4,7 @@ import {Request,Response} from 'express'
 import db from "../database/connection"
 
 export default class sessionController{
+    
     async newSession(userId:string){
         const model = new SessionModel()
         const authToken = await createToken(userId,'auth')
@@ -35,9 +36,10 @@ export default class sessionController{
         const {Authorization} = req.headers
         console.log(Authorization)
         return res.json(new SessionModel().renew({
-            "userId":userId,
+            "userId" :userId,
             "sessionToken" : Authorization,
             "authToken":authToken
         }))
     }
+    
 }

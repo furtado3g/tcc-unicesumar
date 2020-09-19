@@ -3,8 +3,8 @@ import knex from "knex";
 
 interface authTokens {
   userId: string;
-  authToken: string;
-  sessionToken: string;
+  authToken: any;
+  sessionToken: any;
 }
 
 interface responseObject {
@@ -24,15 +24,17 @@ export default class SessionModel {
       "user_id":userToken.userId,
       "auth_token":userToken.authToken,
       "session_token":userToken.sessionToken,
-    });
-    const rowCount = insertedSession.rowCount
-    if (rowCount > 0) {
-      response.message = "Erro ao Autenticar, Tente Novamente Mais Tarde";
-    }
+    })
+    .then(data=>{
+      response.message = "Sessão Autenicada Com Sucesso"
+    }).catch(e=>{
+      response.message = "Erro ao Autenticar, Tente Novamente Mais Tarde"
+    })
     return response;
   }
 
   async renew(userToken: authTokens) {
+    let returnable
     const sql = "update access"+
                 "set expires_at = expires_at + '5 minutes'::interval "+
                 "where username = '"+userToken.userId+"' "+
@@ -40,28 +42,29 @@ export default class SessionModel {
                 "and session_token = '"+userToken.sessionToken+"' "+
                 "and datetime('now','localtime') between access_at and expires_at"
     const updatedSession = await db.raw(sql)    
-    if(updatedSession.rowCount > 0){
-      return {status:"updated"}
-    }else{
-      return {status:"fail"}
-    }
+    .then(data=>{
+      returnable = {status:"updated"}
+    }).catch(e=>{
+      returnable = {status:"fail"}
+    })
+    return returnable
   }
 
   async verify(userToken: authTokens) {
+    let response: responseObject = {
+      message: "Sessão Autenicada Com Sucesso",
+    };
     let is_valid: boolean
     const session = await db("access")
-      .whereRaw("`access`.`username` = ?", userToken.userId)
-      .whereRaw("`access`.`auth_token` = ?", userToken.authToken)
-      .whereRaw("`access`.`session_token` = ?", userToken.sessionToken)
-      .whereRaw(
-        "datetime('now','localtime') between `access`.`access_at` and `access`.`expires_at`"
-      );
-    
-    if(session.length > 0 ){
-        is_valid = true
-    }else{
-        is_valid = false
-    }
-    return is_valid
+    .whereRaw("`access`.`username` = ?", userToken.userId)
+    .whereRaw("`access`.`auth_token` = ?", userToken.authToken)
+    .whereRaw("`access`.`session_token` = ?", userToken.sessionToken)
+    .whereRaw("datetime('now','localtime') between `access`.`access_at` and `access`.`expires_at`")
+    .then(data=>{
+      response.message = "Sessão Autenicada Com Sucesso"
+    }).catch(e=>{
+      response.message = "Erro ao Autenticar, Tente Novamente Mais Tarde"
+    })
+    return response;
   }
 }

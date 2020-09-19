@@ -29,13 +29,8 @@ export default class UserModel{
         return {is_valid,user:search[0]}
     }
     async update(user:userInterface){
-        const sql = 'update users as usuarios'
-                   +'set `usuarios`.`name` = name,'
-                   +'`usuarios`.`PASSWORD` = password,'
-                   +'`usuarios`.`email` = email,'
-                   +'`usuarios`.`last_password` = usuarios.PASSWORD'
-                   +'`usuarios`.`user_type` = user_type'
-                   + 'where `usuarios`.`id` = id'
-        return await db.raw(sql);
+        return await db('users')
+        .where('username',user.username)
+        .update(user);
     }
 }
