@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import UserModel from "../models/userModel";
-import digestHash from "../util/digestHash";
 import sessionController from "./sessionController";
-
+import * as DBkey from '../db.json'
+import digestHash from '../util/digestHash'
 export default class userController {
 
   /*
@@ -18,7 +18,7 @@ export default class userController {
     password = digestHash(password)
     const session = new sessionController();
     const model = new UserModel()
-    const verify = await model.verifyUser({username,password})
+    const verify:any = await model.verifyUser({username,password})
     if(verify.is_valid == true){
       const token = await session.newSession(verify.user['id'])
       return res.json({ auth: verify.user['id'], token: token });
@@ -57,7 +57,7 @@ export default class userController {
   async update(req:Request,res:Response){
     const {name,username,email} = req.body
     let {password} = req.body
-    const salt = "SistemaDeGerenciamento"
+    const salt = DBkey.key
     password = digestHash(password)
     const last_password = password
     const userModel = new UserModel()
@@ -69,9 +69,32 @@ export default class userController {
       last_password
     })
     if(created != null){
-      return res.json({"message":"Usuario Criado Com Sucesso!"})
+      return res.json({"message":"Informações do Usuario Atualizadas Com Sucesso!"})
     }else{
       return res.status(404).json({"message":"Erro ao criar novo Usuario"})
     }
   }
+
+  async recoveryPassword(req:Request,res:Response){
+    const {userName} = req.body
+    const userModel = new UserModel()
+    const recovered:any = await userModel.recoveryPassword(userName)
+    if(recovered.updated){
+      return res.json({"message":"Foi enviado um email com sua senha provisória"})
+    }else{
+      return res.json({"Erro":"Erro ao enviar o email com nova senha"}).status(404)
+    }
+  }
+
+  async updatePassword(req:Request,res:Response){
+    const {userId,password} = req.body
+    const userModel = new UserModel()
+    const updated:any = await userModel.updatePassword(userId,password)
+    if(updated.updated){
+      return res.json({"message":"Senha atualizada com sucesso"})
+    }else{
+      return res.json({"Erro":"Erro ao Atualizar Senha"}).status(404)
+    }
+  }
+
 }
