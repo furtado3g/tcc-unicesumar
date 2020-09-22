@@ -26,7 +26,7 @@ routes.post('/recovery',users.recoveryPassword)
 routes.put('/user/recovery',users.updatePassword)
 //controle de tipo de local
 routes.post('/location/type/',locationType.create)
-routes.get('/location/type/',locationType.list)
+routes.get('/location/type/:id',locationType.list)
 routes.delete('/location/type/',locationType.delete)
 //controle de reservas 
 routes.post('/reserve/',reserves.create)
