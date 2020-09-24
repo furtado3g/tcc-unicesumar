@@ -40,7 +40,7 @@ export default class UserModel{
     async recoveryPassword(username:string){
         let random = randomBytes(20).toString('hex');
         random = digestHash(random)
-        let returnable
+        let returnable:any
         const {password} = await db('users')
         .select('password')
         .where('username',username);
@@ -50,8 +50,8 @@ export default class UserModel{
             password : random,
             last_password : password
         })
-        .then(data=>returnable={updated:true})
-        .catch(e=>{returnable={updated:false}})
+        .then(data=>returnable=true)
+        .catch(e=>{returnable=false})
         return returnable
     }
 

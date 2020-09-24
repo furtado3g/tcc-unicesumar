@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import UserModel from "../models/userModel";
 import sessionController from "./sessionController";
-import * as DBkey from '../db.json'
+import * as DBkey from '../../db.json'
 import digestHash from '../util/digestHash'
 export default class userController {
 
@@ -76,10 +76,11 @@ export default class userController {
   }
 
   async recoveryPassword(req:Request,res:Response){
-    const {userName} = req.body
+    const {username} = req.body
     const userModel = new UserModel()
-    const recovered:any = await userModel.recoveryPassword(userName)
-    if(recovered.updated){
+    console.log(username)
+    const recovered = await userModel.recoveryPassword(username)
+    if(recovered){
       return res.json({"message":"Foi enviado um email com sua senha provisória"})
     }else{
       return res.json({"Erro":"Erro ao enviar o email com nova senha"}).status(404)

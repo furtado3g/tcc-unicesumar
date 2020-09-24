@@ -1,5 +1,4 @@
 import Knex from "knex";
-import path from "path";
 import * as dbInfo from '../../db.json'
 
 const db = Knex({

@@ -23,11 +23,11 @@ routes.put('/session',sessions.extendSession)
 routes.post('/user',users.create)
 routes.put('/user',users.update)
 routes.post('/recovery',users.recoveryPassword)
-routes.put('/user/recovery',users.updatePassword)
+routes.put('/user/changePassword',users.updatePassword)
 //controle de tipo de local
 routes.post('/location/type/',locationType.create)
 routes.get('/location/type/:id',locationType.list)
-routes.delete('/location/type/',locationType.delete)
+routes.delete('/location/type',locationType.delete)
 //controle de reservas 
 routes.post('/reserve/',reserves.create)
 routes.put('/reserve/:reserveId',reserves.update)
