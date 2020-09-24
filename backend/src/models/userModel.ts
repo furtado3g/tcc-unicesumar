@@ -31,7 +31,7 @@ export default class UserModel{
         return returnable
     }
     
-    async update(user:userInterface){
+    async update(user:any){
         return await db('users')
         .where('username',user.username)
         .update(user);
