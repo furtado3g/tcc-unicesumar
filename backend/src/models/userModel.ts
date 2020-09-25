@@ -26,7 +26,13 @@ export default class UserModel{
         const search = await db('users')
         .whereRaw('username = ?',user.username)
         .whereRaw('password = ?',user.password)
-        .then(data=>{returnable={is_valid:true,user:data}})
+        .then(data=>{
+            if(data[0]){
+                returnable={is_valid : true,user:data[0]}
+            }else{
+                returnable={is_valid : false,user:null}
+            }
+        })
         .catch(e=>{returnable={is_valid : false,user:null}})
         return returnable
     }

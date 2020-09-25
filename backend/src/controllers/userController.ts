@@ -3,6 +3,7 @@ import UserModel from "../models/userModel";
 import sessionController from "./sessionController";
 import digestHash from '../util/digestHash'
 import verify from '../util/verify'
+import { Console } from "console";
 export default class userController {
 
   /*
@@ -21,6 +22,7 @@ export default class userController {
     const verify:any = await model.verifyUser({username,password})
     if(verify.is_valid == true){
       const token = await session.newSession(verify.user['id'])
+      console.log(token)
       return res.json({ auth: verify.user['id'], token: token });
     }else{
       return res.json({message:"Username or password is invalid"})
