@@ -1,5 +1,5 @@
 import db from "../database/connection";
-
+import moment, { now } from 'moment'
 interface authTokens {
   userId: string;
   authToken: any;
@@ -23,9 +23,9 @@ export default class SessionModel {
     };
     console.log(userToken)
     const insertedSession = await db("sessions").insert({
-      "user_id":userToken.userId,
-      "auth_token":userToken.authToken,
-      "session_token":userToken.sessionToken,
+      user_id:userToken.userId,
+      auth_token :userToken.authToken,
+      session_token:userToken.sessionToken
     })
     .then(data=>{
       response.token = data
@@ -37,12 +37,14 @@ export default class SessionModel {
 
   async renew(userToken: authTokens) {
     let returnable
-    const sql = "update sessions"+
-                "set expires_at = expires_at + '5 minutes'::interval "+
-                "where user_id = "+userToken.userId+" "+
-                "and session_token = '"+userToken.sessionToken+"' "+
-                "and datetime('localtime') between access_at and expires_at"
-    const updatedSession = await db.raw(sql)
+    const getValues = await db('sessions')
+      .where('session_token',userToken.sessionToken)
+      .select("expires_at")
+    const updatedSession = await db('sessions')
+    .where('session_token',userToken.sessionToken)
+    .update({
+      expires_at : moment(getValues[0].expires_at).add(5,'minutes').toISOString()
+    })
     .then(data=>{
       returnable = {status:"updated"}
     })
@@ -59,10 +61,8 @@ export default class SessionModel {
     };
     let is_valid: boolean
     const session = await db("sessions")
-    .whereRaw("`sessions`.`username` = ?", userToken.userId)
-    .whereRaw("`sessions`.`auth_token` = ?", userToken.authToken)
     .whereRaw("`sessions`.`session_token` = ?", userToken.sessionToken)
-    .whereRaw("datetime('now','localtime') between `sessions`.`access_at` and `sessions`.`expires_at`")
+    .whereRaw(" now() between `sessions`.`access_at` and `sessions`.`expires_at`")
     .then(data=>{
       response.message = "Sessão Valida"
     }).catch(e=>{
