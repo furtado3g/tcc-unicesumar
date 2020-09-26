@@ -42,6 +42,7 @@ export default class SessionModel {
       .select("expires_at")
     const updatedSession = await db('sessions')
     .where('session_token',userToken.sessionToken)
+    .where('expires_at','>=',moment(getValues[0].expires_at).toISOString())
     .update({
       expires_at : moment(getValues[0].expires_at).add(5,'minutes').toISOString()
     })
