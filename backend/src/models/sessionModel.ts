@@ -18,7 +18,7 @@ export default class SessionModel {
 
   async create(userToken: authTokens) {
     let response:responseObject = {
-      message: "Sessão Autenicada Com Sucesso",
+      message: "Session successfully authenticated",
       token : {},
     };
     console.log(userToken)
@@ -30,7 +30,7 @@ export default class SessionModel {
     .then(data=>{
       response.token = data
     }).catch(e=>{
-      response.message = "Erro ao Autenticar, Tente Novamente Mais Tarde"
+      response.message = "Authentication error! Try again later"
     })
     return response;
   }
@@ -57,7 +57,7 @@ export default class SessionModel {
 
   async verify(userToken: authTokens) {
     let response: responseObject = {
-      message: "Sessão Autenicada Com Sucesso",
+      message: "Session successfully authenticated",
       token : {}
     };
     let is_valid: boolean
@@ -65,9 +65,9 @@ export default class SessionModel {
     .whereRaw("`sessions`.`session_token` = ?", userToken.sessionToken)
     .whereRaw(" now() between `sessions`.`access_at` and `sessions`.`expires_at`")
     .then(data=>{
-      response.message = "Sessão Valida"
+      response.message = "Valid session"
     }).catch(e=>{
-      response.message = "Sessão Invalida"
+      response.message = "Invalid session"
     })
     return response;
   }

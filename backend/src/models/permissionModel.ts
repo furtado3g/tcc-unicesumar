@@ -49,7 +49,7 @@ class PermissionModel{
             {"endpoint":url}
         ).then(selectedTodo => {
             console.log(selectedTodo)
-            returnable = {message:"Novo endpoint criado com sucesso"}
+            returnable = {message:"New endpoint successfully registered"}
         })
         .catch(e=>{
             returnable = {error:e}
@@ -61,7 +61,7 @@ class PermissionModel{
         let returnable
         const insertedRows = await db('user_type')
         .insert({description})
-        .then(()=>{ returnable ={message:"Novo tipo de usuário cadastrado com sucesso"} })
+        .then(()=>{ returnable ={message:"Type of user successfully registered"} })
         .catch((e)=>{returnable= {error:e}})
         return returnable
     }

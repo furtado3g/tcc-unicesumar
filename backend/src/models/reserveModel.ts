@@ -21,7 +21,7 @@ class ReserveModel{
         const insertedRows = await db('reservations').insert(reserve)
         .then(data=>{
             returnable = {
-                message:"Reserva efetuada com sucesso"
+                message:"Successful booking"
             }
         //}).catch(e=>{
           //  returnable = {
@@ -38,11 +38,11 @@ class ReserveModel{
         .update(reserve)
         .then(data=>{
             returnable = {
-                message:"Reserva atualizada com sucesso"
+                message:"Reservation updated successfully"
             }
         }).catch(()=>{
             returnable = {
-                error : "Erro ao atualizar reserva"
+                error : "Error updating booking"
             }
         }) 
         return returnable
@@ -55,11 +55,11 @@ class ReserveModel{
         .delete()
         .then(data=>{
             returnable = {
-                message : "Reserva excluida com sucesso"
+                message : "Reservation successfully deleted"
             }
         }).catch(e=>{
             returnable = {
-                error : "Erro ao excluir reserva"
+                error : "Error deleting reservation"
             }
         })
         return returnable 

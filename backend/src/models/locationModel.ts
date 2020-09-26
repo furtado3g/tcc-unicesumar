@@ -11,9 +11,9 @@ class LocationModel{
         let returnable
         const insertedRows = await db('locations').insert(location)
         .then(data=>{
-            returnable = {"message":"Local Cadastrado com Sucesso"}
+            returnable = {"message":"Place successfully registered"}
         }).catch(err=>{
-            returnable = {"error" : "Erro ao Excluir Local"}
+            returnable = {"error" : "Error deleting location"}
         })
         return returnable
     }
@@ -24,9 +24,9 @@ class LocationModel{
         .where('id',locationId)
         .update(location)
         .then(data=>{
-            returnable = {message :"Local alterado com sucesso"}
+            returnable = {message :"Location changed successfully"}
         }).catch(err=>{
-            returnable =  {"error":"Erro ao Atualizar Descrição do Local"}
+            returnable =  {"error":"Error updating location description"}
         })
         return  returnable
     }
@@ -37,9 +37,9 @@ class LocationModel{
         .where('id',locationId) 
         .delete()
         .then(data=>{
-            returnable = {"message":"Local Excluido com Sucesso"}
+            returnable = {"message":"Location successfully deleted"}
         }).catch(err=>{
-            returnable = {"error" : "Erro ao Excluir Local"}
+            returnable = {"error" : "Error deleting location"}
         })
         return  returnable
     }
