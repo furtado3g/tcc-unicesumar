@@ -18,22 +18,22 @@ class ReserveModel{
     
     async insert (reserve:reserveInterface){
         let returnable
-        const insertedRows = await db('reserve').insert(reserve)
+        const insertedRows = await db('reservations').insert(reserve)
         .then(data=>{
             returnable = {
                 message:"Reserva efetuada com sucesso"
             }
-        }).catch(e=>{
-            returnable = {
-                error : "Erro ao reservar o espaço"
-            }
+        //}).catch(e=>{
+          //  returnable = {
+            //    error : "Erro ao reservar o espaço"
+            //}
         })
         return returnable
     }
 
     async update (reserve:reserveInterface,reserveId:number){
         let returnable        
-        const insertedRows = await db('reserve')
+        const insertedRows = await db('reservations')
         .where('id',reserveId)
         .update(reserve)
         .then(data=>{
@@ -50,7 +50,7 @@ class ReserveModel{
 
     async delete(reserveId:any){
         let returnable 
-        const deletedRows = await db('reserve')
+        const deletedRows = await db('reservations')
         .where('id','=',reserveId)
         .delete()
         .then(data=>{
@@ -67,7 +67,7 @@ class ReserveModel{
 
     async list(page:any,perPage:any){
         attachPaginate();
-        const itens = await db('reserve').paginate({
+        const itens = await db('reservations').paginate({
             perPage : perPage || 10,
             currentPage : page || 1
         })
@@ -75,7 +75,7 @@ class ReserveModel{
     }
 
     async detail(reserveId:any){
-        const reserve = db('reserve').select('*').where('id',reserveId)
+        const reserve = db('reservations').select('*').where('id',reserveId)
         return reserve
     }
 }

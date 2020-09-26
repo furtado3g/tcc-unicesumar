@@ -51,7 +51,7 @@ export default class userController {
       last_password : last_password
     })
     if(created != null){
-      return res.json({"message":"Usuario Criado Com Sucesso!"})
+      return res.json({"message":"Usuario Cadastrado com Sucesso"})
     }else{
       return res.status(404).json({"message":"Erro ao criar novo Usuario"})
     }

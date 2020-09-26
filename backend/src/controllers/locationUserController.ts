@@ -7,7 +7,7 @@ class LocationUserController{
     async assign(req:Request,res:Response){
         const {locationId,userId} = req.body
         const model = new LocationUserModel()
-        const {message,error} = await model.new({locationId,userId})
+        const {message,error} = await model.new({location_id:locationId,user_id:userId})
         return error ? res.json(message) : res.status(404).json(error)
     }
 

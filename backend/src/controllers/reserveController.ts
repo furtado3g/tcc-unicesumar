@@ -17,32 +17,32 @@ class ReserveController{
     async create(req:Request,res:Response){
         const reserveModel = new ReserveModel()
         const {reserveInterface} = req.body; 
-        return await reserveModel.insert(reserveInterface)
+        return res.json( await reserveModel.insert(reserveInterface))
     }
 
     async update(req:Request,res:Response){
         const reserveModel = new ReserveModel()
         const {reserveId} = req.params
         const {reserveInterface} = req.body;
-        return await reserveModel.update(reserveInterface,Number(reserveId))
+        return res.json(await reserveModel.update(reserveInterface,Number(reserveId)))
     }
     
     async delete(req:Request,res:Response){
         const reserveModel = new ReserveModel()
         const {reserveId} = req.params
-        return await reserveModel.delete(Number(reserveId))
+        return res.json(await reserveModel.delete(Number(reserveId)))
     }
 
     async list(req:Request,res:Response){
         const reserveModel = new ReserveModel()
         const {page,perPage} = req.query
-        return await reserveModel.list(Number(page),Number(perPage))
+        return res.json(await reserveModel.list(Number(page),Number(perPage)))
     }
 
     async detail(req:Request,res:Response){
         const reserveModel = new ReserveModel()
         const {reserveId} = req.params
-        return await reserveModel.detail
+        return res.json(await reserveModel.detail)
     }
 
 }

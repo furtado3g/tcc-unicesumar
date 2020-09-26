@@ -7,7 +7,7 @@ class LocationController{
     async new(req:Request,res:Response){
         const model = new LocationModel()
         const {tp_location,comments,capacity} = req.body
-        const response= await model.insert({tp_location,comments,capacity})        
+        const response= await model.insert({type:tp_location,comments,capacity})        
         return res.json(response)
     }
     
@@ -15,7 +15,7 @@ class LocationController{
         const model = new LocationModel()
         const {tp_location,comments,capacity} = req.body
         const {locationId} = req.params
-        const response = await model.update({tp_location,comments,capacity},Number(locationId))
+        const response = await model.update({type:tp_location,comments,capacity},Number(locationId))
         return res.json(response) 
     }
     
@@ -43,10 +43,21 @@ class LocationController{
     async search(req:Request,res:Response){
         const model = new LocationModel()
         const {term,type} = req.query
-        const sql = "select *"+
-                    "  from locations"
-                    " where tp_location = '"+type+"'"+
-                    "   and comments like '%"+term+"%'"
+        let sql : string
+        if(type == null || type == ""){
+            sql = "select *"+
+                  "  from locations"
+                  " where comments like '%"+term+"%'"
+        }else if(term == null || term == ""){
+            sql = "select *"+
+                  "  from locations"
+                  " where type = '"+type+"";
+        }else{
+            sql = "select *"+
+                  "  from locations"
+                  " where type = '"+type+""
+                  "   and comments like '%"+term+"%'";
+        }
         return await model.getList(sql)
     }
 }

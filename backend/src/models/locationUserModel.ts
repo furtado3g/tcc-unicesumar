@@ -1,8 +1,8 @@
 import db from "../database/connection";
 
 interface ILocationUser{
-    userId : number,
-    locationId:number
+    user_id : number,
+    location_id:number
 }
 class LocationUserModel{
 

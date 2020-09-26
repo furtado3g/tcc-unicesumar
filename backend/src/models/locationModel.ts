@@ -1,7 +1,7 @@
 import db from "../database/connection"
 
 interface ILocation{
-    "tp_location":string,
+    "type":string,
     "comments":string,
     "capacity":number
 }
@@ -11,10 +11,11 @@ class LocationModel{
         let returnable
         const insertedRows = await db('locations').insert(location)
         .then(data=>{
-            returnable = {"message":"Local Excluido com Sucesso"}
+            returnable = {"message":"Local Cadastrado com Sucesso"}
         }).catch(err=>{
             returnable = {"error" : "Erro ao Excluir Local"}
         })
+        return returnable
     }
 
     async update(location:ILocation,locationId:number){
@@ -23,7 +24,7 @@ class LocationModel{
         .where('id',locationId)
         .update(location)
         .then(data=>{
-            returnable = {message :"Local atualizado com sucesso"}
+            returnable = {message :"Local alterado com sucesso"}
         }).catch(err=>{
             returnable =  {"error":"Erro ao Atualizar Descrição do Local"}
         })
@@ -33,7 +34,8 @@ class LocationModel{
     async delete(locationId:number){
         let returnable
         const deletedRows = await db('locations')
-        .where('id',locationId)
+        .where('id',locationId) 
+        .delete()
         .then(data=>{
             returnable = {"message":"Local Excluido com Sucesso"}
         }).catch(err=>{
