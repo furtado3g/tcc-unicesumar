@@ -44,7 +44,6 @@ routes.put('/location/:locationId',location.update)
 routes.delete('/location/:locationId',location.delete)
 routes.get('/location/',location.list)
 routes.get('/location/:locationId',location.detail)
-routes.get('/location/search/',location.search)
 //controle de permissões
 routes.post('/endpoint',permission.newEndpoint)
 routes.post('/usertype',permission.newUserType)

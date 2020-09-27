@@ -4,8 +4,8 @@ import { attachPaginate } from 'knex-paginate' ;
 
 
 interface reserveInterface{
-    "userId":number,
-    "locationId":number,
+    "teacher_id":number,
+    "location_id":number,
     "date":string,
     "time_start":string,
     "time_end":string,
@@ -20,13 +20,15 @@ class ReserveModel{
         let returnable
         const insertedRows = await db('reservations').insert(reserve)
         .then(data=>{
+            console.log(data)
             returnable = {
                 message:"Successful booking"
             }
-        //}).catch(e=>{
-          //  returnable = {
-            //    error : "Erro ao reservar o espaço"
-            //}
+        }).catch(e=>{
+            //traduzir retorno a baixo
+            returnable = {
+                error : "Erro ao reservar o espaço"
+            }
         })
         return returnable
     }

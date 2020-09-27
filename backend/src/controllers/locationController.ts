@@ -28,37 +28,21 @@ class LocationController{
 
     async list(req:Request,res:Response){
         const model = new LocationModel()
-        const sql = "select * from locations"
-        const result = await model.getList(sql)
-        return res.json(result['rows'])
+        const {term,type} = req.query
+        return res.send(await model.search(term,type))
     }
 
     async detail(req:Request,res:Response){
         const model = new LocationModel()
         const {locationId} = req.params
-        const sql = "select * from locations where id = '"+locationId+"'"
-        return await model.getList(sql)
+        return res.json(await model.detail(locationId))
+        
     }
 
     async search(req:Request,res:Response){
         const model = new LocationModel()
         const {term,type} = req.query
-        let sql : string
-        if(type == null || type == ""){
-            sql = "select *"+
-                  "  from locations"
-                  " where comments like '%"+term+"%'"
-        }else if(term == null || term == ""){
-            sql = "select *"+
-                  "  from locations"
-                  " where type = '"+type+"";
-        }else{
-            sql = "select *"+
-                  "  from locations"
-                  " where type = '"+type+""
-                  "   and comments like '%"+term+"%'";
-        }
-        return await model.getList(sql)
+        return res.send(req.query)//await model.search(term,type))
     }
 }
 export default LocationController

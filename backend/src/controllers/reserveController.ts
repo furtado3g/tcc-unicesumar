@@ -2,12 +2,12 @@ import {Request,Response} from 'express'
 import ReserveModel from '../models/reserveModel';
 
 interface reserveInterface{
-    userId:number,
-    locationId:number,
+    user_id:number,
+    location_id:number,
     date:string,
     time_start:string,
     time_end:string,
-    class:string,
+    classes:string,
     discipline:string,
     comments:string
 }
@@ -16,15 +16,51 @@ class ReserveController{
 
     async create(req:Request,res:Response){
         const reserveModel = new ReserveModel()
-        const {reserveInterface} = req.body; 
-        return res.json( await reserveModel.insert(reserveInterface))
+        const {
+            user_id,
+            location_id,
+            date,
+            time_start,
+            time_end,
+            classes,
+            discipline,
+            comments
+        } = req.body; 
+        return res.json( await reserveModel.insert({
+            teacher_id:user_id,
+            location_id,
+            date,
+            time_start,
+            time_end,
+            class : classes,
+            discipline,
+            comments
+        }))
     }
 
     async update(req:Request,res:Response){
         const reserveModel = new ReserveModel()
         const {reserveId} = req.params
-        const {reserveInterface} = req.body;
-        return res.json(await reserveModel.update(reserveInterface,Number(reserveId)))
+        const {
+            user_id,
+            location_id,
+            date,
+            time_start,
+            time_end,
+            classes,
+            discipline,
+            comments
+        } = req.body;
+        return res.json(await reserveModel.update({
+            teacher_id:user_id,
+            location_id,
+            date,
+            time_start,
+            time_end,
+            class : classes,
+            discipline,
+            comments
+        },Number(reserveId)))
     }
     
     async delete(req:Request,res:Response){
@@ -42,7 +78,7 @@ class ReserveController{
     async detail(req:Request,res:Response){
         const reserveModel = new ReserveModel()
         const {reserveId} = req.params
-        return res.json(await reserveModel.detail)
+        return res.json(await reserveModel.detail(reserveId))
     }
 
 }
