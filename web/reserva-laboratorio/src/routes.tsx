@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter,Route,Switch } from "react-router-dom";
 import Login from "./pages/login";
 import ForgotPassword from "./pages/forgot";
+import Home from "./pages/home"
+import Admin from './pages/admin'
 
 function Routes (){
     return(
@@ -9,6 +11,8 @@ function Routes (){
             <Switch>
                 <Route exact={true} path="/" component={Login} />
                 <Route exact={true} path="/forgot" component={ForgotPassword} />
+                <Route exact={true} path="/home" component={Home} />
+                <Route exact={true} path="/admin" component={Admin} />
             </Switch>
         </BrowserRouter>
     )

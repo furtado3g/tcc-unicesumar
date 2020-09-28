@@ -1,0 +1,17 @@
+.container{
+    max-width: 100%;
+    background-color: transparent;
+    align-self: center;
+    justify-self: center;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.panel{
+    max-width: 80%;
+    height: 90vh;
+    background-color: whitesmoke;
+}
