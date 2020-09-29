@@ -7,14 +7,13 @@ function Admin(){
 
     async function handleWithPageLoad(){
         const requestData = {
-            url : 'http://localhost:3333/user/',
+            url : 'http://localhost:3333/user/'+localStorage.getItem('user_id'),
             options : {
                 method: "GET",
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body : JSON.stringify({"userId":localStorage.getItem('user_id')})
             }
         }
         const request = await fetch(requestData.url,requestData.options)
@@ -22,6 +21,8 @@ function Admin(){
             const response = await request.json()
             const { name } = response 
             usernameState(name)
+        }else{
+            usernameState('Administrador')
         }
     }
 
