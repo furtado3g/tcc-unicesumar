@@ -58,10 +58,10 @@ class LocationModel{
     async search(term : any, type : any){
         console.log(term)
         console.log(type)
-        
+        let returnable
         if((term != null || term != undefined || term != '')&&
            (type == null || type == undefined || type == '')){
-           return await db('locations')
+            returnable =  await db('locations')
                 .where('comments','like','%'+term+'%')
                 .select('*')
                 .catch(err => {
@@ -69,7 +69,7 @@ class LocationModel{
                 })
         }else if((type == null || type == undefined || type == '')&&
                  (term != null || term != undefined || term != '')){
-            return await db('locations')
+                returnable =  await db('locations')
                 .where('type',type)
                 .select('*')
                 .catch(err => {
@@ -77,14 +77,14 @@ class LocationModel{
                 })
         }else if((type == null || type == undefined || type == '')&&
                  (term == null || term == undefined || term == '')){
-            return await db('locations')
+                returnable =  await db('locations')
                 .select('*')
                 .catch(err => {
                     console.log('c');
                 })
         }else if((type != null || type != undefined || type != '')&&
                  (term != null || term != undefined || term != '')){
-            return await db('locations')
+                returnable =  await db('locations')
                 .where('comments','like','%'+term+'%')
                 .where('type',type)
                 .select('*')
@@ -92,6 +92,7 @@ class LocationModel{
                     console.log('D');
                 })
         }
+        return returnable
     }
 }
 

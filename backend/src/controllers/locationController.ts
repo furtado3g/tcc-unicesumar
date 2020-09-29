@@ -29,7 +29,7 @@ class LocationController{
     async list(req:Request,res:Response){
         const model = new LocationModel()
         const {term,type} = req.query
-        return res.send(await model.search(term,type))
+        return res.json(await model.search(term,type))
     }
 
     async detail(req:Request,res:Response){
