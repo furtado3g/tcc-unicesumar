@@ -56,8 +56,9 @@ class LocationModel{
     }
 
     async search(term : any, type : any){
-        console.log(term)
-        console.log(type)
+        if(term == undefined)term='';
+        if(type == undefined)type='';
+
         let returnable
         if((term != null || term != undefined || term != '')&&
            (type == null || type == undefined || type == '')){
