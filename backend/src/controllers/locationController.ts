@@ -42,7 +42,7 @@ class LocationController{
     async search(req:Request,res:Response){
         const model = new LocationModel()
         const {term,type} = req.query
-        return res.send(req.query)//await model.search(term,type))
+        return res.send(model.search(term,type))
     }
 }
 export default LocationController

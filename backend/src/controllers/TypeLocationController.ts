@@ -1,5 +1,5 @@
 import {Request,Response} from 'express'
-import TypeLocationModel from '../models/typeLocationModel'
+import TypeLocationModel from '../models/typeLocationModel' 
 
 class TypeLocationController{
     async create(req:Request,res:Response){
@@ -16,7 +16,9 @@ class TypeLocationController{
 
     async list(req:Request,res:Response){
         const model = new TypeLocationModel()
-        return res.json(await model.list())
+        const list = await model.list()
+        console.log(list)
+        return res.json(list)
     }
 }
 
