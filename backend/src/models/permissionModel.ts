@@ -73,7 +73,8 @@ class PermissionModel{
         .where("users.id",idUser)
         .select(
             'permissions.id',
-            'permissions.endpoint'
+            'permissions.endpoint',
+            'users.name'
         )
         return result
     }
