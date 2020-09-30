@@ -18,18 +18,20 @@ class ReserveModel{
     
     async insert (reserve:reserveInterface){
         let returnable
+        console.log(reserve)
         const insertedRows = await db('reservations').insert(reserve)
         .then(data=>{
             console.log(data)
             returnable = {
                 message:"Successful booking"
             }
-        }).catch(e=>{
+        })
+        /*.catch(e=>{
             //traduzir retorno a baixo
             returnable = {
                 error : "Erro ao reservar o espaço"
             }
-        })
+        })*/
         return returnable
     }
 
