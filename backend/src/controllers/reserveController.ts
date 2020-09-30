@@ -31,7 +31,7 @@ class ReserveController{
         return res.json( await reserveModel.insert({
             teacher_id:userId,
             location_id:locationId,
-            date,
+            date: date,
             time_start,
             time_end,
             class : classes,
