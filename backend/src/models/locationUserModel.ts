@@ -7,22 +7,42 @@ interface ILocationUser{
 class LocationUserModel{
 
     async new(locationUser : ILocationUser){
-        const insertedRow = await db('user_location').insert(locationUser)
-        return insertedRow.length ?{ message : "assigned location to user" } : { error : "error when assigning responsibility"}
+        let returnable
+        await db('user_location')
+        .insert(locationUser)
+        .then(data=>{
+            returnable = { message : "assigned location to user" }
+        })
+        .catch(e=>{
+            returnable = { error : "error when assigning responsibility"}
+        })
+        return returnable
     }
 
     async delete(id:string){
+        let returnable
         const deletedRows = await db('user_location')
-            .where("id",id)
-            .delete()
-        return deletedRows > 0 ? {message : "excluded liability association"} : {error : "error deleting liability association"}
+        .where("id",id)
+        .delete().then(data=>{
+            returnable = {message : "excluded liability association"}
+        }).catch(err=>{
+            returnable = {error : "error deleting liability association"}
+        })
+        return returnable
     }
 
     async list(id:string){
+        let returnable
         const listOfUserLocatios = await db('user_location')
-            .where('user_id',id)
-            .select('*')
-        return listOfUserLocatios ?  {listOfUserLocatios} : {error:"error fetching list of users responsible for the location"}
+        .where('user_id',id)
+        .select('*')
+        .then(data=>{
+            returnable = data
+        })
+        .catch(e=>{
+            returnable = {error:"error fetching list of users responsible for the location"}
+        })
+        return returnable
     }
 }
 
