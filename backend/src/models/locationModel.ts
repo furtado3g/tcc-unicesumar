@@ -20,6 +20,14 @@ class LocationModel{
 
     async update(location:ILocation,locationId:number){
         let returnable
+        const canIUpdate =  await db('locations')
+        .select('*')
+        .where("id",locationId)
+        if(!canIUpdate[0]){
+            return {
+                error : "Location does not exist"
+            }
+        }
         const updatedRows = await db('locations')
         .where('id',locationId)
         .update(location)
@@ -33,6 +41,14 @@ class LocationModel{
     
     async delete(locationId:number){
         let returnable
+        const canIUpdate =  await db('locations')
+        .select('*')
+        .where("id",locationId)
+        if(!canIUpdate[0]){
+            return {
+                error : "Location does not exist"
+            }
+        }
         const deletedRows = await db('locations')
         .where('id',locationId) 
         .delete()

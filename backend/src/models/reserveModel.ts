@@ -18,7 +18,16 @@ class ReserveModel{
     
     async insert (reserve:reserveInterface){
         let returnable
-        console.log(reserve)
+        const labIsTaken = await db('reservations')
+        .where('location_id',reserve.location_id)
+        .where('date',reserve.date)
+        .whereBetween('time_start',[reserve.time_end,reserve.time_start])
+        .whereBetween('time_end',[reserve.time_end,reserve.time_start])
+        if(labIsTaken[0]){
+            return {
+                message : "Place is already reserved"
+            }
+        }
         const insertedRows = await db('reservations').insert(reserve)
         .then(data=>{
             console.log(data)
@@ -72,11 +81,10 @@ class ReserveModel{
 
     async list(page:any,perPage:any){
         attachPaginate();
-        const itens = await db('reservations').paginate({
-            perPage : perPage || 10,
-            currentPage : page || 1
-        })
-        return itens.data
+        const itens = await db('reservations')
+        .limit(perPage || 10)
+        .offset((page*perPage) || 1)
+        return itens
     }
 
     async detail(reserveId:any){

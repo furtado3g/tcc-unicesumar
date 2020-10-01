@@ -17,30 +17,78 @@ interface authUser{
 
 export default class UserModel{
     async create(user:userInterface){
+        const usernameExists = await db('users')
+        .select('*')
+        .where('username',user.username)
+        if(usernameExists[0]){
+            return {
+                "status" : "Username is already registered"
+            }
+        }
+        const emailExists = await db('users')
+        .select('*')
+        .where('email',user.email)
+        if(emailExists[0]){
+            return {
+                "error" : "Username is already registered"
+            }
+        }
         const insertedRows = await db('users').insert(user)
         return insertedRows
     }
 
     async verifyUser(user:authUser){
         let returnable 
+        const usernameExists = await db('users')
+        .select('*')
+        .where('username',user.username)
+        if(usernameExists[0]){
+            returnable =  {
+                "status" : "Username is already registered"
+            }
+        }
         const search = await db('users')
-        .whereRaw('username = ?',user.username)
-        .whereRaw('password = ?',user.password)
-        .then(data=>{
+        .where('username',user.username)
+        .where('password',user.password)
+        .then((data: any[])=>{
             if(data[0]){
                 returnable={is_valid : true,user:data[0]}
             }else{
                 returnable={is_valid : false,user:null}
             }
         })
-        .catch(e=>{returnable={is_valid : false,user:null}})
+        .catch((e: any)=>{returnable={is_valid : false,user:null}})
         return returnable
     }
     
     async update(user:any){
+        const usernameExists = await db('users')
+        .select('*')
+        .where('username',user.username)
+        if(usernameExists[0]){
+            return {
+                "status" : "Username is already registered"
+            }
+        }
+        const emailExists = await db('users')
+        .select('*')
+        .where('email',user.email)
+        if(emailExists[0]){
+            return {
+                "error" : "Username is already registered"
+            }
+        }
+        const {password} = await db('users')
+        .select('password')
+        .where('username',user.username);
         return await db('users')
         .where('username',user.username)
-        .update(user);
+        .update({
+            name:user.name,
+            email:user.email,
+            password:user.password,
+            last_password:password
+        });
     }
 
     async recoveryPassword(username:string){
@@ -56,8 +104,13 @@ export default class UserModel{
             password : random,
             last_password : password
         })
-        .then(data=>returnable=true)
-        .catch(e=>{returnable=false})
+        .then((data: any)=>{
+            console.log(data);returnable=true
+        })
+        .catch((e: any)=>{
+            console.log(e);
+            returnable=false
+        })
         return returnable
     }
 
@@ -72,8 +125,8 @@ export default class UserModel{
             password : newPassword,
             last_password : password
         })
-        .then(data=>returnable={updated:true})
-        .catch(e=>{returnable={updated:false}})
+        .then((data: any)=>returnable={updated:true})
+        .catch((e: any)=>{returnable={updated:false}})
         return returnable
     }
 }

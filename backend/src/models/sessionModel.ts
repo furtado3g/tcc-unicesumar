@@ -1,5 +1,5 @@
 import db from "../database/connection";
-import moment, { now } from 'moment'
+import moment from 'moment'
 interface authTokens {
   userId: string;
   authToken: any;
@@ -21,7 +21,6 @@ export default class SessionModel {
       message: "Session successfully authenticated",
       token : {},
     };
-    console.log(userToken)
     const insertedSession = await db("sessions").insert({
       user_id:userToken.userId,
       auth_token :userToken.authToken,
@@ -40,7 +39,11 @@ export default class SessionModel {
     const getValues = await db('sessions')
       .where('session_token',userToken.sessionToken)
       .select("expires_at")
-    console.log(getValues)
+    if(moment(getValues[0].expires_at) < moment()){
+      return {
+        message : "Token is no longer valid"
+      }
+    }
     const updatedSession = await db('sessions')
     .where('session_token',userToken.sessionToken)
     .where('expires_at','>=',moment(getValues[0].expires_at).toISOString())
@@ -51,9 +54,9 @@ export default class SessionModel {
       console.log(data)
       returnable = {status:"updated"}
     })
-    //.catch(e=>{
-    //  returnable = {status:e}
-    //})
+    .catch(e=>{
+      returnable = {status:e}
+    })
     return returnable
   }
 
@@ -63,14 +66,18 @@ export default class SessionModel {
       token : {}
     };
     let is_valid: boolean
-    const session = await db("sessions")
-    .whereRaw("`sessions`.`session_token` = ?", userToken.sessionToken)
-    .whereRaw(" now() between `sessions`.`access_at` and `sessions`.`expires_at`")
-    .then(data=>{
-      response.message = "Valid session"
-    }).catch(e=>{
-      response.message = "Invalid session"
-    })
-    return response;
+    const getValues = await db('sessions')
+      .where('session_token',userToken.sessionToken)
+      .select("expires_at")
+    if(moment(getValues[0].expires_at) < moment()){
+      return {
+        message : "Token is no longer valid"
+      }
+    }else{
+      return{
+        message : "Token is valid",
+        is_valid : true
+      }
+    }
   }
 }

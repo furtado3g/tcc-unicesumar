@@ -6,13 +6,16 @@ class PermissionModel{
         const tp_user = await this.getUserType(idUser);
         const id_permission = await this.getEndPointId(url);
         let returnable 
+        const permissionExists = await db('type_user_permisions')
+        .where('tp_user',tp_user[0].user_type)
+        .where('id_permission',id_permission[0].id)
+        if(permissionExists[0]) return {error:"Permission has already been given"};
         const insertedRows = await db('type_user_permisions')
         .insert({
             id_permission : id_permission[0].id,
             tp_user : tp_user[0].user_type
         })
         .then((data)=>{
-            console.log(data.values)
             returnable = data
         }).catch((e)=>{
             returnable = {error:e}
@@ -30,7 +33,7 @@ class PermissionModel{
         .then(data=>{
             returnable =  {
                 granted: true,
-                result : result
+                result : data
             }
 
         })
@@ -44,6 +47,14 @@ class PermissionModel{
 
     async newEndPoint(url:string){
         let returnable
+        const endpointExists = await db('permissions')
+        .where('endpoint',url)
+        .select('*')
+        if(endpointExists[0]){
+            return {
+                error : "Endpoint already exists"
+            }
+        }
         const insertedRows = await db('permissions')
         .insert(
             {"endpoint":url}
@@ -59,6 +70,14 @@ class PermissionModel{
 
     async newUserType(description:string){
         let returnable
+        const userTypeExists = await db('user_type')
+        .where('description',description)
+        .select('*')
+        if(userTypeExists[0]){
+            return {
+                error : "User type already exists"
+            }
+        }
         const insertedRows = await db('user_type')
         .insert({description})
         .then(()=>{ returnable ={message:"Type of user successfully registered"} })

@@ -4,6 +4,14 @@ class TypeLocationModel{
     
     async create(description:string){
         let returnable
+        const typeExists = await db('type_location')
+        .select('*')
+        .where('description',description)
+        if(typeExists[0]){
+            return {
+                message : "Location type already registered"
+            }
+        }
         await db('type_location')
         .insert({description})
         .then(data=>{
@@ -34,6 +42,14 @@ class TypeLocationModel{
 
     async delete (id:number){
         let returnable 
+        const idExists = await db('type_location')
+        .where('id',id)
+        .select('*')
+        if(idExists[0]){
+            return {
+                message : "Unregistered location"
+            }
+        }
         await db('type_location')
         .where('id',id)
         .delete()
