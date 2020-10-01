@@ -39,7 +39,7 @@ export default class userController {
     const {name,username,email} = req.body
     let {password} = req.body
     const verifier = new verify();
-    if(!verifier.verifyNullIncommingFields({name,username,email,password})) return res.status(404).json({"message":"Campo Obrigatório em Branco"});
+    if(!verifier.verifyNullIncommingFields({name,username,email,password})) return res.status(404).json({"message":"Required field"});
     password = digestHash(password)
     const last_password = password
     const userModel = new UserModel()
@@ -51,9 +51,9 @@ export default class userController {
       last_password : last_password
     })
     if(created != null){
-      return res.json({"message":"Usuario Cadastrado com Sucesso"})
+      return res.json({"message":"User successfully registered"})
     }else{
-      return res.status(404).json({"message":"Erro ao criar novo Usuario"})
+      return res.status(404).json({"message":"Error when registering user"})
     }
   }
 
@@ -61,43 +61,43 @@ export default class userController {
     const {name,username,email} = req.body
     const userModel = new UserModel()
     const verifier = new verify();
-    if(!verifier.verifyNullIncommingFields({name,username,email})) return res.status(404).json({"error":"Campo Obrigatório em Branco"});
+    if(!verifier.verifyNullIncommingFields({name,username,email})) return res.status(404).json({"error":"Required field"});
     const created = userModel.update({
       name,
       username,
       email,
     })
     if(created != null){
-      return res.json({"message":"Informações do Usuario Atualizadas Com Sucesso!"})
+      return res.json({"message":"Data updated successfully"})
     }else{
-      return res.status(404).json({"message":"Erro ao criar novo Usuario"})
+      return res.status(404).json({"message":"Error when registering user"})
     }
   }
 
   async recoveryPassword(req:Request,res:Response){
     const {username} = req.body
     const verifier = new verify();
-    if(!verifier.verifyNullIncommingFields({username})) return res.status(404).json({"message":"Campo Obrigatório em Branco"});
+    if(!verifier.verifyNullIncommingFields({username})) return res.status(404).json({"message":"Required field"});
     const userModel = new UserModel()
     console.log(username)
     const recovered = await userModel.recoveryPassword(username)
     if(recovered){
-      return res.json({"message":"Foi enviado um email com sua senha provisória"})
+      return res.json({"message":"Check email with temporary password"})
     }else{
-      return res.json({"Erro":"Erro ao enviar o email com nova senha"}).status(404)
+      return res.json({"Erro":"Error sending email with new password"}).status(404)
     }
   }
 
   async updatePassword(req:Request,res:Response){
     const {userId,password} = req.body
     const verifier = new verify();
-    if(!verifier.verifyNullIncommingFields({userId,password})) return res.status(404).json({"message":"Campo Obrigatório em Branco"});
+    if(!verifier.verifyNullIncommingFields({userId,password})) return res.status(404).json({"message":"Required field"});
     const userModel = new UserModel()
     const updated:any = await userModel.updatePassword(userId,password)
     if(updated.updated){
-      return res.json({"message":"Senha atualizada com sucesso"})
+      return res.json({"message":"Password updated successfully"})
     }else{
-      return res.json({"Erro":"Erro ao Atualizar Senha"}).status(404)
+      return res.json({"Erro":"Error updating password"}).status(404)
     }
   }
 

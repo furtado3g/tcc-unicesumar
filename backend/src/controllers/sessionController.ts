@@ -26,7 +26,7 @@ export default class sessionController{
             return returnableToken
         }else{
             return {
-                message : "Erro ao persistir sessão no banco"
+                message : "Error persisting session in the database"
             }
         }
     }

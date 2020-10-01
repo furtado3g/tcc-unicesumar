@@ -11,10 +11,10 @@ class LocationUserModel{
         await db('user_location')
         .insert(locationUser)
         .then(data=>{
-            returnable = { message : "assigned location to user" }
+            returnable = { message : "Assigned location to user" }
         })
         .catch(e=>{
-            returnable = { error : "error when assigning responsibility"}
+            returnable = { error : "Error when assigning responsibility"}
         })
         return returnable
     }
@@ -24,9 +24,9 @@ class LocationUserModel{
         const deletedRows = await db('user_location')
         .where("id",id)
         .delete().then(data=>{
-            returnable = {message : "excluded liability association"}
+            returnable = {message : "Excluded liability association"}
         }).catch(err=>{
-            returnable = {error : "error deleting liability association"}
+            returnable = {error : "Error deleting liability association"}
         })
         return returnable
     }
@@ -40,7 +40,7 @@ class LocationUserModel{
             returnable = data
         })
         .catch(e=>{
-            returnable = {error:"error fetching list of users responsible for the location"}
+            returnable = {error:"Error fetching list of users responsible for the location"}
         })
         return returnable
     }

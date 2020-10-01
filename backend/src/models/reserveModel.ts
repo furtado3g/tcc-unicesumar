@@ -29,7 +29,7 @@ class ReserveModel{
         .catch(e=>{
             //traduzir retorno a baixo
             returnable = {
-                error : "Erro ao reservar o espaço"
+                error : "Error when making reservation"
             }
         })
         return returnable

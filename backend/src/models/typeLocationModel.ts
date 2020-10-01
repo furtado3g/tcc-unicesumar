@@ -8,12 +8,12 @@ class TypeLocationModel{
         .insert({description})
         .then(data=>{
             returnable ={
-                message : "location type has been created"
+                message : "Location type has been created"
             }
         })
         .catch(e=>{
             return returnable ={
-                message: "error at create new location type"
+                message: "Error at create new location type"
             }
         })
         return returnable
@@ -39,12 +39,12 @@ class TypeLocationModel{
         .delete()
         .then(data =>{
             returnable = {
-                message : "location type has been deleted"
+                message : "Location type has been deleted"
             }
         })
         .catch(e=>{
             returnable = {
-                message : "error when trying to delete a location type"
+                message : "Error when trying to delete a location type"
             }
         })
         return returnable
