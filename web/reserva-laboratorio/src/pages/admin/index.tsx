@@ -39,7 +39,11 @@ function Admin(){
                         </div>
                     </div>
                     <div className="panel-body">
-
+                        <div className="panel-sidebar">
+                            <div className="panel-sidebar-item">
+                                Novo Usuario
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

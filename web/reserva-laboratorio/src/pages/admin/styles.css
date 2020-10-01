@@ -18,6 +18,7 @@
     background-color: whitesmoke;
     border-radius: 0.5rem;
 }
+
 .panel-header{
     height: 6rem;
     width : 100%;
@@ -27,9 +28,30 @@
     align-items: center;
     border-radius: 0.5rem 0.5rem  0 0;
 }
+
 .panel-title{
     margin: 2rem;
     line-height: 21px;
     font-size: 20px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.panel-body{
+    display : grid;
+    grid-template-areas: "panel-sidebar panel-body";
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 100%;
+}
+
+.panel-sidebar{
+    grid-area: 'panel-sidebar';
+    min-height: 100%;
+}
+
+.panel-sidebar-item{
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    font-family: sans-serif;
 }
