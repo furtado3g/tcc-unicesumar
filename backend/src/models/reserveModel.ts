@@ -26,17 +26,18 @@ class ReserveModel{
                 message:"Successful booking"
             }
         })
-        /*.catch(e=>{
+        .catch(e=>{
             //traduzir retorno a baixo
             returnable = {
                 error : "Erro ao reservar o espaço"
             }
-        })*/
+        })
         return returnable
     }
 
     async update (reserve:reserveInterface,reserveId:number){
-        let returnable        
+        let returnable 
+        console.log(reserve)
         const insertedRows = await db('reservations')
         .where('id',reserveId)
         .update(reserve)

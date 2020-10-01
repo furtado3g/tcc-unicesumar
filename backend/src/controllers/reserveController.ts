@@ -26,8 +26,6 @@ class ReserveController{
             discipline,
             comments
         } = req.body; 
-
-        console.log(req.body)        
         return res.json( await reserveModel.insert({
             teacher_id:userId,
             location_id:locationId,
@@ -44,8 +42,8 @@ class ReserveController{
         const reserveModel = new ReserveModel()
         const {reserveId} = req.params
         const {
-            user_id,
-            location_id,
+            userId,
+            locationId,
             date,
             time_start,
             time_end,
@@ -54,9 +52,9 @@ class ReserveController{
             comments
         } = req.body;
         return res.json(await reserveModel.update({
-            teacher_id:user_id,
-            location_id,
-            date,
+            teacher_id:userId,
+            location_id:locationId,
+            date: date,
             time_start,
             time_end,
             class : classes,
