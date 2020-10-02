@@ -14,7 +14,7 @@
 .panel{
     grid-area: panel;
     max-width: 80%;
-    min-height: 90vh;
+    max-height: 90vh;
     background-color: whitesmoke;
     border-radius: 0.5rem;
 }
@@ -41,17 +41,94 @@
     grid-template-areas: "panel-sidebar panel-body";
     grid-template-columns: 20% 80%;
     grid-template-rows: 100%;
+    overflow-y: scroll;
 }
 
 .panel-sidebar{
-    grid-area: 'panel-sidebar';
-    min-height: 100%;
+    grid-area: panel-sidebar;
+    height: 100% !important;
+    border-right: 1px solid #666666;
 }
 
 .panel-sidebar-item{
-    height: 4rem;
+    padding: 2rem;
     display: flex;
     justify-content: center;
     align-content: center;
     font-family: sans-serif;
+    border-bottom:1px solid #666666;
+    background-color: #6d05ce;
+    color: whitesmoke;
+}
+
+.panel-content{
+    grid-area: panel-body ;
+    padding: 1rem;
+    background-color: #ffffff !important;
+}
+
+.row{
+    display: flex;
+    font-family: sans-serif;
+    margin: 1rem 0.5rem;
+}
+
+.row > .text-center{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.page-name{
+    align-self: center;
+}
+
+.col-6{
+    padding: 0.5rem;
+    width: 50%;
+}
+
+.col-12{
+    padding: 0.5rem;
+    width: 100%;
+}
+
+.form-control{
+    padding: 0.5rem 1rem;
+    font-family: sans-serif;
+    width: 100%;
+}
+
+select {
+    font-size: 1.5rem;
+    /* line-height: 3rem !important; */
+    height: 4.5rem;
+}
+
+.btn{
+    margin : 0.3rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-success{
+    background-color: rgba(82, 206, 0, 0.801);
+    color: white;
+    transform: 2s;
+}
+
+.btn-success:hover{
+    opacity: 0.75;
+}
+
+.btn-danger{
+    background-color: tomato;
+    color: white;
+    transform: 2s;
+}
+
+.btn-danger:hover{
+    opacity: 0.75;
 }
