@@ -9,6 +9,9 @@ function Admin(){
     const [username, usernameState] = useState('')
     const [password, passwordState] = useState('')
     const [redundacy, redundacyState] = useState('')
+    const [email, emailState] = useState('')
+    const [userType, userTypeState] = useState('')
+
 
     async function handleWithPageLoad(){
         const requestData = {
@@ -32,6 +35,24 @@ function Admin(){
         .catch(e=>{
             loggedUsernameState("Admin")
         })
+    }
+
+    function handleWithSubmit(){
+        const data = {
+            url : "http://localhost:3333/user/",
+            options : {
+                method : "post",
+                body : JSON.stringify({
+                    username,
+                    password,
+                    email,
+                    userType
+                })
+            }
+        }
+        if(password !== redundacy){
+            alert('Senhas Não Coincidem')
+        }
     }
 
     useState(handleWithPageLoad())
@@ -79,6 +100,17 @@ function Admin(){
                                 </div>
                             </div>
                             <div className="row">
+                                <div className="col-12">
+                                    <label htmlFor="email">Email</label>
+                                    <input 
+                                        type="text"
+                                        className="form-control"
+                                        id="email"
+                                        onChange={e=>emailState(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                            <div className="row">
                                 <div className="col-6">
                                     <label htmlFor="password">Senha</label>
                                     <input 
@@ -103,6 +135,7 @@ function Admin(){
                                     <select 
                                         className="form-control" 
                                         id="userType"
+                                        onChange={e=>userTypeState(e.target.value)}
                                     >
                                         <option value="">Selecione</option>
                                         <option value="1">Coordenador</option>
@@ -115,6 +148,7 @@ function Admin(){
                                 <div className="col-12 text-center" >
                                     <button
                                         className="btn btn-success"
+                                        onClick={handleWithSubmit}
                                     >
                                         Salvar Usuario
                                     </button>
