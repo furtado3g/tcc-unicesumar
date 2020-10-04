@@ -8,6 +8,7 @@ interface userInterface{
     email:string
     password:string;
     last_password:string;
+    user_type : string;
 }
 
 interface authUser{
@@ -20,20 +21,27 @@ export default class UserModel{
         const usernameExists = await db('users')
         .select('*')
         .where('username',user.username)
+        console.log('usernameExists')
+        console.log(usernameExists)
         if(usernameExists[0]){
             return {
-                "status" : "Username is already registered"
+                "error" : "Username is already registered"
             }
         }
         const emailExists = await db('users')
         .select('*')
         .where('email',user.email)
+        console.log('emailExists')
+        console.log(emailExists)
         if(emailExists[0]){
             return {
-                "error" : "Username is already registered"
+                "error" : "Email is already registered"
             }
         }
+        console.log(emailExists)
         const insertedRows = await db('users').insert(user)
+        console.log('insertedRows')
+        console.log(insertedRows)
         return insertedRows
     }
 
@@ -44,7 +52,7 @@ export default class UserModel{
         .where('username',user.username)
         if(usernameExists[0]){
             returnable =  {
-                "status" : "Username is already registered"
+                "error" : "Username is already registered"
             }
         }
         const search = await db('users')
@@ -62,13 +70,8 @@ export default class UserModel{
     }
     
     async update(user:any){
-        const usernameExists = await db('users')
-        .select('*')
-        .where('username',user.username)
-        if(usernameExists[0]){
-            return {
-                "status" : "Username is already registered"
-            }
+        const returnable = {
+            message: "message"
         }
         const emailExists = await db('users')
         .select('*')
@@ -78,52 +81,60 @@ export default class UserModel{
                 "error" : "Username is already registered"
             }
         }
-        const {password} = await db('users')
+        const users = await db('users')
         .select('password')
         .where('username',user.username);
-        return await db('users')
+        if(!users[0])return {message:"No user found"} 
+        await db('users')
         .where('username',user.username)
         .update({
             name:user.name,
             email:user.email,
             password:user.password,
-            last_password:password
-        });
+            last_password:users[0].password
+        })
+        .then((data: any)=>{
+            returnable.message = "User has been updated"
+        })
+        .catch((e: any)=>{
+            returnable.message = "Error when updating user"
+        })
     }
 
     async recoveryPassword(username:string){
         let random = randomBytes(20).toString('hex');
         random = digestHash(random)
         let returnable:any
-        const {password} = await db('users')
+        const user = await db('users')
         .select('password')
         .where('username',username);
+        if(!user[0]) return false;
         const updatedRows = db('users')
         .where('username',username)
         .update({
             password : random,
-            last_password : password
+            last_password : user[0].password
         })
         .then((data: any)=>{
-            console.log(data);returnable=true
+            returnable=true
         })
         .catch((e: any)=>{
-            console.log(e);
             returnable=false
         })
         return returnable
     }
 
-    async updatePassword(userId:number,newPassword:string){
+    async updatePassword(userId:string,newPassword:string){
         let returnable
-        const {password} = await db('users')
+        const user = await db('users')
         .select('password')
         .where('id',userId);
+        if(!user[0])return {message:"No user found"}
         const updatedRows = db('users')
         .where('id',userId)
         .update({
             password : newPassword,
-            last_password : password
+            last_password : user[0].password
         })
         .then((data: any)=>returnable={updated:true})
         .catch((e: any)=>{returnable={updated:false}})

@@ -1,5 +1,6 @@
 import db from "../database/connection";
-import moment from 'moment'
+import moment from "moment";
+
 interface authTokens {
   userId: string;
   authToken: any;
@@ -8,7 +9,7 @@ interface authTokens {
 
 interface responseObject {
   message: string;
-  token : any
+  token: any;
 }
 
 export default class SessionModel {
@@ -17,67 +18,72 @@ export default class SessionModel {
   */
 
   async create(userToken: authTokens) {
-    let response:responseObject = {
+    let response: responseObject = {
       message: "Session successfully authenticated",
-      token : {},
+      token: {},
     };
-    const insertedSession = await db("sessions").insert({
-      user_id:userToken.userId,
-      auth_token :userToken.authToken,
-      session_token:userToken.sessionToken
-    })
-    .then(data=>{
-      response.token = data
-    }).catch(e=>{
-      response.message = "Authentication error! Try again later"
-    })
+    const insertedSession = await db("sessions")
+      .insert({
+        user_id: userToken.userId,
+        auth_token: userToken.authToken,
+        session_token: userToken.sessionToken,
+      })
+      .then((data) => {
+        response.token = data;
+      })
+      .catch((e) => {
+        response.message = "Authentication error! Try again later";
+      });
     return response;
   }
 
   async renew(userToken: authTokens) {
-    let returnable
-    const getValues = await db('sessions')
-      .where('session_token',userToken.sessionToken)
-      .select("expires_at")
-    if(moment(getValues[0].expires_at) < moment()){
+    let returnable;
+    const getValues = await db("sessions")
+      .where("session_token", userToken.sessionToken)
+      .select("expires_at");
+    if (moment(getValues[0].expires_at) < moment()) {
       return {
-        message : "Token is no longer valid"
-      }
+        message: "Token is no longer valid",
+      };
     }
-    const updatedSession = await db('sessions')
-    .where('session_token',userToken.sessionToken)
-    .where('expires_at','>=',moment(getValues[0].expires_at).toISOString())
-    .update({
-      expires_at : moment(getValues[0].expires_at).add(5,'minutes').toISOString()
-    })
-    .then(data=>{
-      console.log(data)
-      returnable = {status:"updated"}
-    })
-    .catch(e=>{
-      returnable = {status:e}
-    })
-    return returnable
+    const updatedSession = await db("sessions")
+      .where("session_token", userToken.sessionToken)
+      .where("expires_at", ">=", moment(getValues[0].expires_at).toISOString())
+      .update({
+        expires_at: moment(getValues[0].expires_at)
+          .add(5, "minutes")
+          .toISOString(),
+      })
+      .then((data) => {
+        console.log(data);
+        returnable = { status: "updated" };
+      })
+      .catch((e) => {
+        returnable = { status: e };
+      });
+    return returnable;
   }
 
-  async verify(userToken: authTokens) {
+  async verify(sessionToken: any) {
     let response: responseObject = {
       message: "Session successfully authenticated",
-      token : {}
+      token: {},
     };
-    let is_valid: boolean
-    const getValues = await db('sessions')
-      .where('session_token',userToken.sessionToken)
-      .select("expires_at")
-    if(moment(getValues[0].expires_at) < moment()){
+    let is_valid: boolean;
+    const getValues = await db("sessions")
+      .where("session_token", sessionToken)
+      .select("expires_at");
+    if (moment(getValues[0].expires_at) > moment()) {
       return {
-        message : "Token is no longer valid"
-      }
-    }else{
-      return{
-        message : "Token is valid",
-        is_valid : true
-      }
+        message: "Token is valid",
+        is_valid: true,
+      };
+    } else {
+      return {
+        message: "Token is no longer valid",
+        is_valid: false,
+      };
     }
   }
 }

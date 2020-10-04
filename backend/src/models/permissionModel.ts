@@ -23,10 +23,13 @@ class PermissionModel{
         return returnable
     }
 
-    async verify(idUser:number,idPermission:number){
+    async verify(idUser:any,url:any){
         let returnable
+        const endpoint = await db('permissions')
+        .where('url',url)
+        .select('id')
         const result = await db('type_user_permisions')
-        .where("id_permission",idPermission)
+        .where("id_permission",endpoint[0].id)
         .join("users","users.user_type","type_user_permisions.tp_user")
         .where("users.id",idUser)
         .select('*')
