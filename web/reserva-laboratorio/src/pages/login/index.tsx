@@ -4,13 +4,17 @@ import logo from './assets/img/logo.png'
 import "./styles.css";
 function Login() {
   
-  const [login, loginState] = useState('');
+  const [username, usernameState] = useState('');
   const [password, passwordState] = useState('');
-  
+  const [error, errorState] = useState('');
+
+  function handleWithAlert(){
+    document.querySelector(".alert")?.classList.toggle('hidden')
+  }
 
   function handleUsernameChange(e:any){
     const value:string = e.target.value
-    loginState(value)
+    usernameState(value)
   }
 
   function handlePasswordChange(e:any){
@@ -18,15 +22,45 @@ function Login() {
     passwordState(value)
   }
 
-  function handleLoginForm(){
+  async function handleLoginForm(){
     const data = {
-      url : "localhost:3333/session",
+      url : "http://localhost:3333/session",
       options:{
         method : "post",
-        body : {login,password}
+        body : JSON.stringify({username,password}),
+        headers:{
+          'Content-Type' : 'application/json'
+        }
       }
     }
-    
+    await fetch(data.url,data.options)
+    .then(async (data)=>{
+      if(data.status === 200){
+        const {auth,token} = await data.json()
+        const{authToken,sessionToken,expires_at} = token 
+        console.log({auth,authToken,sessionToken,expires_at})
+        if(!auth||auth !== null)handleWithInsertLocalStorage({auth,authToken,sessionToken,expires_at})
+        window.location.replace('/home')
+      }else{
+        const {message} = await data.json()
+        errorState(message)
+        handleWithAlert()
+      }
+
+    })
+    .catch(e=>{
+      alert(e)
+    })
+  }
+
+  function handleWithInsertLocalStorage(json:any){
+    Object.keys(json).map(key=>{
+      if(key === 'auth'){
+        localStorage.setItem('userId',json[key])
+      }else{
+        localStorage.setItem(key,json[key])
+      }
+    })
   }
 
   return (
@@ -52,6 +86,9 @@ function Login() {
             className="form-control"
             onChange={handlePasswordChange}
           />
+        </div>
+        <div className="alert hidden">
+          {error}
         </div>
       </main>
       <footer>

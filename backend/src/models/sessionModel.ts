@@ -29,7 +29,7 @@ export default class SessionModel {
         session_token: userToken.sessionToken,
       })
       .then((data) => {
-        response.token = data;
+        response.token = userToken;
       })
       .catch((e) => {
         response.message = "Authentication error! Try again later";

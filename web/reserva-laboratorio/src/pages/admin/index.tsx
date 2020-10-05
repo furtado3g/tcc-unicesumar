@@ -4,11 +4,14 @@ import Panel from "../../components/panel";
 import PanelSidebar from "../../components/panel-sidebar";
 import PanelSidebarItem from "../../components/panel-sidebar-item";
 import Sidebar from "../../components/sidebar";
+import moment from 'moment'
 import "./styles.css";
 function Admin() {
   const sessionToken = localStorage.getItem("sessionToken")
   const expires_at = localStorage.getItem("expires_at")
   if(sessionToken == null) window.location.replace('/')
+  if(moment(expires_at) < moment()) window.location.replace('/')
+  
   return (
     <>
       <div className="container-admin">

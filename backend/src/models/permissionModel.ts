@@ -26,8 +26,13 @@ class PermissionModel{
     async verify(idUser:any,url:any){
         let returnable
         const endpoint = await db('permissions')
-        .where('url',url)
+        .where('endpoint',url)
         .select('id')
+        if(!endpoint[0]){
+            return {
+                error : "Endpoint not registered"
+            }
+        }
         const result = await db('type_user_permisions')
         .where("id_permission",endpoint[0].id)
         .join("users","users.user_type","type_user_permisions.tp_user")

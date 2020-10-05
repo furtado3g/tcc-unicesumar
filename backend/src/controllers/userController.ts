@@ -21,6 +21,7 @@ export default class userController {
   async validate(req: Request, res: Response) {
     const {username} = req.body;
     let {password} = req.body;
+    console.log(req.body)
     if(!verifier.verifyNullIncommingFields({username,password})) return res.status(404).json({"message":"Required field not informated"});
     password = digestHash(password)
     const sessionc = new sessionController();

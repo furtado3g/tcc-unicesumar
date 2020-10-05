@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Panel from "../../components/panel";
 import PanelSidebar from "../../components/panel-sidebar";
 import PanelSidebarItem from "../../components/panel-sidebar-item";
 import Sidebar from "../../components/sidebar";
+import moment from 'moment'
+import toastr from 'toastr'
 import "./styles.css";
 function NewUser() {
+  const sessionToken = localStorage.getItem("sessionToken")
+  const expires_at = localStorage.getItem("expires_at")
+  
   const [loggedUsername, loggedUsernameState] = useState("");
   const [name, nameState] = useState("");
   const [username, usernameState] = useState("");
@@ -38,25 +43,64 @@ function NewUser() {
       });
   }
 
-  function handleWithSubmit() {
+  async function handleWithSubmit() {
+    const token:any  = localStorage.getItem("sessionToken")
     const data = {
       url: "http://localhost:3333/user/",
       options: {
         method: "post",
         body: JSON.stringify({
+          name,
           username,
           password,
           email,
           userType,
         }),
+        headers: {
+          authorization: token
+        }
       },
     };
     if (password !== redundacy) {
       alert("Senhas Não Coincidem");
     }
+    await fetch(data.url, data.options)
+      .then(async (data) => {
+        const { message, error } = await data.json()
+        if (data.status >= 200 && data.status < 300) {
+          toastr.success(message)
+        } else {
+          toastr.error(error || message)
+        }
+      })
+      .catch(e => {
+        console.log(e)
+      })
   }
-
-  useState(handleWithPageLoad());
+  
+  useEffect(()=>{
+    if (sessionToken == null) {
+      toastr.options = {
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "showDuration": 5000,
+        "timeOut": 5000,
+      }
+      toastr.error("É necessario estar logado Para obter acesso ao Sistema")
+      window.location.replace('/')
+    }
+    if (moment(expires_at) < moment()) {
+      toastr.options = {
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "progressBar": false,
+        "showDuration": 5000,
+        "timeOut": 5000,
+      }
+      toastr.warning("Sua Sessão expirou")
+      window.location.replace('/')
+    }
+  },[])
 
   return (
     <>
