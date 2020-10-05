@@ -10,7 +10,6 @@ import "./styles.css";
 function NewUser() {
   const sessionToken = localStorage.getItem("sessionToken")
   const expires_at = localStorage.getItem("expires_at")
-  
   const [loggedUsername, loggedUsernameState] = useState("");
   const [name, nameState] = useState("");
   const [username, usernameState] = useState("");

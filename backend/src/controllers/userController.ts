@@ -50,6 +50,7 @@ export default class userController {
     if(!logged.is_valid)return res.status(404).json({error:"this session is no longer valid"});
     //checks if the user has permission to access the endpoint
     const grant:any = await permission.verify(user_id,path);
+    console.log(grant)
     if(!grant.granted){
       return res.status(404).json({error:"you don't have permission to access this route"})
     }

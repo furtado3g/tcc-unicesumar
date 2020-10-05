@@ -43,10 +43,10 @@ function ForgotPassword(){
                 </Link>
             </header>
             <main>
-                <label htmlFor="username">Informe Seu Login</label>
+                <label htmlFor="email">Informe Seu Email</label>
                 <input 
                     type="text"
-                    id="username"
+                    id="email"
                     onChange={e=>usernameState(e.target.value)}
                 />
             </main>

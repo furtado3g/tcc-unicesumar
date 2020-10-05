@@ -54,7 +54,7 @@ function Login() {
   }
 
   function handleWithInsertLocalStorage(json:any){
-    Object.keys(json).map(key=>{
+    Object.keys(json).map((key)=>{
       if(key === 'auth'){
         localStorage.setItem('userId',json[key])
       }else{

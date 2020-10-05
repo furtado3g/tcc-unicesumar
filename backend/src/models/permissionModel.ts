@@ -33,10 +33,17 @@ class PermissionModel{
                 error : "Endpoint not registered"
             }
         }
+        const user = await db('users')
+        .where('`users`.`id`',idUser)
+        .select('*')
+        if(!endpoint[0]){
+            return{
+                "error" : "User don't exists"
+            }
+        }
         const result = await db('type_user_permisions')
         .where("id_permission",endpoint[0].id)
-        .join("users","users.user_type","type_user_permisions.tp_user")
-        .where("users.id",idUser)
+        .where('tp_user',user[0].user_type)
         .select('*')
         .then(data=>{
             returnable =  {
@@ -46,6 +53,7 @@ class PermissionModel{
 
         })
         .catch(e=>{
+            console.log(e)
             returnable = {
                 granted: false
             }
