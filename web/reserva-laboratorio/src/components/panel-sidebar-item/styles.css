@@ -1,0 +1,19 @@
+.panel-sidebar-item{
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    font-family: sans-serif;
+    border-bottom:1px solid #666666;
+    background-color: #6d05ce;
+    color: whitesmoke;
+}
+
+.panel-sidebar-item i {
+    margin: 0.5rem;
+}
+
+a{
+    text-decoration: none;
+    cursor: pointer;
+}

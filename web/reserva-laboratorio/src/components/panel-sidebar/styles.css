@@ -1,0 +1,5 @@
+.panel-sidebar{
+    grid-area: panel-sidebar;
+    height: 100% !important;
+    border-right: 1px solid #666666;
+}
