@@ -39,7 +39,7 @@ header p{
 .form-group label{
     font:300 2rem sans-serif;
     align-self: flex-start;
-    color:#7a4dee;
+    color:#003bdf;
     margin-left: 2.4rem ;
 }
 
@@ -60,7 +60,7 @@ header p{
 }
 
 .form-control:focus{
-    border: 2px solid #7a4dee;
+    border: 2px solid #003bdf;
 }
 
 footer {
@@ -80,7 +80,7 @@ footer {
 }
 
 .btn-login{
-    background-color: #7a4dee;
+    background-color: #003bdf;
     color:whitesmoke;
     transition: 0.5s;
 }
@@ -90,7 +90,7 @@ footer {
 }
 
 .btn-forgot{
-    background-color:blueviolet;
+    background-color:#022994;
     margin-left:5px;
     margin-top: 10px;
     color: whitesmoke;
@@ -107,9 +107,9 @@ footer {
     display:flex;
     align-items: center;
     justify-content: center;
-    border: 3px solid blueviolet;
+    border: 3px solid #022994;
     border-radius: 10px;
-    color:blueviolet;
+    color:#022994;
     width:90%;
     margin:1rem !important;
 }

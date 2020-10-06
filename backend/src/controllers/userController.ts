@@ -44,21 +44,23 @@ export default class userController {
   */
   async create(req:Request,res:Response){
     const {path} = req.route
-    const {user_id,authorization} = req.headers
+    const {userid,authorization} = req.headers
+    console.log(userid)
     //Checks whether the session is valid
     const logged = await session.verify(authorization)
     if(!logged.is_valid)return res.status(404).json({error:"this session is no longer valid"});
     //checks if the user has permission to access the endpoint
-    const grant:any = await permission.verify(user_id,path);
-    console.log(grant)
+    const grant:any = await permission.verify(userid,path);
     if(!grant.granted){
       return res.status(404).json({error:"you don't have permission to access this route"})
     }
     const {name,username,email,user_type} = req.body
     let {password} = req.body
+
+    console.log(req.body)
     // check if any mandatory parameters do not exist
     const verifier = new verify();
-    if(!verifier.verifyNullIncommingFields({name,username,email,password})) return res.status(404).json({"message":"Required field not informated"});
+    if(!verifier.verifyNullIncommingFields({name,username,email,password})) return res.status(404).json({"error":"Required field not informated"});
     password = digestHash(password)
     const last_password = password
     const userModel = new UserModel()
@@ -83,7 +85,7 @@ export default class userController {
   async update(req:Request,res:Response){
     const {name,username,email,user_type} = req.body
     const userModel = new UserModel()
-    const {user_id,authorization} = req.headers
+    const {authorization} = req.headers
     //Checks whether the session is valid
     const logged = await session.verify(authorization)
     if(!logged.is_valid)return res.status(404).json({error:"this session is no longer valid"});

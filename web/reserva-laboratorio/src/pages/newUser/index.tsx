@@ -17,33 +17,15 @@ function NewUser() {
   const [redundacy, redundacyState] = useState("");
   const [email, emailState] = useState("");
   const [userType, userTypeState] = useState("");
+  const [response, responseTypeState] = useState("");
 
-  async function handleWithPageLoad() {
-    const requestData = {
-      url: "http://localhost:3333/user/" + localStorage.getItem("user_id"),
-      options: {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      },
-    };
-    await fetch(requestData.url, requestData.options)
-      .then((data) => {
-        return data.json();
-      })
-      .then((data: any) => {
-        const { name } = data;
-        loggedUsernameState(name);
-      })
-      .catch((e) => {
-        loggedUsernameState("Admin");
-      });
+  async function handleWithAlerts(){
+    document.querySelector(".alert")?.classList.toggle('hidden')
   }
 
   async function handleWithSubmit() {
     const token:any  = localStorage.getItem("sessionToken")
+    const user :any  = localStorage.getItem("userId")
     const data = {
       url: "http://localhost:3333/user/",
       options: {
@@ -56,20 +38,30 @@ function NewUser() {
           userType,
         }),
         headers: {
-          authorization: token
+          'Content-Type' : 'application/json',
+          authorization: token,
+          userId : user
         }
       },
     };
     if (password !== redundacy) {
-      alert("Senhas Não Coincidem");
+      return responseTypeState("Senhas Não Coincidem")
     }
     await fetch(data.url, data.options)
       .then(async (data) => {
         const { message, error } = await data.json()
         if (data.status >= 200 && data.status < 300) {
-          toastr.success(message)
+          handleWithAlerts()
+          responseTypeState(message)
+          setTimeout(()=>{
+            window.location.replace('/admin')
+          },5000)
         } else {
-          toastr.error(error || message)
+          handleWithAlerts()
+          responseTypeState(error || message)
+          setTimeout(()=>{
+            handleWithAlerts()
+          },5000)
         }
       })
       .catch(e => {
@@ -79,24 +71,11 @@ function NewUser() {
   
   useEffect(()=>{
     if (sessionToken == null) {
-      toastr.options = {
-        "positionClass": "toast-top-right",
-        "preventDuplicates": false,
-        "showDuration": 5000,
-        "timeOut": 5000,
-      }
-      toastr.error("É necessario estar logado Para obter acesso ao Sistema")
+      alert("É necessario estar logado Para obter acesso ao Sistema")
       window.location.replace('/')
     }
     if (moment(expires_at) < moment()) {
-      toastr.options = {
-        "positionClass": "toast-top-right",
-        "preventDuplicates": false,
-        "progressBar": false,
-        "showDuration": 5000,
-        "timeOut": 5000,
-      }
-      toastr.warning("Sua Sessão expirou")
+      alert("Sua Sessão expirou")
       window.location.replace('/')
     }
   },[])
@@ -179,6 +158,13 @@ function NewUser() {
                   <option value="2">Professor</option>
                   <option value="3">Laboratorista</option>
                 </select>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-12">
+                <div className="alert hidden">
+                  {response}
+                </div>
               </div>
             </div>
             <div className="row">

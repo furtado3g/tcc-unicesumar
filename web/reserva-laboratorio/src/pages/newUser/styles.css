@@ -89,3 +89,8 @@ select {
 .btn-danger:hover {
   opacity: 0.75;
 }
+
+
+.hidden{
+  display : none;
+}

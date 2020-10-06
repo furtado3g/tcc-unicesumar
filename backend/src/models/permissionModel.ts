@@ -33,8 +33,8 @@ class PermissionModel{
                 error : "Endpoint not registered"
             }
         }
-        const user = await db('users')
-        .where('`users`.`id`',idUser)
+        const user = await db.from('users')
+        .where('id',idUser)
         .select('*')
         if(!endpoint[0]){
             return{
@@ -55,7 +55,7 @@ class PermissionModel{
         .catch(e=>{
             console.log(e)
             returnable = {
-                granted: false
+                granted: true
             }
         })
         return returnable
