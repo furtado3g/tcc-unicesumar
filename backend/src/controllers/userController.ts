@@ -8,6 +8,8 @@ import sessionModel from '../models/sessionModel'
 const verifier = new verify();
 const permission = new PermissionModel();
 const session = new sessionModel();
+const userModel = new UserModel()
+
 export default class userController {
 
   /*
@@ -47,7 +49,7 @@ export default class userController {
    // check if any mandatory parameters do not exist
    const {name,username,email,user_type} = req.body
    const verifier = new verify();
-   if(!verifier.verifyNullIncommingFields({name,username,email,password})) return res.status(404).json({"error":"Required field not informated"});
+   if(!verifier.verifyNullIncommingFields({name,username,email,password,userid,authorization})) return res.status(404).json({"error":"Required field not informated"});
     //Checks whether the session is valid
     const logged = await session.verify(authorization)
     if(!logged.is_valid)return res.status(404).json({error:"this session is no longer valid"});
@@ -79,9 +81,8 @@ export default class userController {
 
   async update(req:Request,res:Response){
     const {name,username,email,user_type} = req.body
-    const userModel = new UserModel()
     const {authorization} = req.headers
-    if(!verifier.verifyNullIncommingFields({name,username,email})) return res.status(404).json({"error":"Required field"});
+    if(!verifier.verifyNullIncommingFields({name,username,email,authorization})) return res.status(404).json({"error":"Required field"});
     //Checks whether the session is valid
     const logged = await session.verify(authorization)
     if(!logged.is_valid) return res.status(404).json({error:"this session is no longer valid"});

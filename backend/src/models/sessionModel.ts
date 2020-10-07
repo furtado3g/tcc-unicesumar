@@ -66,24 +66,35 @@ export default class SessionModel {
   }
 
   async verify(sessionToken: any) {
-    let response: responseObject = {
-      message: "Session successfully authenticated",
-      token: {},
+    let returnable  = {
+      message: "Token is no longer valid",
+      is_valid: false,
     };
     let is_valid: boolean;
-    const getValues = await db("sessions")
-      .where("session_token", sessionToken)
-      .select("expires_at");
-    if (moment(getValues[0].expires_at) > moment()) {
-      return {
-        message: "Token is valid",
-        is_valid: true,
-      };
-    } else {
-      return {
-        message: "Token is no longer valid",
+    await db("sessions")
+    .where("session_token", sessionToken)
+    .select("expires_at")
+    .then(data=>{
+      if (moment(data[0].expires_at) > moment()) {
+        returnable =  {
+          message: "Token is valid",
+          is_valid: true,
+        };
+      } else {
+        returnable = {
+          message: "Token is no longer valid",
+          is_valid: false,
+        };
+      }
+    })
+    .catch(e=>{
+      returnable = {
+        message: "Error while transact information",
         is_valid: false,
       };
-    }
+      console.log(e)
+      
+    })
+    return returnable
   }
 }

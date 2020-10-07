@@ -25,14 +25,15 @@ class PermissionController{
         const {path} = req.route
         const {user_id,authorization} = req.headers
         const {idUser,url} = req.body
+        console.log({idUser,url,user_id,authorization})
         if(!verifier.verifyNullIncommingFields({url,idUser,user_id,authorization})) return res.status(404).json({"message":"mandatory field not informed"});
         //Checks whether the session is valid
         const logged = await session.verify(authorization)
-        if(!logged.is_valid)return res.status(404).json({error:"this session is no longer valid"});
+        if(!logged.is_valid)return res.status(404).json({error:logged.message});
         //checks if the user has permission to access the endpoint
         const grant:any = await model.verify(user_id,path);
         if(!grant.granted){
-        return res.status(404).json({error:"you don't have permission to access this route"})
+            return res.status(404).json({error:"you don't have permission to access this route"})
         }
         return res.json(await model.assign(idUser,url))
     }
