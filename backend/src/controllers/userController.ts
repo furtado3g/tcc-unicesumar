@@ -8,7 +8,6 @@ import sessionModel from '../models/sessionModel'
 const verifier = new verify();
 const permission = new PermissionModel();
 const session = new sessionModel();
-
 export default class userController {
 
   /*
@@ -21,7 +20,6 @@ export default class userController {
   async validate(req: Request, res: Response) {
     const {username} = req.body;
     let {password} = req.body;
-    console.log(req.body)
     if(!verifier.verifyNullIncommingFields({username,password})) return res.status(404).json({"message":"Required field not informated"});
     password = digestHash(password)
     const sessionc = new sessionController();
@@ -42,10 +40,14 @@ export default class userController {
     Sends the request to the database
     Persists the data using the model
   */
-  async create(req:Request,res:Response){
-    const {path} = req.route
-    const {userid,authorization} = req.headers
-    console.log(userid)
+ async create(req:Request,res:Response){
+   const {path} = req.route
+   const {userid,authorization} = req.headers
+   let {password} = req.body
+   // check if any mandatory parameters do not exist
+   const {name,username,email,user_type} = req.body
+   const verifier = new verify();
+   if(!verifier.verifyNullIncommingFields({name,username,email,password})) return res.status(404).json({"error":"Required field not informated"});
     //Checks whether the session is valid
     const logged = await session.verify(authorization)
     if(!logged.is_valid)return res.status(404).json({error:"this session is no longer valid"});
@@ -54,13 +56,6 @@ export default class userController {
     if(!grant.granted){
       return res.status(404).json({error:"you don't have permission to access this route"})
     }
-    const {name,username,email,user_type} = req.body
-    let {password} = req.body
-
-    console.log(req.body)
-    // check if any mandatory parameters do not exist
-    const verifier = new verify();
-    if(!verifier.verifyNullIncommingFields({name,username,email,password})) return res.status(404).json({"error":"Required field not informated"});
     password = digestHash(password)
     const last_password = password
     const userModel = new UserModel()
@@ -86,12 +81,11 @@ export default class userController {
     const {name,username,email,user_type} = req.body
     const userModel = new UserModel()
     const {authorization} = req.headers
+    if(!verifier.verifyNullIncommingFields({name,username,email})) return res.status(404).json({"error":"Required field"});
     //Checks whether the session is valid
     const logged = await session.verify(authorization)
-    if(!logged.is_valid)return res.status(404).json({error:"this session is no longer valid"});
+    if(!logged.is_valid) return res.status(404).json({error:"this session is no longer valid"});
     // check if any mandatory parameters do not exist
-    const verifier = new verify();
-    if(!verifier.verifyNullIncommingFields({name,username,email})) return res.status(404).json({"error":"Required field"});
     const created = userModel.update({
       name,
       username,
@@ -107,7 +101,6 @@ export default class userController {
 
   async recoveryPassword(req:Request,res:Response){
     const {email} = req.body
-    const verifier = new verify();
     if(!verifier.verifyNullIncommingFields({email})) return res.status(404).json({"message":"Required field"});
     const userModel = new UserModel()
     const recovered = await userModel.recoveryPassword(email)
@@ -121,8 +114,7 @@ export default class userController {
   async updatePassword(req:Request,res:Response){
     const {userId,password} = req.body
     const {authorization} = req.headers
-    const verifier = new verify();
-    if(!verifier.verifyNullIncommingFields({userId,password})) return res.status(404).json({"message":"Required field"});
+    if(!verifier.verifyNullIncommingFields({userId,password,authorization})) return res.status(404).json({"message":"Required field"});
     const userModel = new UserModel()
     //Checks whether the session is valid
     const logged = await session.verify(authorization)

@@ -1,8 +1,11 @@
 import {json, Request,Response} from'express';
 import PermissionModel from '../models/permissionModel';
 import verify from '../util/verify'
+import sessionModel from '../models/sessionModel'
 const model = new PermissionModel()
 const verifier = new verify();
+const session = new sessionModel();
+
 class PermissionController{
 
     async newEndpoint(req:Request,res:Response){
@@ -19,14 +22,34 @@ class PermissionController{
     }
 
     async assignPermission(req:Request,res:Response){
+        const {path} = req.route
+        const {user_id,authorization} = req.headers
         const {idUser,url} = req.body
-        if(!verifier.verifyNullIncommingFields({url,idUser})) return res.status(404).json({"message":"mandatory field not informed"});
+        if(!verifier.verifyNullIncommingFields({url,idUser,user_id,authorization})) return res.status(404).json({"message":"mandatory field not informed"});
+        //Checks whether the session is valid
+        const logged = await session.verify(authorization)
+        if(!logged.is_valid)return res.status(404).json({error:"this session is no longer valid"});
+        //checks if the user has permission to access the endpoint
+        const grant:any = await model.verify(user_id,path);
+        if(!grant.granted){
+        return res.status(404).json({error:"you don't have permission to access this route"})
+        }
         return res.json(await model.assign(idUser,url))
     }
     
     async listUserPermissions(req:Request,res:Response){
+        const {path} = req.route
+        const {user_id,authorization} = req.headers
         const {idUser} = req.params
-        if(!verifier.verifyNullIncommingFields({idUser})) return res.status(404).json({"message":"mandatory field not informed"});
+        if(!verifier.verifyNullIncommingFields({idUser,user_id,authorization})) return res.status(404).json({"message":"mandatory field not informed"});
+        //Checks whether the session is valid
+        const logged = await session.verify(authorization)
+        if(!logged.is_valid)return res.status(404).json({error:"this session is no longer valid"});
+        //checks if the user has permission to access the endpoint
+        const grant:any = await model.verify(user_id,path);
+        if(!grant.granted){
+        return res.status(404).json({error:"you don't have permission to access this route"})
+        }
         return res.json(await model.listUserPermissions(idUser))
     }
     

@@ -7,6 +7,7 @@ import verify from "../util/verify";
 const verifier = new verify();
 const permission = new PermissionModel();
 const session = new SessionModel();
+const reserveModel = new ReserveModel();
 
 interface reserveInterface {
   user_id: number;
@@ -75,18 +76,6 @@ class ReserveController {
   async update(req: Request, res: Response) {
     const { path } = req.route;
     const { user_id, authorization } = req.headers;
-    //Checks whether the session is valid
-    const logged = await session.verify(authorization);
-    if (!logged.is_valid)
-      return res.status(404).json({ error: "this session is no longer valid" });
-    //checks if the user has permission to access the endpoint
-    const grant: any = await permission.verify(user_id, path);
-    if (!grant.granted) {
-      return res
-        .status(404)
-        .json({ error: "you don't have permission to access this route" });
-    }
-    const reserveModel = new ReserveModel();
     const { reserveId } = req.params;
     const {
       userId,
@@ -109,9 +98,22 @@ class ReserveController {
         classes,
         discipline,
         comments,
+        user_id,
+        authorization,
       })
     )
       return res.status(404).json({ message: "Required field not informated" });
+    //Checks whether the session is valid
+    const logged = await session.verify(authorization);
+    if (!logged.is_valid)
+      return res.status(404).json({ error: "this session is no longer valid" });
+    //checks if the user has permission to access the endpoint
+    const grant: any = await permission.verify(user_id, path);
+    if (!grant.granted) {
+      return res
+        .status(404)
+        .json({ error: "you don't have permission to access this route" });
+    }
     return res.json(
       await reserveModel.update(
         {
@@ -132,6 +134,11 @@ class ReserveController {
   async delete(req: Request, res: Response) {
     const { path } = req.route;
     const { user_id, authorization } = req.headers;
+    const { reserveId } = req.params;
+    if (
+      !verifier.verifyNullIncommingFields({ reserveId, user_id, authorization })
+    )
+      return res.status(404).json({ message: "Required field not informated" });
     //Checks whether the session is valid
     const logged = await session.verify(authorization);
     if (!logged.is_valid)
@@ -143,16 +150,14 @@ class ReserveController {
         .status(404)
         .json({ error: "you don't have permission to access this route" });
     }
-    const reserveModel = new ReserveModel();
-    const { reserveId } = req.params;
-    if (!verifier.verifyNullIncommingFields({ reserveId }))
-      return res.status(404).json({ message: "Required field not informated" });
     return res.json(await reserveModel.delete(Number(reserveId)));
   }
 
   async list(req: Request, res: Response) {
     const { path } = req.route;
     const { user_id, authorization } = req.headers;
+    if (!verifier.verifyNullIncommingFields({ user_id, authorization }))
+      return res.status(404).json({ message: "Required field not informated" });
     //Checks whether the session is valid
     const logged = await session.verify(authorization);
     if (!logged.is_valid)
@@ -164,7 +169,6 @@ class ReserveController {
         .status(404)
         .json({ error: "you don't have permission to access this route" });
     }
-    const reserveModel = new ReserveModel();
     const { page, perPage } = req.query;
     return res.json(await reserveModel.list(Number(page), Number(perPage)));
   }
@@ -172,6 +176,11 @@ class ReserveController {
   async detail(req: Request, res: Response) {
     const { path } = req.route;
     const { user_id, authorization } = req.headers;
+    const { reserveId } = req.params;
+    if (
+      !verifier.verifyNullIncommingFields({ reserveId, user_id, authorization })
+    )
+      return res.status(404).json({ message: "Required field not informated" });
     //Checks whether the session is valid
     const logged = await session.verify(authorization);
     if (!logged.is_valid)
@@ -183,10 +192,6 @@ class ReserveController {
         .status(404)
         .json({ error: "you don't have permission to access this route" });
     }
-    const reserveModel = new ReserveModel();
-    const { reserveId } = req.params;
-    if (!verifier.verifyNullIncommingFields({ reserveId }))
-      return res.status(404).json({ message: "Required field not informated" });
     return res.json(await reserveModel.detail(reserveId));
   }
 }
