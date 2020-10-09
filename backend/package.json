@@ -14,8 +14,11 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
+    "@types/body-parser": "^1.19.0",
     "@types/cors": "^2.8.7",
     "@types/jest": "^26.0.14",
+    "@types/nodemailer": "^6.4.0",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "dotenv-safe": "^8.2.0",
@@ -24,12 +27,14 @@
     "knex": "^0.21.4",
     "knex-paginate": "^1.2.3",
     "moment": "^2.29.0",
+    "nodemailer": "^6.4.13",
     "pg": "^8.3.0",
     "sqlite3": "^5.0.0",
     "swagger-ui-express": "^4.1.4"
   },
   "scripts": {
     "start": "tsnd --transpile-only --ignore-watch node_modules --respawn src/server.ts",
+    "startMail": "tsnd --transpile-only --ignore-watch node_modules --respawn src/maildummytest.ts",
     "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
     "knex:migrate:rollback": "knex --knexfile knexfile.ts migrate:rollback",
     "test": "jest"

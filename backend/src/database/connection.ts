@@ -1,5 +1,5 @@
 import Knex from "knex";
-import * as dbInfo from '../../db.json'
+import * as dbInfo from '../configs/db.json'
 
 const db = Knex({
   client: "pg",

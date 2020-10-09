@@ -1,5 +1,5 @@
 import path from "path";
-import * as dbInfo from './db.json'
+import * as dbInfo from './src/configs/db.json'
 module.exports = {
   client: "pg",
   version: "7.2",

@@ -1,6 +1,8 @@
 import { randomBytes } from "crypto";
 import db from "../database/connection";
 import digestHash from '../util/digestHash'
+import  Mail from '../util/mailer'
+import fs from 'fs'
 
 interface userInterface{
     name:string;
@@ -101,25 +103,29 @@ export default class UserModel{
         })
     }
 
-    async recoveryPassword(username:string){
+    async recoveryPassword(email:string){
         let random = randomBytes(20).toString('hex');
-        random = digestHash(random)
+        let digestedRandom = digestHash(random)
         let returnable:any
         const user = await db('users')
-        .select('password')
-        .where('username',username);
+        .select('password','id')
+        .where('email',email);
         if(!user[0]) return false;
-        const updatedRows = db('users')
-        .where('username',username)
+        Mail.to = email
+        Mail.subject = "Email de recuperação de senha" 
+        Mail.message = "Sua senha foi recuperada por meio do processo de recuperar minha senha <br> Sua nova senha é : "+random
+        Mail.sendMail()
+        const updatedRows = await db('users')
+        .where('id',user[0].id)
         .update({
-            password : random,
+            password : digestedRandom,
             last_password : user[0].password
         })
         .then((data: any)=>{
-            returnable=true
+            returnable = true
         })
         .catch((e: any)=>{
-            returnable=false
+            returnable = false
         })
         return returnable
     }
