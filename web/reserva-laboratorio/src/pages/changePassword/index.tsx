@@ -1,4 +1,5 @@
 import React, { useState,useEffect } from 'react';
+import {Link} from "react-router-dom";
 import moment from 'moment';
 import Panel from '../../components/panel';
 import Sidebar from '../../components/sidebar'
@@ -26,10 +27,10 @@ function ChangePassword(props: any) {
     async function handleWithSubmit() {
         const token: any = localStorage.getItem("sessionToken")
         const user: any = localStorage.getItem("userId")
-        if (actualPassword == '' || newPassword == '' || redundacy == '') 
+        if (actualPassword === '' || newPassword === '' || redundacy === '') 
             return alert("Campos Obrigatórios estão em branco")
-        if (newPassword != redundacy) return alert("As senhas não coincidem")
-        if (actualPassword == newPassword) return alert("A nova senha não pode ser identica a atual")
+        if (newPassword !== redundacy) return alert("As senhas não coincidem")
+        if (actualPassword === newPassword) return alert("A nova senha não pode ser identica a atual")
         const data = {
             url: "http://localhost:3333/user/changePassword",
             options: {
@@ -60,9 +61,17 @@ function ChangePassword(props: any) {
             <Sidebar />
             <Panel title="Mudar Senha">
                 <PanelSidebar>
-                    <PanelSidebarItem>
-                        <i className="fas fa-user-plus"></i>
-                    Mudar Senha
+                    <PanelSidebarItem id="active">
+                        <Link to="/changePassword">
+                            <i className="fas fa-key"></i>
+                            Mudar Senha
+                        </Link>
+                    </PanelSidebarItem>
+                    <PanelSidebarItem >
+                        <Link to="/editMyInfo" >
+                            <i className="fas fa-file-alt"></i>
+                            Editar informações
+                        </Link>
                     </PanelSidebarItem>
                 </PanelSidebar>
                 <div className="panel-content">

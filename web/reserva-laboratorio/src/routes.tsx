@@ -6,7 +6,8 @@ import Home from "./pages/home"
 import Admin from './pages/admin'
 import NewUser from './pages/newUser'
 import ChangePassword from './pages/changePassword'
-function Routes (){
+import EditMyInfo from './pages/editMyInfo'
+function Routes (props: any){
     return(
         <BrowserRouter>
             <Switch>
@@ -16,6 +17,7 @@ function Routes (){
                 <Route exact={true} path="/admin" component={Admin} />
                 <Route exact={true} path="/user/add" component={NewUser} />
                 <Route exact={true} path="/changePassword" component={ChangePassword} />
+                <Route exact={true} path="/editMyInfo" component={EditMyInfo} />
             </Switch>
         </BrowserRouter>
     )
