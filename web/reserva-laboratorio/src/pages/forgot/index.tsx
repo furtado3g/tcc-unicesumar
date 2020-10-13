@@ -3,13 +3,15 @@ import { Link } from "react-router-dom";
 import './styles.css'
 function ForgotPassword(){
 
-    const [username,usernameState] = useState('')
+    const [email,emailState] = useState('')
 
     function showMessage(){
         const element:any = document.querySelector("#critica")
-        const eventElement:any = document.querySelector('#username')
-        element.classList.toggle('hide')
-        eventElement.classList.toggle('hide')
+        const eventElement:any = document.querySelector('main')
+        const btnElement:any = document.querySelector('.btn')
+        element?.classList.toggle('hide')
+        eventElement?.classList.toggle('hide')
+        btnElement?.classList.toggle('hide')
     }
 
     async function handleSendMail(event:any){
@@ -21,17 +23,14 @@ function ForgotPassword(){
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body : JSON.stringify({"username":username})
+                body : JSON.stringify({"email":email})
             }
         }
         await fetch(data.url,data.options)
-        .then(response =>{
-            const rjson:any= response.json()
+        .then(async response =>{
+            const rjson:any= await response.json()
             alert(JSON.stringify(rjson))
             showMessage()
-        })
-        .catch(e=>{
-            alert(e)
         })
     }
 
@@ -47,17 +46,18 @@ function ForgotPassword(){
                 <input 
                     type="text"
                     id="email"
-                    onChange={e=>usernameState(e.target.value)}
+                    onChange={e=>emailState(e.target.value)}
                 />
             </main>
             <footer>
                 <div id="critica" className="hide">
-                    Enviamos um email contendo uma senha provisoria,
-                    em seu proximo login efetue a troca de sua senha, 
-                    a validade de suasenha provisória é de 1 login
+                    Enviamos um email contendo uma senha provisoria,<br/>
+                    em seu proximo login efetue a troca de sua senha<br/>
+                    Para Sua propria segurança
                 </div>
                 <button
                     type="button"
+                    className="btn"
                     onClick={e => handleSendMail(e)}
                 >
                     Recuperar Senha

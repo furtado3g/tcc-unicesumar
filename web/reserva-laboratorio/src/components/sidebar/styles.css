@@ -45,6 +45,10 @@
     max-width: 20px;
     margin: 0.5rem;
 }
+.sidebar-item i{
+    max-width: 20px;
+    margin: 0.5rem;
+}
 .sidebar-logo{
     display : flex;
     align-items: center;

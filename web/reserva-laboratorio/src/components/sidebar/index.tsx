@@ -14,6 +14,10 @@ function Menu (){
         document.querySelector(".sidebar")?.classList.toggle('only-logo')
         document.querySelectorAll(".icon-text")?.forEach(element=>element.classList.toggle('hidden'))
     }
+
+    function handleWithlogout(){
+        localStorage.clear()
+    }
     return (
         <>
             <div className="sidebar only-logo">
@@ -45,7 +49,13 @@ function Menu (){
                     </Link>
                 </div>
                 <div className="sidebar-item">
-                    <Link  to="/">
+                    <Link  to="/changePassword">
+                        <i className="fas fa-fingerprint"></i>
+                        <h4 className="icon-text hidden">Mudar Senha</h4>
+                    </Link>
+                </div>
+                <div className="sidebar-item">
+                    <Link  to="/" onClick={handleWithlogout}>
                         <img src={ArrowBackIcon} alt="Icon for admin"/>
                         <h4 className="icon-text hidden">Sair</h4>
                     </Link>

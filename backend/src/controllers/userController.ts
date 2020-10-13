@@ -32,7 +32,7 @@ export default class userController {
       console.log(token)
       return res.json({ auth: verify.user['id'], token: token });
     }else{
-      return res.json({message:"Username or password is invalid"})
+      return res.status(404).json({message:"Username or password is invalid"})
     }
   }
 
@@ -113,19 +113,22 @@ export default class userController {
   }
 
   async updatePassword(req:Request,res:Response){
-    const {userId,password} = req.body
-    const {authorization} = req.headers
-    if(!verifier.verifyNullIncommingFields({userId,password,authorization})) return res.status(404).json({"message":"Required field"});
+    let {password,actualPassword} = req.body
+    password = digestHash(password)
+    actualPassword = digestHash(actualPassword)
+    const {userid,authorization} = req.headers
+    if(!verifier.verifyNullIncommingFields({userid,password,authorization})) return res.status(404).json({"message":"Required field"});
     const userModel = new UserModel()
     //Checks whether the session is valid
     const logged = await session.verify(authorization)
     if(!logged.is_valid)return res.status(404).json({error:"this session is no longer valid"});
-    // check if any mandatory parameters do not exist
-    const updated:any = await userModel.updatePassword(userId,password)
+    const checkActual = await userModel.checkAtualPassword(userid,actualPassword)
+    if(!checkActual) return res.status(404).json({Error:"Previous password does not match"})
+    const updated:any = await userModel.updatePassword(userid,password)
     if(updated.updated){
       return res.json({"message":"Password updated successfully"})
     }else{
-      return res.json({"Erro":"Error updating password"}).status(404)
+      return res.json({"Error":"Error updating password"}).status(404)
     }
   }
 

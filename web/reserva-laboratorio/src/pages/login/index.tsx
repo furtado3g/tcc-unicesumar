@@ -36,9 +36,8 @@ function Login() {
     await fetch(data.url,data.options)
     .then(async (data)=>{
       if(data.status === 200){
-        const {auth,token} = await data.json()
+        const {message,auth,token} = await data.json()
         const{authToken,sessionToken,expires_at} = token 
-        console.log({auth,authToken,sessionToken,expires_at})
         if(!auth||auth !== null)handleWithInsertLocalStorage({auth,authToken,sessionToken,expires_at})
         window.location.replace('/home')
       }else{

@@ -130,8 +130,8 @@ export default class UserModel{
         return returnable
     }
 
-    async updatePassword(userId:string,newPassword:string){
-        let returnable
+    async updatePassword(userId:any,newPassword:string){
+        let returnable = {updated:true}
         const user = await db('users')
         .select('password')
         .where('id',userId);
@@ -142,8 +142,25 @@ export default class UserModel{
             password : newPassword,
             last_password : user[0].password
         })
-        .then((data: any)=>returnable={updated:true})
+        .then(async(data: any)=>{
+            console.log(await data)
+            returnable={updated:true}
+        })
         .catch((e: any)=>{returnable={updated:false}})
+        return returnable
+    }
+
+    async checkAtualPassword(userId:any,actualPassword:string){
+        let returnable:boolean = true
+        await db('users')
+        .where('id',userId)
+        .where('password',actualPassword)
+        .select('*')
+        .then((data: any)=>{
+            console.log(data)
+            if(!data[0]) returnable = false
+        })
+        .catch((e: any)=>{returnable = false})
         return returnable
     }
 }
