@@ -93,7 +93,7 @@ function NewUser() {
           </PanelSidebar>
           <div className="panel-content">
             <div className="row">
-              <h2 className="page-name">Novo Usuario</h2>
+              <h2 className="page-name">Novo Usuário</h2>
             </div>
             <div className="row">
               <div className="col-6">

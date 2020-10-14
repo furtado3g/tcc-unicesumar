@@ -21,7 +21,7 @@ function Admin() {
             <PanelSidebarItem>
               <Link to="/user/add">
                 <i className="fas fa-user-plus"></i>
-                Novo Usuario
+                Novo Usuário
               </Link>
             </PanelSidebarItem>
           </PanelSidebar>

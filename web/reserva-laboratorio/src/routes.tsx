@@ -6,6 +6,9 @@ import Home from "./pages/home"
 import Admin from './pages/admin'
 import NewUser from './pages/newUser'
 import ChangePassword from './pages/changePassword'
+import Reservation from './pages/reservation'
+import NewReserve from './pages/newReserve'
+
 function Routes (){
     return(
         <BrowserRouter>
@@ -16,6 +19,9 @@ function Routes (){
                 <Route exact={true} path="/admin" component={Admin} />
                 <Route exact={true} path="/user/add" component={NewUser} />
                 <Route exact={true} path="/changePassword" component={ChangePassword} />
+                <Route exact={true} path="/reserves" component={Reservation}/>
+                <Route exact={true} path="/reserves/add" component={NewReserve}/>
+
             </Switch>
         </BrowserRouter>
     )

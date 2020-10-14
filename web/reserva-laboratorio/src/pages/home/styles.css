@@ -3,3 +3,18 @@
     min-width:30vh;
     background-color: black;
 }
+
+.container-admin {
+    max-width: 100%;
+    background-color: transparent;
+    min-height: 50vh!important;
+    align-self: center;
+    justify-self: center;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    display: grid;
+    grid-template-areas: "sidebar panel";
+    grid-template-columns: 22% 100vw;
+  }
+  
