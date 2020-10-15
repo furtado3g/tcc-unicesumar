@@ -1,26 +1,21 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 import Panel from "../../components/panel";
 import PanelSidebar from "../../components/panel-sidebar";
 import PanelSidebarItem from "../../components/panel-sidebar-item";
-import Sidebar from "../../components/sidebar";
-import moment from 'moment'
-import toastr from 'toastr'
-import "./styles.css";
-
-function NewReserve() {
+import Sidebar from "../../components/sidebar/index";
+function History() {
   return (
     <div className="container-admin">
       <Sidebar />
-      <Panel title="Reservas">
+      <Panel title="Histórico">
         <PanelSidebar>
           <PanelSidebarItem>
-            <i className="far fa-calendar-check"></i>
-            Realizar Agendamento
+            <i className="fas fa-book-open"></i>
+            Histórico
           </PanelSidebarItem>
         </PanelSidebar>
       </Panel>
     </div>
   );
 }
-export default NewReserve;
+export default History;
