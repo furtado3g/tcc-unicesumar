@@ -26,7 +26,7 @@ function EditMyInfo() {
     }
 
     return (
-        <div className="container">
+        <div className="container-info">
             <Sidebar />
             <Panel title="Editar Informações">
                 <PanelSidebar>

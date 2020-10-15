@@ -42,7 +42,7 @@ function ForgotPassword(){
                 </Link>
             </header>
             <main>
-                <label htmlFor="email">Informe Seu Email</label>
+                <label htmlFor="email">Informe seu Email</label>
                 <input 
                     type="text"
                     id="email"
@@ -51,9 +51,8 @@ function ForgotPassword(){
             </main>
             <footer>
                 <div id="critica" className="hide">
-                    Enviamos um email contendo uma senha provisoria,<br/>
-                    em seu proximo login efetue a troca de sua senha<br/>
-                    Para Sua propria segurança
+                    Enviamos um email com sua senha provisória,<br/>
+                    para sua própria segurança, em seu próximo acesso efetue a alteração de senha<br/>
                 </div>
                 <button
                     type="button"

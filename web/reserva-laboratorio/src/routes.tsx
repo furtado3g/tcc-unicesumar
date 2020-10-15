@@ -7,7 +7,10 @@ import Admin from './pages/admin'
 import NewUser from './pages/newUser'
 import ChangePassword from './pages/changePassword'
 import EditMyInfo from './pages/editMyInfo'
-function Routes (props: any){
+import Reservation from './pages/reservation'
+import NewReserve from './pages/newReserve'
+
+function Routes (){
     return(
         <BrowserRouter>
             <Switch>
@@ -18,6 +21,9 @@ function Routes (props: any){
                 <Route exact={true} path="/user/add" component={NewUser} />
                 <Route exact={true} path="/changePassword" component={ChangePassword} />
                 <Route exact={true} path="/editMyInfo" component={EditMyInfo} />
+                <Route exact={true} path="/reserves" component={Reservation}/>
+                <Route exact={true} path="/reserves/add" component={NewReserve}/>
+
             </Switch>
         </BrowserRouter>
     )
