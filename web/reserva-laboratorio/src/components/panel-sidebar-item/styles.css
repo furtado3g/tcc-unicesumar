@@ -13,7 +13,17 @@
     margin: 0.5rem;
 }
 
-a{
+.panel-sidebar-item > a{
     text-decoration: none;
     cursor: pointer;
+    color : whitesmoke
+}
+
+#active {
+    background-color: whitesmoke;
+    color: #064fd8;
+}
+
+#active > a{
+    color : #064fd8 !important;
 }
