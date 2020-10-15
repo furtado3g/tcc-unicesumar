@@ -61,9 +61,17 @@ function ChangePassword(props: any) {
             <Sidebar />
             <Panel title="Mudar Senha">
                 <PanelSidebar>
+                <PanelSidebarItem id="active">
+                        <Link to="/changePassword">
+                            <i className="fas fa-key"></i>
+                            Mudar Senha
+                        </Link>
+                    </PanelSidebarItem>
                     <PanelSidebarItem>
-                        <i className="fas fa-user-plus"></i>
-                    Alterar Senha
+                        <Link to="/editMyInfo" >
+                            <i className="fas fa-file-alt"></i>
+                            Editar informações
+                        </Link>
                     </PanelSidebarItem>
                 </PanelSidebar>
                 <div className="panel-content">

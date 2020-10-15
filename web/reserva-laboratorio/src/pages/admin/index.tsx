@@ -24,6 +24,14 @@ function Admin() {
                 Novo Usuário
               </Link>
             </PanelSidebarItem>
+
+            <PanelSidebarItem>
+              <Link to="/user/edit">
+                <i className="fas fa-user-plus"></i>
+                Editar Usuário
+              </Link>
+            </PanelSidebarItem>
+
           </PanelSidebar>
         </Panel>
       </div>

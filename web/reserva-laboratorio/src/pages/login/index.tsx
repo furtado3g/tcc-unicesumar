@@ -102,7 +102,7 @@ function Login() {
           to="/forgot" 
           className="btn btn-forgot"
         >
-          Esqueci minha senha
+          Recuperar senha
         </Link>
       </footer>
     </div>

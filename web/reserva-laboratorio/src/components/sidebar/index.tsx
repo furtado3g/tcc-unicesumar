@@ -27,7 +27,7 @@ function Menu (){
                 <div className="sidebar-item">
                     <Link to="/home">
                         <img src={HomeIcon} alt="Icon for home"/>
-                        <h4 className="icon-text hidden">Home</h4>
+                        <h4 className="icon-text hidden">Início</h4>
                     </Link>
                 </div>
                 <div className="sidebar-item">
@@ -51,7 +51,7 @@ function Menu (){
                 <div className="sidebar-item">
                     <Link  to="/changePassword">
                         <i className="fas fa-fingerprint"></i>
-                        <h4 className="icon-text hidden">Mudar Senha</h4>
+                        <h4 className="icon-text hidden">Segurança</h4>
                     </Link>
                 </div>
                 <div className="sidebar-item">
