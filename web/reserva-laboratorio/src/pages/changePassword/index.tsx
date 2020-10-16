@@ -53,6 +53,7 @@ function ChangePassword(props: any) {
             })
             .then(response=>{
                 alert(response)
+                window.location.replace('/home')
             })
             .catch(e => alert(e))
     }

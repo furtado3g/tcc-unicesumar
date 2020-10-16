@@ -75,14 +75,6 @@ export default class UserModel{
         const returnable = {
             message: "message"
         }
-        const emailExists = await db('users')
-        .select('*')
-        .where('email',user.email)
-        if(emailExists[0]){
-            return {
-                "error" : "Username is already registered"
-            }
-        }
         const users = await db('users')
         .select('password')
         .where('username',user.username);
@@ -92,8 +84,7 @@ export default class UserModel{
         .update({
             name:user.name,
             email:user.email,
-            password:user.password,
-            last_password:users[0].password
+            user_type : user.user_type
         })
         .then((data: any)=>{
             returnable.message = "User has been updated"
@@ -161,6 +152,21 @@ export default class UserModel{
             if(!data[0]) returnable = false
         })
         .catch((e: any)=>{returnable = false})
+        return returnable
+    }
+
+    async detail (usersId: string){
+        let returnable
+        await db('users')
+        .where('id', usersId)
+        .select('*')
+        .then((data)=>{
+            returnable = data[0]
+        }).catch(err=>{
+            returnable = {
+                error : "When getting user has ocorred an error"
+            }
+        })
         return returnable
     }
 }
