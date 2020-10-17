@@ -23,6 +23,7 @@ routes.put('/session',sessions.extendSession)
 routes.post('/user',users.create)
 routes.put('/user',users.update)
 routes.get('/user/:id',users.detail)
+routes.get('/users',users.listUsers)
 routes.post('/recovery',users.recoveryPassword)
 routes.put('/user/changePassword',users.updatePassword)
 //controle de tipo de local

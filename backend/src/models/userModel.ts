@@ -169,4 +169,21 @@ export default class UserModel{
         })
         return returnable
     }
+
+    async list(){
+        let returnable
+        await db('users')
+        .select('id','name')
+        .orderBy('name')        
+        .then(data=>{
+            if(data[0]){
+                returnable = data
+            }else{
+                returnable = {
+                    error : "No user found"
+                }
+            }
+        })
+        return returnable
+    }
 }

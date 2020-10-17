@@ -143,4 +143,17 @@ export default class userController {
     return res.json(data)
   }
 
+  async listUsers(req:Request,res:Response){
+    const {userid,authorization} = req.headers
+    const userModel = new UserModel()
+    if(!verifier.verifyNullIncommingFields({userid,authorization})) return res.status(404).json({"message":"Required field"});
+    const logged = await session.verify(authorization)
+    if(!logged.is_valid)return res.status(404).json({error:"this session is no longer valid"});
+    const data =  await userModel.list()
+    if(JSON.stringify(data).includes('"error"')){
+      return res.status(404).json(data)
+    }
+    return res.json(data)
+  }
+
 }

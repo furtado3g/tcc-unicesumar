@@ -19,13 +19,13 @@ function NewUser() {
   const [userType, userTypeState] = useState("");
   const [response, responseTypeState] = useState("");
 
-  async function handleWithAlerts(){
+  async function handleWithAlerts() {
     document.querySelector(".alert")?.classList.toggle('hidden')
   }
 
   async function handleWithSubmit() {
-    const token:any  = localStorage.getItem("sessionToken")
-    const user :any  = localStorage.getItem("userId")
+    const token: any = localStorage.getItem("sessionToken")
+    const user: any = localStorage.getItem("userId")
     const data = {
       url: "http://localhost:3333/user/",
       options: {
@@ -38,9 +38,9 @@ function NewUser() {
           userType,
         }),
         headers: {
-          'Content-Type' : 'application/json',
+          'Content-Type': 'application/json',
           authorization: token,
-          userId : user
+          userId: user
         }
       },
     };
@@ -53,23 +53,23 @@ function NewUser() {
         if (data.status >= 200 && data.status < 300) {
           handleWithAlerts()
           responseTypeState(message)
-          setTimeout(()=>{
+          setTimeout(() => {
             window.location.replace('/admin')
-          },5000)
+          }, 5000)
         } else {
           handleWithAlerts()
           responseTypeState(error || message)
-          setTimeout(()=>{
+          setTimeout(() => {
             handleWithAlerts()
-          },5000)
+          }, 5000)
         }
       })
       .catch(e => {
         console.log(e)
       })
   }
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     if (sessionToken == null) {
       alert("É necessario estar logado Para obter acesso ao Sistema")
       window.location.replace('/')
@@ -78,17 +78,23 @@ function NewUser() {
       alert("Sua Sessão expirou")
       window.location.replace('/')
     }
-  },[])
+  }, [])
 
   return (
     <>
       <div className="container-admin">
         <Sidebar />
-        <Panel title={loggedUsername}>
+        <Panel title="Administrador">
           <PanelSidebar>
-            <PanelSidebarItem>
+            <PanelSidebarItem id="active">
               <i className="fas fa-user-plus"></i>
-              Novo Usuario
+              Novo Usuário
+            </PanelSidebarItem>
+            <PanelSidebarItem>
+              <Link to="/user/edit">
+                <i className="fas fa-user-plus"></i>
+                Editar Usuário
+              </Link>
             </PanelSidebarItem>
           </PanelSidebar>
           <div className="panel-content">

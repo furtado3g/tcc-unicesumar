@@ -10,6 +10,7 @@ import EditMyInfo from './pages/editMyInfo'
 import Reservation from './pages/reservation'
 import NewReserve from './pages/newReserve'
 import History from './pages/history'
+import EditUser from "./pages/editUser";
 
 function Routes (){
     return(
@@ -25,6 +26,7 @@ function Routes (){
                 <Route exact={true} path="/reserves" component={Reservation}/>
                 <Route exact={true} path="/reserves/add" component={NewReserve}/>
                 <Route exact={true} path="/history" component={History}/>
+                <Route exact={true} path="/user/edit" component={EditUser}/>
 
             </Switch>
         </BrowserRouter>
