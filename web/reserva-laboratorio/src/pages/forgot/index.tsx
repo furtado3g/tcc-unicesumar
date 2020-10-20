@@ -61,6 +61,14 @@ function ForgotPassword(){
                 >
                     Recuperar Senha
                 </button>
+                
+                <button
+                    type="button"
+                    className="btn"
+                    onClick={e => handleSendMail(e)}
+                >
+                    Voltar
+                </button>
             </footer>
         </div>
     )

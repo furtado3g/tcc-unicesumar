@@ -39,12 +39,12 @@ header p{
 .form-group label{
     font:300 2rem sans-serif;
     align-self: flex-start;
-    color:#003bdf;
+    color:#666666;
     margin-left: 1rem ;
 }
 
 .form-control{
-    border: 1px solid #003bdf;
+    border: 1px solid #666666;
     width: 80%;
     line-height: 3rem;
     border-radius: 0.5rem;
@@ -60,13 +60,13 @@ header p{
 }
 
 .form-control:focus{
-    border: 2px solid #003bdf;
+    border: 2px solid #000000;
 }
 
 footer {
     margin:3.2rem 0;
     display: flex;
-    flex-direction: row;
+    flex-direction: column !important;
     justify-content: center;
     align-self: center;
     width: 100%;
@@ -80,7 +80,7 @@ footer {
 }
 
 .btn-login{
-    background-color: #003bdf;
+    background-color: #424242;
     color:whitesmoke;
     transition: 0.5s;
 }
@@ -90,7 +90,7 @@ footer {
 }
 
 .btn-forgot{
-    background-color:#022994;
+    background-color:#141414;
     margin-left:5px;
     margin-top: 10px;
     color: whitesmoke;
@@ -107,9 +107,9 @@ footer {
     display:flex;
     align-items: center;
     justify-content: center;
-    border: 3px solid #022994;
+    border: 3px solid #666666;
     border-radius: 10px;
-    color:#022994;
+    color:#666666;
     width:90%;
     margin:1rem !important;
 }
