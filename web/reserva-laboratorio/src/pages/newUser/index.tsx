@@ -92,7 +92,7 @@ function NewUser() {
             </PanelSidebarItem>
             <PanelSidebarItem>
               <Link to="/user/edit">
-                <i className="fas fa-user-plus"></i>
+                <i className="fas fa-user-edit"></i>
                 Editar Usuário
               </Link>
             </PanelSidebarItem>
@@ -154,9 +154,11 @@ function NewUser() {
             </div>
             <div className="row">
               <div className="col-12">
+                <label htmlFor="userType">Tipo de usuário</label>
                 <select
                   className="form-control"
                   id="userType"
+                  value={userType}
                   onChange={(e) => userTypeState(e.target.value)}
                 >
                   <option value="">Selecione</option>

@@ -5,7 +5,6 @@ import PanelSidebar from "../../components/panel-sidebar";
 import PanelSidebarItem from "../../components/panel-sidebar-item";
 import Sidebar from "../../components/sidebar/index";
 import moment from 'moment';
-import { options } from "toastr";
 function EditUser() {
 
   const sessionToken = localStorage.getItem("sessionToken")
@@ -114,6 +113,7 @@ function EditUser() {
         emailState(email)
         usernameState(username)
         userTypeState(user_type)
+        alert(user_type)
       })
   }
 
@@ -141,7 +141,7 @@ function EditUser() {
             </Link>
           </PanelSidebarItem>
           <PanelSidebarItem id="active">
-          <i className="fas fa-user-edit"></i>
+            <i className="fas fa-user-edit"></i>
               Editar Usuário
             </PanelSidebarItem>
         </PanelSidebar>
@@ -152,6 +152,8 @@ function EditUser() {
           <div className="row">
             <div className="col-12">
               <label htmlFor="userList">Usuário</label>
+              
+              
               <select
                 id="userList"
                 className="form-control"
@@ -197,6 +199,7 @@ function EditUser() {
           </div>
           <div className="row">
             <div className="col-12">
+              <label htmlFor="userType">Tipo de usuário</label>
               <select
                 className="form-control"
                 id="userType"
