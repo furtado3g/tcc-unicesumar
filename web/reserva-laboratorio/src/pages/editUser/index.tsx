@@ -144,6 +144,12 @@ function EditUser() {
             <i className="fas fa-user-edit"></i>
               Editar Usuário
             </PanelSidebarItem>
+            <PanelSidebarItem>
+              <Link to="/location/add">
+              <i className="fas fa-map-marker-alt"></i>
+                Cadastrar Espaço
+              </Link>
+            </PanelSidebarItem>
         </PanelSidebar>
         <div className="panel-content">
           <div className="row">
@@ -199,7 +205,7 @@ function EditUser() {
           </div>
           <div className="row">
             <div className="col-12">
-              <label htmlFor="userType">Tipo de usuário</label>
+              <label htmlFor="userType">Tipo de Usuário</label>
               <select
                 className="form-control"
                 id="userType"
@@ -223,7 +229,7 @@ function EditUser() {
           <div className="row">
             <div className="col-12 text-center">
               <button className="btn btn-success" onClick={handleWithSubmit}>
-                Salvar Alterações
+                Salvar 
                 </button>
               <Link to="/admin">
                 <button className="btn btn-danger">Voltar</button>

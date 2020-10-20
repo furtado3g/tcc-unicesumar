@@ -37,6 +37,12 @@ function Admin() {
                 Cadastrar Espaço
               </Link>
             </PanelSidebarItem>
+            <PanelSidebarItem>
+              <Link to="/location/edit">
+              <i className="fas fa-pen-square"></i>
+                Editar Espaço
+              </Link>
+            </PanelSidebarItem>
           </PanelSidebar>
         </Panel>
       </div>

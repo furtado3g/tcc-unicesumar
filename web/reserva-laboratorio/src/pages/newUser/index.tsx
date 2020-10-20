@@ -96,6 +96,12 @@ function NewUser() {
                 Editar Usuário
               </Link>
             </PanelSidebarItem>
+            <PanelSidebarItem>
+              <Link to="/location/add">
+              <i className="fas fa-map-marker-alt"></i>
+                Cadastrar Espaço
+              </Link>
+            </PanelSidebarItem>
           </PanelSidebar>
           <div className="panel-content">
             <div className="row">
@@ -154,7 +160,7 @@ function NewUser() {
             </div>
             <div className="row">
               <div className="col-12">
-                <label htmlFor="userType">Tipo de usuário</label>
+                <label htmlFor="userType">Tipo de Usuário</label>
                 <select
                   className="form-control"
                   id="userType"
