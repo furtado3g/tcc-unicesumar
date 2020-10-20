@@ -155,7 +155,7 @@ function EditUser() {
               <select
                 id="userList"
                 className="form-control"
-                onChange={e=>handleWithUserSelected(e.target.value)}
+                onChange={e => handleWithUserSelected(e.target.value)}
               >
                 <option value="">Selecione</option>
               </select>
