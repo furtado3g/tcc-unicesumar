@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    width: 90vw;
+    width: 80vw;
     background : whitesmoke;
     border-radius: 1.4rem;
     border-color:transparent;    
@@ -32,7 +32,7 @@ header p{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 3.2rem;
+    margin-top: 1.8rem;
     width: 90%;
 }
 
@@ -40,12 +40,12 @@ header p{
     font:300 2rem sans-serif;
     align-self: flex-start;
     color:#003bdf;
-    margin-left: 2.4rem ;
+    margin-left: 1rem ;
 }
 
 .form-control{
-    border: 1px solid #7a4dee;
-    width: 90%;
+    border: 1px solid #003bdf;
+    width: 80%;
     line-height: 3rem;
     border-radius: 0.5rem;
     transform: 0.2s;

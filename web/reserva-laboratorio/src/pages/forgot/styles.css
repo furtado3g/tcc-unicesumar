@@ -5,7 +5,7 @@
     align-content: center;
     width: 90vw;
     background : whitesmoke;
-    color: #7a4dee;
+    color: #000000;
     border-radius: .8rem;
     border-color:transparent;    
     -webkit-box-shadow: -1px 6px 19px -6px rgba(0,0,0,0.75);
@@ -28,8 +28,8 @@ header h3{
 
 header a{
     text-decoration: none;
-    border: 1px solid #7a4dee;
-    background :#7a4dee;
+    border: 1px solid #003bdf;
+    background :#003bdf;
     color: whitesmoke;
     padding:1rem 1.5rem;
     border-radius: 0.6rem;
@@ -48,7 +48,7 @@ main{
 
 main input{
     border-radius: 0.5rem;
-    border-color: #7a4dee;
+    border-color: #003bdf;
     line-height: 2rem;
     padding: 0.5rem;
     width: 90%;
@@ -58,7 +58,7 @@ main input{
 main label{
     margin-right: auto;
     margin-left : 4rem;
-    color: #7a4dee;
+    color: #003bdf;
 }
 
 footer{
@@ -70,8 +70,8 @@ footer{
 
 footer button{
     text-decoration: none;
-    border: 1px solid #7a4dee;
-    background :#7a4dee;
+    border: 1px solid #003bdf;
+    background :#003bdf;
     color: whitesmoke;
     padding:1rem 1.5rem;
     border-radius: 0.6rem;
@@ -80,7 +80,7 @@ footer button{
 }
 
 #critica{
-    border: 1px solid #7a4dee;
+    border: 1px solid #003bdf;
     padding :2rem;
     width: 90%;
     border-radius: .4rem;

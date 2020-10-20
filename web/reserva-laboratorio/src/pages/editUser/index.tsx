@@ -151,7 +151,7 @@ function EditUser() {
           </div>
           <div className="row">
             <div className="col-12">
-              <label htmlFor="userList">Selecione o usuário que deseja editar</label>
+              <label htmlFor="userList">Usuário</label>
               <select
                 id="userList"
                 className="form-control"
