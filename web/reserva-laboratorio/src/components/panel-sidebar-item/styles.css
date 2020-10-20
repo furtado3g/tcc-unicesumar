@@ -5,7 +5,7 @@
     align-content: center;
     font-family: sans-serif;
     border-bottom:1px solid #666666;
-    background-color: #064fd8;
+    background-color: #666666;
     color: whitesmoke;
 }
 
@@ -21,9 +21,9 @@
 
 #active {
     background-color: whitesmoke;
-    color: #064fd8;
+    color: #666666;
 }
 
 #active > a{
-    color : #064fd8 !important;
+    color : #666666 !important;
 }

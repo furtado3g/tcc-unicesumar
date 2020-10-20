@@ -27,7 +27,7 @@ function Admin() {
 
             <PanelSidebarItem>
               <Link to="/user/edit">
-                <i className="fas fa-user-plus"></i>
+              <i className="fas fa-user-edit"></i>
                 Editar Usuário
               </Link>
             </PanelSidebarItem>
