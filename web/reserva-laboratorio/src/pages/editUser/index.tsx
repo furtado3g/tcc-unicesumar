@@ -141,7 +141,7 @@ function EditUser() {
             </Link>
           </PanelSidebarItem>
           <PanelSidebarItem id="active">
-            <i className="fas fa-user-plus"></i>
+          <i className="fas fa-user-edit"></i>
               Editar Usuário
             </PanelSidebarItem>
         </PanelSidebar>
@@ -206,7 +206,7 @@ function EditUser() {
                 <option value="">Selecione</option>
                 <option value="1">Coordenador</option>
                 <option value="2">Professor</option>
-                <option value="3">Laboratorista</option>
+                <option value="3">Gestor de Espaço</option>
               </select>
             </div>
           </div>

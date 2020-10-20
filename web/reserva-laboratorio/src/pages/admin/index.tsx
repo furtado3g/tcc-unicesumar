@@ -27,11 +27,16 @@ function Admin() {
 
             <PanelSidebarItem>
               <Link to="/user/edit">
-                <i className="fas fa-user-plus"></i>
+              <i className="fas fa-user-edit"></i>
                 Editar Usuário
               </Link>
             </PanelSidebarItem>
-
+            <PanelSidebarItem>
+              <Link to="/location/add">
+              <i className="fas fa-map-marker-alt"></i>
+                Cadastrar Espaço
+              </Link>
+            </PanelSidebarItem>
           </PanelSidebar>
         </Panel>
       </div>

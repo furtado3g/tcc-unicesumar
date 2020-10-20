@@ -12,8 +12,8 @@ function NewUser(){
           <Panel title="Administrador">
             <PanelSidebar>
               <PanelSidebarItem>
-                <i className="far fa-calendar-check"></i>
-                Realizar Agendamento
+              <i className="fas fa-map-marker-alt"></i>
+                Cadastrar Espaço
               </PanelSidebarItem>
             </PanelSidebar>
           </Panel>

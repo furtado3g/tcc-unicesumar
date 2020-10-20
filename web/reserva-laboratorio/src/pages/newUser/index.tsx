@@ -162,7 +162,7 @@ function NewUser() {
                   <option value="">Selecione</option>
                   <option value="1">Coordenador</option>
                   <option value="2">Professor</option>
-                  <option value="3">Laboratorista</option>
+                  <option value="3">Gestor de Espaço</option>
                 </select>
               </div>
             </div>
@@ -176,7 +176,7 @@ function NewUser() {
             <div className="row">
               <div className="col-12 text-center">
                 <button className="btn btn-success" onClick={handleWithSubmit}>
-                  Salvar Usuario
+                  Salvar
                 </button>
                 <Link to="/admin">
                   <button className="btn btn-danger">Voltar</button>
