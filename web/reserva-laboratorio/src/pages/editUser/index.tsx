@@ -5,7 +5,8 @@ import PanelSidebar from "../../components/panel-sidebar";
 import PanelSidebarItem from "../../components/panel-sidebar-item";
 import Sidebar from "../../components/sidebar/index";
 import moment from 'moment';
-import { Dropdown } from 'semantic-ui-react'
+import Select from "react-dropdown-select";
+
 function EditUser() {
 
   const sessionToken = localStorage.getItem("sessionToken")
@@ -18,7 +19,7 @@ function EditUser() {
   const [email, emailState] = useState("");
   const [userType, userTypeState] = useState("");
   const [response, responseTypeState] = useState("");
-
+  let Options : {}
   async function handleWithPageLoad() {
     const data = {
       url: "http://localhost:3333/users",
@@ -30,16 +31,20 @@ function EditUser() {
         }
       }
     }
+    let options = {}
     await fetch(data.url, data.options)
       .then(data => {
         return data.json()
       })
       .then(response => {
-        response.map((user: any) => {
-          let element = new Option(user.id + "-" + user.name, user.id)
-          document.querySelector("#userList")?.appendChild(element)
+        options = response.map((user: any) => {
+          return {
+            value : user.id,
+            label : user.name
+          }
         })
       })
+    Options = options
   }
 
   async function handleWithAlerts() {
@@ -153,8 +158,6 @@ function EditUser() {
           <div className="row">
             <div className="col-12">
               <label htmlFor="userList">Usuário</label>
-              
-              
               <select
                 id="userList"
                 className="form-control"
