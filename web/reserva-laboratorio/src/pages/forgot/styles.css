@@ -66,14 +66,22 @@ main label{
     color: #424242;
 }
 
-footer{
+.footer{
+    padding : 1rem ;
     display: flex;
-    flex-direction: column;
+    flex-direction: column !important;
     justify-content: center;
     align-items: center;
 }
 
-footer button{
+#button-container{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer button{
     text-decoration: none;
     border: 1px solid #424242;
     background :#424242;

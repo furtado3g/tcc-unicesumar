@@ -28,8 +28,6 @@ function ForgotPassword() {
         }
         await fetch(data.url, data.options)
             .then(async response => {
-                const rjson: any = await response.json()
-                alert(JSON.stringify(rjson))
                 showMessage()
             })
     }
@@ -51,12 +49,19 @@ function ForgotPassword() {
                     onChange={e => emailState(e.target.value)}
                 />
             </main>
-            <footer>
+            <div className="footer">
                 <div id="critica" className="hide">
                     Enviamos um email com sua senha provisória,<br />
                     para sua própria segurança, em seu próximo acesso efetue a alteração de senha!<br />
                 </div>
-                <div className="button-container">
+                <div id="button-container">
+                    <button
+                        type="button"
+                        className="btn"
+                        onClick={e => handleSendMail(e)}
+                        >
+                        Recuperar Senha
+                    </button>
                     <button
                         type="button"
                         className="btn"
@@ -64,15 +69,8 @@ function ForgotPassword() {
                     >
                         Voltar
                     </button>
-                    <button
-                        type="button"
-                        className="btn"
-                        onClick={e => handleSendMail(e)}
-                    >
-                        Recuperar Senha
-                    </button>
                 </div>
-            </footer>
+            </div>
         </div>
     )
 }

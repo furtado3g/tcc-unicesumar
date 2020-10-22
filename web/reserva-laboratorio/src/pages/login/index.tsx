@@ -90,7 +90,7 @@ function Login() {
           {error}
         </div>
       </main>
-      <footer>
+      <div id="footer">
         <button 
           type="button" 
           className="btn btn-login"
@@ -104,7 +104,7 @@ function Login() {
         >
           Recuperar senha
         </Link>
-      </footer>
+      </div>
     </div>
   );
 }

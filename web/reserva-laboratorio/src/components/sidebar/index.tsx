@@ -56,7 +56,7 @@ function Menu (){
                 </div>
                 <div className="sidebar-item">
                     <Link  to="/" onClick={handleWithlogout}>
-                        <img src={ArrowBackIcon} alt="Icon for admin"/>
+                        <i className="fas fa-sign-out-alt"></i>
                         <h4 className="icon-text hidden">Sair</h4>
                     </Link>
                 </div>
