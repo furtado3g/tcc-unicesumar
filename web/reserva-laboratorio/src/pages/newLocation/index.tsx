@@ -1,7 +1,6 @@
 import React from "react";
+import AdminPanelSidebar from "../../components/admin-panel-sidebar";
 import Panel from "../../components/panel";
-import PanelSidebar from "../../components/panel-sidebar";
-import PanelSidebarItem from "../../components/panel-sidebar-item";
 import Sidebar from "../../components/sidebar";
 
 function NewLocation() {
@@ -9,12 +8,7 @@ function NewLocation() {
     <div className="container-admin">
       <Sidebar />
       <Panel title="Administrador">
-        <PanelSidebar>
-          <PanelSidebarItem>
-            <i className="fas fa-map-marker-alt"></i>
-            Cadastrar Espaço
-          </PanelSidebarItem>
-        </PanelSidebar>
+        <AdminPanelSidebar className="newLocation"/>
         <div className="panel-content">
           <div className="row">
             <h2 className="page-name">Cadastrar Espaço</h2>
