@@ -129,7 +129,7 @@ function NewUser() {
             </div>
             <div className="row">
               <div className="col-12">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">Email (Institucional)</label>
                 <input
                   type="text"
                   className="form-control"
