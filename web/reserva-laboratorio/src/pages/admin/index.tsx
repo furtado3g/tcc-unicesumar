@@ -6,6 +6,7 @@ import PanelSidebarItem from "../../components/panel-sidebar-item";
 import Sidebar from "../../components/sidebar";
 import moment from 'moment'
 import "./styles.css";
+import AdminPanelSidebar from "../../components/admin-panel-sidebar";
 function Admin() {
   const sessionToken = localStorage.getItem("sessionToken")
   const expires_at = localStorage.getItem("expires_at")
@@ -17,22 +18,7 @@ function Admin() {
       <div className="container-admin">
         <Sidebar />
         <Panel title="Painel Administrativo">
-          <PanelSidebar>
-            <PanelSidebarItem>
-              <Link to="/user/add">
-                <i className="fas fa-user-plus"></i>
-                Novo Usuário
-              </Link>
-            </PanelSidebarItem>
-
-            <PanelSidebarItem>
-              <Link to="/user/edit">
-              <i className="fas fa-user-edit"></i>
-                Editar Usuário
-              </Link>
-            </PanelSidebarItem>
-
-          </PanelSidebar>
+          <AdminPanelSidebar/>
         </Panel>
       </div>
     </>

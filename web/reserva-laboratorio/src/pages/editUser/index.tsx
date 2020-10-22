@@ -4,14 +4,12 @@ import Panel from "../../components/panel";
 import PanelSidebar from "../../components/panel-sidebar";
 import PanelSidebarItem from "../../components/panel-sidebar-item";
 import Sidebar from "../../components/sidebar/index";
-import moment from 'moment';
-import Select from "react-dropdown-select";
-
+import moment from "moment";
+import AdminPanelSidebar from "../../components/admin-panel-sidebar";
 function EditUser() {
-
-  const sessionToken = localStorage.getItem("sessionToken")
-  const expires_at = localStorage.getItem("expires_at")
-  const user: any = localStorage.getItem("userId")
+  const sessionToken = localStorage.getItem("sessionToken");
+  const expires_at = localStorage.getItem("expires_at");
+  const user: any = localStorage.getItem("userId");
   const [name, nameState] = useState("");
   const [username, usernameState] = useState("");
   const [password, passwordState] = useState("");
@@ -26,34 +24,30 @@ function EditUser() {
       options: {
         method: "get",
         headers: {
-          authorization: sessionToken || '',
-          userId: user
-        }
-      }
-    }
-    let options = {}
+          authorization: sessionToken || "",
+          userId: user,
+        },
+      },
+    };
     await fetch(data.url, data.options)
-      .then(data => {
-        return data.json()
+      .then((data) => {
+        return data.json();
       })
-      .then(response => {
-        options = response.map((user: any) => {
-          return {
-            value : user.id,
-            label : user.name
-          }
-        })
-      })
-    Options = options
+      .then((response) => {
+        response.map((user: any) => {
+          let element = new Option(user.id + "-" + user.name, user.id);
+          document.querySelector("#userList")?.appendChild(element);
+        });
+      });
   }
 
   async function handleWithAlerts() {
-    document.querySelector(".alert")?.classList.toggle('hidden')
+    document.querySelector(".alert")?.classList.toggle("hidden");
   }
 
   async function handleWithSubmit() {
-    const token: any = localStorage.getItem("sessionToken")
-    const user: any = localStorage.getItem("userId")
+    const token: any = localStorage.getItem("sessionToken");
+    const user: any = localStorage.getItem("userId");
     const data = {
       url: "http://localhost:3333/user/",
       options: {
@@ -66,35 +60,35 @@ function EditUser() {
           userType,
         }),
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           authorization: token,
-          userId: user
-        }
+          userId: user,
+        },
       },
     };
     if (password !== redundacy) {
-      return responseTypeState("Senhas Não Coincidem")
+      return responseTypeState("Senhas Não Coincidem");
     }
     await fetch(data.url, data.options)
       .then(async (data) => {
-        const { message, error } = await data.json()
+        const { message, error } = await data.json();
         if (data.status >= 200 && data.status < 300) {
-          handleWithAlerts()
-          responseTypeState(message)
+          handleWithAlerts();
+          responseTypeState(message);
           setTimeout(() => {
-            window.location.replace('/admin')
-          }, 5000)
+            window.location.replace("/admin");
+          }, 5000);
         } else {
-          handleWithAlerts()
-          responseTypeState(error || message)
+          handleWithAlerts();
+          responseTypeState(error || message);
           setTimeout(() => {
-            handleWithAlerts()
-          }, 5000)
+            handleWithAlerts();
+          }, 5000);
         }
       })
-      .catch(e => {
-        console.log(e)
-      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   async function handleWithUserSelected(userId: string) {
@@ -103,54 +97,43 @@ function EditUser() {
       options: {
         method: "get",
         headers: {
-          'Content-Type': 'application/json',
-          authorization: sessionToken || '',
-          userId: user
-        }
-      }
-    }
+          "Content-Type": "application/json",
+          authorization: sessionToken || "",
+          userId: user,
+        },
+      },
+    };
     await fetch(data.url, data.options)
       .then((response) => {
-        return response.json()
+        return response.json();
       })
-      .then(result => {
-        const { name, username, email, user_type } = result
-        nameState(name)
-        emailState(email)
-        usernameState(username)
-        userTypeState(user_type)
-        alert(user_type)
-      })
+      .then((result) => {
+        const { name, username, email, user_type } = result;
+        nameState(name);
+        emailState(email);
+        usernameState(username);
+        userTypeState(user_type);
+        alert(user_type);
+      });
   }
 
   useEffect(() => {
-    handleWithPageLoad()
+    handleWithPageLoad();
     if (sessionToken == null) {
-      alert("É necessario estar logado Para obter acesso ao Sistema")
-      window.location.replace('/')
+      alert("É necessario estar logado Para obter acesso ao Sistema");
+      window.location.replace("/");
     }
     if (moment(expires_at) < moment()) {
-      alert("Sua Sessão expirou")
-      window.location.replace('/')
+      alert("Sua Sessão expirou");
+      window.location.replace("/");
     }
-  }, ['loading'])
+  }, ["loading"]);
 
   return (
     <div className="container-admin">
       <Sidebar />
       <Panel title="Administrador">
-        <PanelSidebar>
-          <PanelSidebarItem>
-            <Link to="/user/add">
-              <i className="fas fa-user-plus"></i>
-              Novo Usuario
-            </Link>
-          </PanelSidebarItem>
-          <PanelSidebarItem id="active">
-            <i className="fas fa-user-edit"></i>
-              Editar Usuário
-            </PanelSidebarItem>
-        </PanelSidebar>
+        <AdminPanelSidebar className="editUser" />
         <div className="panel-content">
           <div className="row">
             <h2 className="page-name">Editar Usuário</h2>
@@ -161,7 +144,7 @@ function EditUser() {
               <select
                 id="userList"
                 className="form-control"
-                onChange={e => handleWithUserSelected(e.target.value)}
+                onChange={(e) => handleWithUserSelected(e.target.value)}
               >
                 <option value="">Selecione</option>
               </select>
@@ -203,7 +186,7 @@ function EditUser() {
           </div>
           <div className="row">
             <div className="col-12">
-              <label htmlFor="userType">Tipo de usuário</label>
+              <label htmlFor="userType">Tipo de Usuário</label>
               <select
                 className="form-control"
                 id="userType"
@@ -213,22 +196,20 @@ function EditUser() {
                 <option value="">Selecione</option>
                 <option value="1">Coordenador</option>
                 <option value="2">Professor</option>
-                <option value="3">Laboratorista</option>
+                <option value="3">Gestor de Espaço</option>
               </select>
             </div>
           </div>
           <div className="row">
             <div className="col-12">
-              <div className="alert hidden">
-                {response}
-              </div>
+              <div className="alert hidden">{response}</div>
             </div>
           </div>
           <div className="row">
             <div className="col-12 text-center">
               <button className="btn btn-success" onClick={handleWithSubmit}>
-                Salvar Alterações
-                </button>
+                Salvar
+              </button>
               <Link to="/admin">
                 <button className="btn btn-danger">Voltar</button>
               </Link>

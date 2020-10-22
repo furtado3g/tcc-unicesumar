@@ -1,14 +1,16 @@
 import React from "react";
-import AdminPanelSidebar from "../../components/admin-panel-sidebar";
 import Panel from "../../components/panel";
+import PanelSidebar from "../../components/panel-sidebar";
+import PanelSidebarItem from "../../components/panel-sidebar-item";
 import Sidebar from "../../components/sidebar";
-
-function NewLocation() {
+import { Link } from "react-router-dom";
+import AdminPanelSidebar from "../../components/admin-panel-sidebar";
+function EditLocation() {
   return (
     <div className="container-admin">
       <Sidebar />
       <Panel title="Administrador">
-        <AdminPanelSidebar className="newLocation"/>
+        <AdminPanelSidebar className="editLocation"/>
         <div className="panel-content">
           <div className="row">
             <h2 className="page-name">Cadastrar Espaço</h2>
@@ -46,4 +48,4 @@ function NewLocation() {
   );
 }
 
-export default NewLocation;
+export default EditLocation;

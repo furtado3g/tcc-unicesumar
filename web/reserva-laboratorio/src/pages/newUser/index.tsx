@@ -7,6 +7,7 @@ import Sidebar from "../../components/sidebar";
 import moment from 'moment'
 import toastr from 'toastr'
 import "./styles.css";
+import AdminPanelSidebar from "../../components/admin-panel-sidebar";
 function NewUser() {
   const sessionToken = localStorage.getItem("sessionToken")
   const expires_at = localStorage.getItem("expires_at")
@@ -85,18 +86,7 @@ function NewUser() {
       <div className="container-admin">
         <Sidebar />
         <Panel title="Administrador">
-          <PanelSidebar>
-            <PanelSidebarItem id="active">
-              <i className="fas fa-user-plus"></i>
-              Novo Usuário
-            </PanelSidebarItem>
-            <PanelSidebarItem>
-              <Link to="/user/edit">
-                <i className="fas fa-user-edit"></i>
-                Editar Usuário
-              </Link>
-            </PanelSidebarItem>
-          </PanelSidebar>
+          <AdminPanelSidebar className="newUser"/>
           <div className="panel-content">
             <div className="row">
               <h2 className="page-name">Novo Usuário</h2>
@@ -154,7 +144,7 @@ function NewUser() {
             </div>
             <div className="row">
               <div className="col-12">
-                <label htmlFor="userType">Tipo de usuário</label>
+                <label htmlFor="userType">Tipo de Usuário</label>
                 <select
                   className="form-control"
                   id="userType"
@@ -164,7 +154,7 @@ function NewUser() {
                   <option value="">Selecione</option>
                   <option value="1">Coordenador</option>
                   <option value="2">Professor</option>
-                  <option value="3">Laboratorista</option>
+                  <option value="3">Gestor de Espaço</option>
                 </select>
               </div>
             </div>
@@ -178,7 +168,7 @@ function NewUser() {
             <div className="row">
               <div className="col-12 text-center">
                 <button className="btn btn-success" onClick={handleWithSubmit}>
-                  Salvar Usuario
+                  Salvar
                 </button>
                 <Link to="/admin">
                   <button className="btn btn-danger">Voltar</button>

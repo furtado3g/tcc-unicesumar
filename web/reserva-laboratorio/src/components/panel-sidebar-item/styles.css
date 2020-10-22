@@ -19,6 +19,15 @@
     color : whitesmoke
 }
 
+.active {
+    background-color: whitesmoke;
+    color: #666666;
+}
+
+.active > a{
+    color : #666666 !important;
+}
+
 #active {
     background-color: whitesmoke;
     color: #666666;
