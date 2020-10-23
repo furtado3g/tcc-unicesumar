@@ -170,11 +170,13 @@ export default class UserModel{
         return returnable
     }
 
-    async list(){
+    async list(perPage:number,page:number){
         let returnable
         await db('users')
         .select('id','name')
-        .orderBy('name')        
+        .orderBy('name')
+        .limit(perPage || 10)
+        .offset((page*perPage) || 1)       
         .then(data=>{
             if(data[0]){
                 returnable = data
