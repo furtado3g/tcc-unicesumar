@@ -84,6 +84,7 @@ class ReserveModel{
         const itens = await db('reservations')
         .limit(perPage || 10)
         .offset((page*perPage) || 1)
+        .select('*')
         return itens
     }
 

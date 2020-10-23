@@ -5,6 +5,7 @@ import digestHash from '../util/digestHash'
 import verify from '../util/verify'
 import PermissionModel from '../models/permissionModel'
 import sessionModel from '../models/sessionModel'
+import jwt from 'jsonwebtoken'
 const verifier = new verify();
 const permission = new PermissionModel();
 const session = new sessionModel();
@@ -145,11 +146,12 @@ export default class userController {
 
   async listUsers(req:Request,res:Response){
     const {userid,authorization} = req.headers
+    const {page,perPage} = req.query
     const userModel = new UserModel()
     if(!verifier.verifyNullIncommingFields({userid,authorization})) return res.status(404).json({"message":"Required field"});
     const logged = await session.verify(authorization)
     if(!logged.is_valid)return res.status(404).json({error:"this session is no longer valid"});
-    const data =  await userModel.list()
+    const data =  await userModel.list(Number(perPage),Number(page))
     if(JSON.stringify(data).includes('"error"')){
       return res.status(404).json(data)
     }
