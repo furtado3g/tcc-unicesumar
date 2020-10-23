@@ -27,7 +27,7 @@ export default class UserModel{
         console.log(usernameExists)
         if(usernameExists[0]){
             return {
-                "error" : "Username is already registered"
+                "error" : "Nome de usuário já cadastrado"
             }
         }
         const emailExists = await db('users')
@@ -37,7 +37,7 @@ export default class UserModel{
         console.log(emailExists)
         if(emailExists[0]){
             return {
-                "error" : "Email is already registered"
+                "error" : "Email já cadastrado"
             }
         }
         console.log(emailExists)
@@ -54,7 +54,7 @@ export default class UserModel{
         .where('username',user.username)
         if(usernameExists[0]){
             returnable =  {
-                "error" : "Username is already registered"
+                "error" : "Nome de usuário já cadastrado"
             }
         }
         const search = await db('users')
@@ -87,10 +87,10 @@ export default class UserModel{
             user_type : user.user_type
         })
         .then((data: any)=>{
-            returnable.message = "User has been updated"
+            returnable.message = "Alteração de usuário realizado com sucesso"
         })
         .catch((e: any)=>{
-            returnable.message = "Error when updating user"
+            returnable.message = "Erro ao atualizar usuário"
         })
     }
 
@@ -103,8 +103,8 @@ export default class UserModel{
         .where('email',email);
         if(!user[0]) return false;
         Mail.to = email
-        Mail.subject = "Email de recuperação de senha" 
-        Mail.message = "Sua senha foi recuperada por meio do processo de recuperar minha senha <br> Sua nova senha é : "+random
+        Mail.subject = "RLAB: Recuperação de senha" 
+        Mail.message = "Senha alterada com sucesso <br> Sua nova senha é : "+random
         Mail.sendMail()
         const updatedRows = await db('users')
         .where('id',user[0].id)
@@ -164,7 +164,7 @@ export default class UserModel{
             returnable = data[0]
         }).catch(err=>{
             returnable = {
-                error : "When getting user has ocorred an error"
+                error : "Erro ao obter usuário"
             }
         })
         return returnable
@@ -180,7 +180,7 @@ export default class UserModel{
                 returnable = data
             }else{
                 returnable = {
-                    error : "No user found"
+                    error : "Usuário não encontrado"
                 }
             }
         })

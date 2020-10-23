@@ -9,7 +9,7 @@ class PermissionModel{
         const permissionExists = await db('type_user_permisions')
         .where('tp_user',tp_user[0].user_type)
         .where('id_permission',id_permission[0].id)
-        if(permissionExists[0]) return {error:"Permission has already been given"};
+        if(permissionExists[0]) return {error:"Permissão já atribuída"};
         const insertedRows = await db('type_user_permisions')
         .insert({
             id_permission : id_permission[0].id,
@@ -30,7 +30,7 @@ class PermissionModel{
         .select('id')
         if(!endpoint[0]){
             return {
-                error : "Endpoint not registered"
+                error : "Endpoint não cadastrado"
             }
         }
         const user = await db.from('users')
@@ -38,7 +38,7 @@ class PermissionModel{
         .select('*')
         if(!endpoint[0]){
             return{
-                "error" : "User don't exists"
+                "error" : "Usuário inexistente"
             }
         }
         const result = await db('type_user_permisions')
@@ -68,7 +68,7 @@ class PermissionModel{
         .select('*')
         if(endpointExists[0]){
             return {
-                error : "Endpoint already exists"
+                error : "Endpoint já cadastrado"
             }
         }
         const insertedRows = await db('permissions')
@@ -76,7 +76,7 @@ class PermissionModel{
             {"endpoint":url}
         ).then(selectedTodo => {
             console.log(selectedTodo)
-            returnable = {message:"New endpoint successfully registered"}
+            returnable = {message:"Novo endpoint cadastrado com sucesso"}
         })
         .catch(e=>{
             returnable = {error:e}
@@ -91,12 +91,12 @@ class PermissionModel{
         .select('*')
         if(userTypeExists[0]){
             return {
-                error : "User type already exists"
+                error : "Tipo de usuário já cadastrado"
             }
         }
         const insertedRows = await db('user_type')
         .insert({description})
-        .then(()=>{ returnable ={message:"Type of user successfully registered"} })
+        .then(()=>{ returnable ={message:"Tipo de usuário cadastrado com sucesso"} })
         .catch((e)=>{returnable= {error:e}})
         return returnable
     }

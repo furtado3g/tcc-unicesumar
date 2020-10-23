@@ -25,20 +25,20 @@ class ReserveModel{
         .whereBetween('time_end',[reserve.time_end,reserve.time_start])
         if(labIsTaken[0]){
             return {
-                message : "Place is already reserved"
+                message : "O espaço já está reservado"
             }
         }
         const insertedRows = await db('reservations').insert(reserve)
         .then(data=>{
             console.log(data)
             returnable = {
-                message:"Successful booking"
+                message:"Reserva efetuada com sucesso"
             }
         })
         .catch(e=>{
             //traduzir retorno a baixo
             returnable = {
-                error : "Error when making reservation"
+                error : "Erro ao realizar reserva"
             }
         })
         return returnable
@@ -52,11 +52,11 @@ class ReserveModel{
         .update(reserve)
         .then(data=>{
             returnable = {
-                message:"Reservation updated successfully"
+                message:"Reserva atualizada com sucesso"
             }
         }).catch(()=>{
             returnable = {
-                error : "Error updating booking"
+                error : "Erro ao atualizar reserva"
             }
         }) 
         return returnable
@@ -69,11 +69,11 @@ class ReserveModel{
         .delete()
         .then(data=>{
             returnable = {
-                message : "Reservation successfully deleted"
+                message : "Reserva excluída com sucesso"
             }
         }).catch(e=>{
             returnable = {
-                error : "Error deleting reservation"
+                error : "Erro ao excluir reserva"
             }
         })
         return returnable 

@@ -11,9 +11,9 @@ class LocationModel{
         let returnable
         const insertedRows = await db('locations').insert(location)
         .then(data=>{
-            returnable = {"message":"Place successfully registered"}
+            returnable = {"message":"Espaço cadastrado com sucesso"}
         }).catch(err=>{
-            returnable = {"error" : "Error deleting location"}
+            returnable = {"error" : "Erro ao excluir espaço"}
         })
         return returnable
     }
@@ -25,16 +25,16 @@ class LocationModel{
         .where("id",locationId)
         if(!canIUpdate[0]){
             return {
-                error : "Location does not exist"
+                error : "Espaço não existente"
             }
         }
         const updatedRows = await db('locations')
         .where('id',locationId)
         .update(location)
         .then(data=>{
-            returnable = {message :"Location changed successfully"}
+            returnable = {message :"Espaço alterada com sucesso"}
         }).catch(err=>{
-            returnable =  {"error":"Error updating location description"}
+            returnable =  {"error":"Erro ao alterar espaço"}
         })
         return  returnable
     }
@@ -46,16 +46,16 @@ class LocationModel{
         .where("id",locationId)
         if(!canIUpdate[0]){
             return {
-                error : "Location does not exist"
+                error : "Espaço não existente"
             }
         }
         const deletedRows = await db('locations')
         .where('id',locationId) 
         .delete()
         .then(data=>{
-            returnable = {"message":"Location successfully deleted"}
+            returnable = {"message":"Espaço excluído com sucesso"}
         }).catch(err=>{
-            returnable = {"error" : "Error deleting location"}
+            returnable = {"error" : "Erro ao excluir espaço"}
         })
         return  returnable
     }

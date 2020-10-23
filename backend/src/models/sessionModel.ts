@@ -19,7 +19,7 @@ export default class SessionModel {
 
   async create(userToken: authTokens) {
     let response: responseObject = {
-      message: "Session successfully authenticated",
+      message: "Sessão autenticada com sucesso",
       token: {},
     };
     const insertedSession = await db("sessions")
@@ -32,7 +32,7 @@ export default class SessionModel {
         response.token = userToken;
       })
       .catch((e) => {
-        response.message = "Authentication error! Try again later";
+        response.message = "Erro de autenticação! Tente novamente mais tarde.";
       });
     return response;
   }
@@ -44,7 +44,7 @@ export default class SessionModel {
       .select("expires_at");
     if (moment(getValues[0].expires_at) < moment()) {
       return {
-        message: "Token is no longer valid",
+        message: "Token inválido",
       };
     }
     const updatedSession = await db("sessions")
@@ -67,7 +67,7 @@ export default class SessionModel {
 
   async verify(sessionToken: any) {
     let returnable  = {
-      message: "Token is no longer valid",
+      message: "Token inválido",
       is_valid: false,
     };
     let is_valid: boolean;
@@ -77,19 +77,19 @@ export default class SessionModel {
     .then(data=>{
       if (moment(data[0].expires_at) > moment()) {
         returnable =  {
-          message: "Token is valid",
+          message: "Token válido",
           is_valid: true,
         };
       } else {
         returnable = {
-          message: "Token is no longer valid",
+          message: "Token inválido",
           is_valid: false,
         };
       }
     })
     .catch(e=>{
       returnable = {
-        message: "Error while transact information",
+        message: "Erro durante a transação de informações",
         is_valid: false,
       };
       console.log(e)

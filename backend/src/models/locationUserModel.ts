@@ -14,16 +14,16 @@ class LocationUserModel{
         .where('location_id',locationUser.location_id)
         if (relationExists[0]){
             return {
-                error : "Existing relationship"
+                error : "Relacionamento existente"
             }            
         }
         await db('user_location')
         .insert(locationUser)
         .then(data=>{
-            returnable = { message : "Assigned location to user" }
+            returnable = { message : "Espaço atribuído ao usuário" }
         })
         .catch(e=>{
-            returnable = { error : "Error when assigning relationship"}
+            returnable = { error : "Erro ao atribuir relacionamento"}
         })
         return returnable
     }
@@ -35,15 +35,15 @@ class LocationUserModel{
         .where('id',id)
         if(!idExists[0]){
             return  {
-                error : "Non-existent relationship"
+                error : "Relacionamento inexistente"
             }
         }
         const deletedRows = await db('user_location')
         .where("id",id)
         .delete().then(data=>{
-            returnable = {message : "Excluded liability association"}
+            returnable = {message : "Associação excluída com sucesso"}
         }).catch(err=>{
-            returnable = {error : "Error deleting liability association"}
+            returnable = {error : "Erro ao excluir associação"}
         })
         return returnable
     }
@@ -57,7 +57,7 @@ class LocationUserModel{
             returnable = data
         })
         .catch(e=>{
-            returnable = {error:"Error fetching list of users responsible for the location"}
+            returnable = {error:"Erro ao buscar lista de associação de usuários e espaços"}
         })
         return returnable
     }

@@ -9,19 +9,19 @@ class TypeLocationModel{
         .where('description',description)
         if(typeExists[0]){
             return {
-                message : "Location type already registered"
+                message : "Tipo de espaço já cadastrado"
             }
         }
         await db('type_location')
         .insert({description})
         .then(data=>{
             returnable ={
-                message : "Location type has been created"
+                message : "Tipo de espaço cadastrado"
             }
         })
         .catch(e=>{
             return returnable ={
-                message: "Error at create new location type"
+                message: "Erro ao criar novo tipo de espaço"
             }
         })
         return returnable
@@ -47,7 +47,7 @@ class TypeLocationModel{
         .select('*')
         if(idExists[0]){
             return {
-                message : "Unregistered location"
+                message : "Espaço não registrado"
             }
         }
         await db('type_location')
@@ -55,12 +55,12 @@ class TypeLocationModel{
         .delete()
         .then(data =>{
             returnable = {
-                message : "Location type has been deleted"
+                message : "Tipo de espaço excluído com sucesso"
             }
         })
         .catch(e=>{
             returnable = {
-                message : "Error when trying to delete a location type"
+                message : "Erro ao excluir tipo de espaço"
             }
         })
         return returnable
