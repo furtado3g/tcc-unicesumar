@@ -32,7 +32,7 @@ class LocationModel{
         .where('id',locationId)
         .update(location)
         .then(data=>{
-            returnable = {message :"Espaço alterada com sucesso"}
+            returnable = {message :"Espaço alterado com sucesso"}
         }).catch(err=>{
             returnable =  {"error":"Erro ao alterar espaço"}
         })

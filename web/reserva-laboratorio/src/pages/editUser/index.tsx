@@ -67,7 +67,7 @@ function EditUser() {
       },
     };
     if (password !== redundacy) {
-      return responseTypeState("Senhas Não Coincidem");
+      return responseTypeState("Senhas não correspondem");
     }
     await fetch(data.url, data.options)
       .then(async (data) => {
@@ -120,11 +120,11 @@ function EditUser() {
   useEffect(() => {
     handleWithPageLoad();
     if (sessionToken == null) {
-      alert("É necessario estar logado Para obter acesso ao Sistema");
+      alert("É necessário estar logado para obter acesso ao sistema");
       window.location.replace("/");
     }
     if (moment(expires_at) < moment()) {
-      alert("Sua Sessão expirou");
+      alert("Sessão expirada");
       window.location.replace("/");
     }
   }, ["loading"]);

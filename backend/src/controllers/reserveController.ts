@@ -27,13 +27,13 @@ class ReserveController {
     //Checks whether the session is valid
     const logged = await session.verify(authorization);
     if (!logged.is_valid)
-      return res.status(404).json({ error: "this session is no longer valid" });
+      return res.status(404).json({ error: "Sessão inválida" });
     //checks if the user has permission to access the endpoint
     const grant: any = await permission.verify(user_id, path);
     if (!grant.granted) {
       return res
         .status(404)
-        .json({ error: "you don't have permission to access this route" });
+        .json({ error: "Você não possui permissão para acesso" });
     }
     const reserveModel = new ReserveModel();
     const {
@@ -58,7 +58,7 @@ class ReserveController {
         comments,
       })
     )
-      return res.status(404).json({ message: "Required field not informated" });
+      return res.status(404).json({ message: "Campo obrigatório não informado" });
     return res.json(
       await reserveModel.insert({
         teacher_id: userId,
@@ -102,17 +102,17 @@ class ReserveController {
         authorization,
       })
     )
-      return res.status(404).json({ message: "Required field not informated" });
+      return res.status(404).json({ message: "Campo obrigatório não informado" });
     //Checks whether the session is valid
     const logged = await session.verify(authorization);
     if (!logged.is_valid)
-      return res.status(404).json({ error: "this session is no longer valid" });
+      return res.status(404).json({ error: "Sessão inválida" });
     //checks if the user has permission to access the endpoint
     const grant: any = await permission.verify(user_id, path);
     if (!grant.granted) {
       return res
         .status(404)
-        .json({ error: "you don't have permission to access this route" });
+        .json({ error: "Você não possui permissão para acesso" });
     }
     return res.json(
       await reserveModel.update(
@@ -138,17 +138,17 @@ class ReserveController {
     if (
       !verifier.verifyNullIncommingFields({ reserveId, user_id, authorization })
     )
-      return res.status(404).json({ message: "Required field not informated" });
+      return res.status(404).json({ message: "Campo obrigatório não informado" });
     //Checks whether the session is valid
     const logged = await session.verify(authorization);
     if (!logged.is_valid)
-      return res.status(404).json({ error: "this session is no longer valid" });
+      return res.status(404).json({ error: "Sessão inválida" });
     //checks if the user has permission to access the endpoint
     const grant: any = await permission.verify(user_id, path);
     if (!grant.granted) {
       return res
         .status(404)
-        .json({ error: "you don't have permission to access this route" });
+        .json({ error: "Você não possui permissão para acesso" });
     }
     return res.json(await reserveModel.delete(Number(reserveId)));
   }
@@ -157,17 +157,17 @@ class ReserveController {
     const { path } = req.route;
     const { user_id, authorization } = req.headers;
     if (!verifier.verifyNullIncommingFields({ user_id, authorization }))
-      return res.status(404).json({ message: "Required field not informated" });
+      return res.status(404).json({ message: "Campo obrigatório não informado" });
     //Checks whether the session is valid
     const logged = await session.verify(authorization);
     if (!logged.is_valid)
-      return res.status(404).json({ error: "this session is no longer valid" });
+      return res.status(404).json({ error: "Sessão inválida" });
     //checks if the user has permission to access the endpoint
     const grant: any = await permission.verify(user_id, path);
     if (!grant.granted) {
       return res
         .status(404)
-        .json({ error: "you don't have permission to access this route" });
+        .json({ error: "Você não possui permissão para acesso" });
     }
     const { page, perPage } = req.query;
     return res.json(await reserveModel.list(Number(page), Number(perPage)));
@@ -180,17 +180,17 @@ class ReserveController {
     if (
       !verifier.verifyNullIncommingFields({ reserveId, user_id, authorization })
     )
-      return res.status(404).json({ message: "Required field not informated" });
+      return res.status(404).json({ message: "Campo obrigatório não informado" });
     //Checks whether the session is valid
     const logged = await session.verify(authorization);
     if (!logged.is_valid)
-      return res.status(404).json({ error: "this session is no longer valid" });
+      return res.status(404).json({ error: "Sessão inválida" });
     //checks if the user has permission to access the endpoint
     const grant: any = await permission.verify(user_id, path);
     if (!grant.granted) {
       return res
         .status(404)
-        .json({ error: "you don't have permission to access this route" });
+        .json({ error: "Você não possui permissão para acesso" });
     }
     return res.json(await reserveModel.detail(reserveId));
   }

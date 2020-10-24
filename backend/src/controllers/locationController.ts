@@ -48,14 +48,14 @@ class LocationController{
         const {path} = req.route
         const {user_id,authorization} = req.headers
         const {locationId} = req.params
-        if(!verifier.verifyNullIncommingFields({locationId})) return res.status(404).json({"message":"Required field not informated"});
+        if(!verifier.verifyNullIncommingFields({locationId})) return res.status(404).json({"message":"Campo obrigatório não informado"});
         //Checks whether the session is valid
         const logged = await session.verify(authorization)
-        if(!logged.is_valid)return res.status(404).json({error:"this session is no longer valid"});
+        if(!logged.is_valid)return res.status(404).json({error:"Sessão inválida"});
         //checks if the user has permission to access the endpoint
         const grant:any = await permission.verify(user_id,path);
         if(!grant.granted){
-        return res.status(404).json({error:"you don't have permission to access this route"})
+        return res.status(404).json({error:"Você não possui permissão para acesso"})
         }
         const response = await model.delete(Number(locationId))
         return res.json(response) 
@@ -67,11 +67,11 @@ class LocationController{
         const {term,type} = req.query
         //Checks whether the session is valid
         const logged = await session.verify(authorization)
-        if(!logged.is_valid)return res.status(404).json({error:"this session is no longer valid"});
+        if(!logged.is_valid)return res.status(404).json({error:"Sessão inválida"});
         //checks if the user has permission to access the endpoint
         const grant:any = await permission.verify(user_id,path);
         if(!grant.granted){
-        return res.status(404).json({error:"you don't have permission to access this route"})
+        return res.status(404).json({error:"Você não possui permissão para acesso"})
         }
         return res.json(await model.search(term,type))
     }
@@ -80,14 +80,14 @@ class LocationController{
         const {path} = req.route
         const {user_id,authorization} = req.headers
         const {locationId} = req.params
-        if(!verifier.verifyNullIncommingFields({locationId,user_id,authorization})) return res.status(404).json({"message":"Required field not informated"});
+        if(!verifier.verifyNullIncommingFields({locationId,user_id,authorization})) return res.status(404).json({"message":"Campo obrigatório não informado"});
         //Checks whether the session is valid
         const logged = await session.verify(authorization)
-        if(!logged.is_valid)return res.status(404).json({error:"this session is no longer valid"});
+        if(!logged.is_valid)return res.status(404).json({error:"Sessão inválida"});
         //checks if the user has permission to access the endpoint
         const grant:any = await permission.verify(user_id,path);
         if(!grant.granted){
-        return res.status(404).json({error:"you don't have permission to access this route"})
+        return res.status(404).json({error:"Você não possui permissão para acesso"})
         }
         return res.json(await model.detail(locationId))
         
@@ -97,14 +97,14 @@ class LocationController{
         const {path} = req.route
         const {user_id,authorization} = req.headers
         const {term,type} = req.query
-        if(!verifier.verifyNullIncommingFields({user_id,authorization})) return res.status(404).json({"message":"Required field not informated"});
+        if(!verifier.verifyNullIncommingFields({user_id,authorization})) return res.status(404).json({"message":"Campo obrigatório não informado"});
         //Checks whether the session is valid
         const logged = await session.verify(authorization)
-        if(!logged.is_valid)return res.status(404).json({error:"this session is no longer valid"});
+        if(!logged.is_valid)return res.status(404).json({error:"Sessão inválida"});
         //checks if the user has permission to access the endpoint
         const grant:any = await permission.verify(user_id,path);
         if(!grant.granted){
-        return res.status(404).json({error:"you don't have permission to access this route"})
+        return res.status(404).json({error:"Você não possui permissão para acesso"})
         }
         return res.send(model.search(term,type))
     }

@@ -25,7 +25,7 @@ class ReserveModel{
         .whereBetween('time_end',[reserve.time_end,reserve.time_start])
         if(labIsTaken[0]){
             return {
-                message : "O espaço já está reservado"
+                message : "Espaço já reservado"
             }
         }
         const insertedRows = await db('reservations').insert(reserve)

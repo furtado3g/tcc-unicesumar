@@ -47,7 +47,7 @@ class TypeLocationModel{
         .select('*')
         if(idExists[0]){
             return {
-                message : "Espaço não registrado"
+                message : "Espaço não cadastrado"
             }
         }
         await db('type_location')

@@ -71,7 +71,7 @@ select {
 }
 
 .btn-success {
-  background-color: rgba(82, 206, 0, 0.801);
+  background-color: #787877;
   color: white;
   transform: 2s;
 }
@@ -81,7 +81,7 @@ select {
 }
 
 .btn-danger {
-  background-color: tomato;
+  background-color: #595959;
   color: white;
   transform: 2s;
 }
