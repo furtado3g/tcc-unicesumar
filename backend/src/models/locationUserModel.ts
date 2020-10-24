@@ -14,7 +14,7 @@ class LocationUserModel{
         .where('location_id',locationUser.location_id)
         if (relationExists[0]){
             return {
-                error : "Relacionamento existente"
+                error : "Relacionamento já existente"
             }            
         }
         await db('user_location')

@@ -76,7 +76,7 @@ class PermissionModel{
             {"endpoint":url}
         ).then(selectedTodo => {
             console.log(selectedTodo)
-            returnable = {message:"Novo endpoint cadastrado com sucesso"}
+            returnable = {message:"Endpoint cadastrado com sucesso"}
         })
         .catch(e=>{
             returnable = {error:e}

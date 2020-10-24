@@ -13,7 +13,7 @@ function Home() {
         "showDuration": 5000,
         "timeOut": 5000,
       }
-      toastr.error("É necessario estar logado para obter acesso ao Sistema")
+      toastr.error("É necessário estar logado para obter acesso ao sistema")
       window.location.replace('/')
     }
     if (moment(expires_at) < moment()) {
@@ -24,7 +24,7 @@ function Home() {
         "showDuration": 5000,
         "timeOut": 5000,
       }
-      toastr.warning("Sua Sessão expirou")
+      toastr.warning("Sessão expirada")
       window.location.replace('/')
     }
   }, [])

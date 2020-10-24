@@ -27,7 +27,7 @@ export default class sessionController {
             return returnableToken
         } else {
             return {
-                message: "Error persisting session in the database"
+                message: "Erro ao persistir sessão no banco de dados"
             }
         }
     }
@@ -37,7 +37,7 @@ export default class sessionController {
         const { authorization } = req.headers
         const { reserveId } = req.params;
         if (!verifier.verifyNullIncommingFields({ reserveId, authorization, userId, authToken }))
-            return res.status(404).json({ message: "Required field not informated" });
+            return res.status(404).json({ message: "Campo obrigatório não informado" });
         const model = new SessionModel()
         console.log(authorization)
         return res.json(await model.renew({

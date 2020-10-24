@@ -103,8 +103,8 @@ export default class UserModel{
         .where('email',email);
         if(!user[0]) return false;
         Mail.to = email
-        Mail.subject = "RLAB: Recuperação de senha" 
-        Mail.message = "Senha alterada com sucesso <br> Sua nova senha é : "+random
+        Mail.subject = "RLAB: Recuperação de senha." 
+        Mail.message = "Senha alterada com sucesso. <br> Sua nova senha é : "+random
         Mail.sendMail()
         const updatedRows = await db('users')
         .where('id',user[0].id)

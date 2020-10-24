@@ -55,7 +55,7 @@ function User() {
                         <Table celled>
                             <Table.Header>
                                 <Table.Row>
-                                    <Table.HeaderCell>Usuario</Table.HeaderCell>
+                                    <Table.HeaderCell>Usuário</Table.HeaderCell>
                                     <Table.HeaderCell>Opções</Table.HeaderCell>
                                 </Table.Row>
                             </Table.Header>
@@ -74,13 +74,13 @@ function User() {
                                         })
                                     }else{
                                         return(
-                                            <Table.Cell rowSpan='2'>Nenhum Usuario Encontado</Table.Cell>
+                                            <Table.Cell rowSpan='2'>Nenhum Usuário Encontado</Table.Cell>
                                         )
                                     }
                                 }}
                             </Table.Body>
                         </Table>
-                        <a onClick={handleNextPage}>Proximo</a>
+                        <a onClick={handleNextPage}>Próximo</a>
                     </div>
                 </Panel>
             </div>

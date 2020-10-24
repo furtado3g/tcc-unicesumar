@@ -15,7 +15,7 @@ function ChangePassword(props: any) {
     const expires_at = localStorage.getItem("expires_at")
     useEffect(()=>{
         if (sessionToken == null) {
-          alert("É necessario estar logado Para obter acesso ao Sistema")
+          alert("É necessário estar logado para obter acesso ao Sistema")
           window.location.replace('/')
         }
         if (moment(expires_at) < moment()) {
@@ -28,9 +28,9 @@ function ChangePassword(props: any) {
         const token: any = localStorage.getItem("sessionToken")
         const user: any = localStorage.getItem("userId")
         if (actualPassword === '' || newPassword === '' || redundacy === '') 
-            return alert("Campos Obrigatórios estão em branco")
-        if (newPassword !== redundacy) return alert("As senhas não coincidem")
-        if (actualPassword === newPassword) return alert("A nova senha não pode ser identica a atual")
+            return alert("Campos obrigatórios não preenchidos")
+        if (newPassword !== redundacy) return alert("As senhas não correspondem")
+        if (actualPassword === newPassword) return alert("Nova senha corresponde a senha atual")
         const data = {
             url: "http://localhost:3333/user/changePassword",
             options: {
@@ -60,7 +60,7 @@ function ChangePassword(props: any) {
     return (
         <div className="container-admin">
             <Sidebar />
-            <Panel title="Mudar Senha">
+            <Panel title="Alterar Senha">
                 <PanelSidebar>
                 <PanelSidebarItem id="active">
                         <Link to="/changePassword">

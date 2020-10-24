@@ -133,7 +133,7 @@ function EditMyInfo() {
                             <option value="">Selecione</option>
                             <option value="1">Coordenador</option>
                             <option value="2">Professor</option>
-                            <option value="3">Laboratorista</option>
+                            <option value="3">Gestor de Espaço</option>
                             </select>
                         </div>
                     </div>
