@@ -71,7 +71,7 @@ function User() {
                                         <Menu floated='right' pagination>
                                             <Menu.Item as='a' icon onClick={handlePreviousPage} disabled={page === 0}>
                                                 <Icon name='chevron left' />
-                                            </Menu.Item>
+                                            </Menu.Item> 
                                             <Menu.Item as='a'>{page + 1}</Menu.Item>
                                             <Menu.Item as='a' icon onClick={handleNextPage} disabled={maxPages <= page}>
                                                 <Icon name='chevron right' />
