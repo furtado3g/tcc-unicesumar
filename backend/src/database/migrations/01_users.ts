@@ -31,6 +31,7 @@ export async function up(knex: Knex) {
     table.string("email").notNullable();
     table.string("last_password").nullable();
     table.dateTime("created_at").defaultTo(knex.fn.now())
+    table.boolean("active").defaultTo(true)
     table
       .integer("user_type")
       .references('id')

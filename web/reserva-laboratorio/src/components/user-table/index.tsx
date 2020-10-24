@@ -1,5 +1,7 @@
 import React , {memo} from 'react'
-import { Table } from 'semantic-ui-react'
+import { Table ,Button} from 'semantic-ui-react'
+import {Link} from 'react-router-dom';
+import './styles.css'
 function UserTable(props: any){
     const tableData = props.data
     return (
@@ -17,15 +19,17 @@ function UserTable(props: any){
                             return (
                                 <Table.Row key={data.id}>
                                     <Table.Cell>{data.name}</Table.Cell>
-                                    <Table.Cell>
-                                        <button className="btn ">
-                                            <i className="fas fa-user-edit"></i>
-                                            Editar
-                                        </button>
-                                        <button className="btn ">
+                                    <Table.Cell textAlign='center'>
+                                        <Link to={`/users/${data.id}`}>
+                                            <Button color='grey'>
+                                                <i className="fas fa-user-edit"></i>
+                                                Editar
+                                            </Button>
+                                        </Link>
+                                        <Button color='black'>
                                             <i className="fas fa-user-minus"></i>
                                             Excluir
-                                        </button>
+                                        </Button>
                                     </Table.Cell>
                                 </Table.Row>
                             )

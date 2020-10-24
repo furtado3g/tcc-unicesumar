@@ -17,15 +17,9 @@ function AdminPanelSidebar(props:any) {
     return(
         <PanelSidebar>
           <PanelSidebarItem className="newUser">
-            <Link to="/user/add">
-              <i className="fas fa-user-plus"></i>
-              Novo Usuário
-            </Link>
-          </PanelSidebarItem>
-          <PanelSidebarItem className="editUser">
-            <Link to="/user/edit">
-              <i className="fas fa-user-edit"></i>
-              Editar Usuário
+            <Link to="/users/">
+              <i className="fas fa-users"></i>
+              Usuários
             </Link>
           </PanelSidebarItem>
           <PanelSidebarItem className="newLocation">

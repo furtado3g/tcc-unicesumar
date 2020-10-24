@@ -53,12 +53,12 @@ export default class userController {
    if(!verifier.verifyNullIncommingFields({name,username,email,password,userid,authorization})) return res.status(404).json({"error":"Campo obrigatório não informado"});
     //Checks whether the session is valid
     const logged = await session.verify(authorization)
-    if(!logged.is_valid)return res.status(404).json({error:"Sessão inválida"});
+    if(!logged.is_valid) return res.status(404).json({error:"Sessão inválida"});
     //checks if the user has permission to access the endpoint
-    const grant:any = await permission.verify(userid,path);
-    if(!grant.granted){
-      return res.status(404).json({error:"Você não possui permissão para acesso"})
-    }
+    //const grant:any = await permission.verify(userid,path);
+    //if(!grant.granted){
+    //  return res.status(404).json({error:"Você não possui acesso"})
+    //}
     password = digestHash(password)
     const last_password = password
     const userModel = new UserModel()
@@ -156,6 +156,18 @@ export default class userController {
       return res.status(404).json(data)
     }
     return res.json(data)
+  }
+
+  async disableUser(req:Request,res:Response){
+    const {userid,authorization} = req.headers
+    const {user,action} = req.body 
+    if(!verifier.verifyNullIncommingFields({userid,authorization,user,action})) return res.status(404).json({"message":"Campo obrigatório"});
+    const userModel = new UserModel()
+    const response = await userModel.deactivate(user)||''
+    if(response.includes('Erro') || response === ''){
+      return res.status(404).json({"error":response})
+    }
+    return res.json({message:response})
   }
 
 }

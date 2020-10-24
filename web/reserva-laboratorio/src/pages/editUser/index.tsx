@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Panel from "../../components/panel";
 import PanelSidebar from "../../components/panel-sidebar";
 import PanelSidebarItem from "../../components/panel-sidebar-item";
@@ -13,32 +13,12 @@ function EditUser() {
   const [name, nameState] = useState("");
   const [username, usernameState] = useState("");
   const [password, passwordState] = useState("");
-  const [redundacy, redundacyState] = useState("");
   const [email, emailState] = useState("");
   const [userType, userTypeState] = useState("");
   const [response, responseTypeState] = useState("");
-  let Options : {}
+  const { id } = useParams(); // eslint-disable-line no-eval
   async function handleWithPageLoad() {
-    const data = {
-      url: "http://localhost:3333/users",
-      options: {
-        method: "get",
-        headers: {
-          authorization: sessionToken || "",
-          userId: user,
-        },
-      },
-    };
-    await fetch(data.url, data.options)
-      .then((data) => {
-        return data.json();
-      })
-      .then((response) => {
-        response.map((user: any) => {
-          let element = new Option(user.id + "-" + user.name, user.id);
-          document.querySelector("#userList")?.appendChild(element);
-        });
-      });
+    handleWithUserSelected(id)
   }
 
   async function handleWithAlerts() {
@@ -66,9 +46,6 @@ function EditUser() {
         },
       },
     };
-    if (password !== redundacy) {
-      return responseTypeState("Senhas não correspondem");
-    }
     await fetch(data.url, data.options)
       .then(async (data) => {
         const { message, error } = await data.json();
@@ -113,7 +90,6 @@ function EditUser() {
         emailState(email);
         usernameState(username);
         userTypeState(user_type);
-        alert(user_type);
       });
   }
 
@@ -137,18 +113,6 @@ function EditUser() {
         <div className="panel-content">
           <div className="row">
             <h2 className="page-name">Editar Usuário</h2>
-          </div>
-          <div className="row">
-            <div className="col-12">
-              <label htmlFor="userList">Usuário</label>
-              <select
-                id="userList"
-                className="form-control"
-                onChange={(e) => handleWithUserSelected(e.target.value)}
-              >
-                <option value="">Selecione</option>
-              </select>
-            </div>
           </div>
           <div className="row">
             <div className="col-6">
@@ -210,7 +174,7 @@ function EditUser() {
               <button className="btn btn-success" onClick={handleWithSubmit}>
                 Salvar
               </button>
-              <Link to="/admin">
+              <Link to="/users">
                 <button className="btn btn-danger">Voltar</button>
               </Link>
             </div>

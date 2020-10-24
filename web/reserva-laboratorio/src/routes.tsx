@@ -28,8 +28,8 @@ function Routes (){
                 <Route exact={true} path="/reserves" component={Reservation}/>
                 <Route exact={true} path="/reserves/add" component={NewReserve}/>
                 <Route exact={true} path="/history" component={History}/>
-                <Route exact={true} path="/user/" component={User}/>
-                <Route exact={true} path="/user/edit" component={EditUser}/>
+                <Route exact={true} path="/users/" component={User}/>
+                <Route exact={true} path="/users/:id" component={EditUser}/>
                 <Route exact={true} path="/location/add" component={NewLocation}/>
                 <Route exact={true} path="/location/edit" component={EditLocation}/>
             </Switch>

@@ -14,6 +14,13 @@ interface userInterface{
     user_type : string;
 }
 
+interface updtUserInterface{
+    name:string;
+    username:string;
+    email:string;
+    user_type : string;
+}
+
 interface authUser{
     username:string;
     password:string;
@@ -53,6 +60,7 @@ export default class UserModel{
         const usernameExists = await db('users')
         .select('*')
         .where('username',user.username)
+        .where('active',true)
         if(usernameExists[0]){
             returnable =  {
                 "error" : "Nome de usuário já cadastrado"
@@ -61,6 +69,7 @@ export default class UserModel{
         const search = await db('users')
         .where('username',user.username)
         .where('password',user.password)
+        .where('active',true)
         .then((data: any[])=>{
             if(data[0]){
                 returnable={is_valid : true,user:data[0]}
@@ -72,7 +81,7 @@ export default class UserModel{
         return returnable
     }
     
-    async update(user:any){
+    async update(user:updtUserInterface){
         const returnable = {
             message: "message"
         }
@@ -82,10 +91,11 @@ export default class UserModel{
         if(!users[0])return {message:"No user found"} 
         await db('users')
         .where('username',user.username)
+        .where('active',true)
         .update({
             name:user.name,
             email:user.email,
-            user_type : user.user_type
+            user_type : user.user_type,
         })
         .then((data: any)=>{
             returnable.message = "Alteração de usuário realizado com sucesso"
@@ -95,12 +105,29 @@ export default class UserModel{
         })
     }
 
+    async deactivate(userId:number){
+        let returnable
+        await db('users')
+        .update({
+            active : false
+        })
+        .where('id',userId)
+        .then(data=>{
+            returnable = "Usuário desativado com sucesso"
+        })
+        .catch(e=>{
+            returnable = "Erro ao desativar usuário"
+        })
+        return returnable
+    }
+
     async recoveryPassword(email:string){
         let random = randomBytes(20).toString('hex');
         let digestedRandom = digestHash(random)
         let returnable:any
         const user = await db('users')
         .select('password','id')
+        .where('active',true)
         .where('email',email);
         if(!user[0]) return false;
         Mail.to = email
@@ -126,6 +153,7 @@ export default class UserModel{
         let returnable = {updated:true}
         const user = await db('users')
         .select('password')
+        .where('active',true)
         .where('id',userId);
         if(!user[0])return {message:"No user found"}
         const updatedRows = db('users')
@@ -146,6 +174,7 @@ export default class UserModel{
         let returnable:boolean = true
         await db('users')
         .where('id',userId)
+        .where('active',true)
         .where('password',actualPassword)
         .select('*')
         .then((data: any)=>{
@@ -161,6 +190,7 @@ export default class UserModel{
         await db('users')
         .where('id', usersId)
         .select('*')
+        .where('active',true)
         .then((data)=>{
             returnable = data[0]
         }).catch(err=>{
@@ -177,13 +207,14 @@ export default class UserModel{
         .select('id')
         await db('users')
         .select('id','name')
+        .where('active',true)
         .orderBy('name')
         .limit(perPage || 10)
         .offset((page*perPage) || 1)       
         .then(data=>{
             if(data[0]){
                 returnable = {
-                    numberofPages:numberofPages.length/perPage||10,
+                    numberofPages:numberofPages.length < perPage?1 : numberofPages.length/perPage||10,
                     data
                 }
             }else{
