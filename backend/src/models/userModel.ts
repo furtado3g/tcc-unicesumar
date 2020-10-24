@@ -3,6 +3,7 @@ import db from "../database/connection";
 import digestHash from '../util/digestHash'
 import  Mail from '../util/mailer'
 import fs from 'fs'
+import { count } from "console";
 
 interface userInterface{
     name:string;
@@ -172,6 +173,8 @@ export default class UserModel{
 
     async list(perPage:number,page:number){
         let returnable
+        const numberofPages = await db('users')
+        .select('id')
         await db('users')
         .select('id','name')
         .orderBy('name')
@@ -179,7 +182,10 @@ export default class UserModel{
         .offset((page*perPage) || 1)       
         .then(data=>{
             if(data[0]){
-                returnable = data
+                returnable = {
+                    numberofPages:numberofPages.length/perPage||10,
+                    data
+                }
             }else{
                 returnable = {
                     error : "Usuário não encontrado"

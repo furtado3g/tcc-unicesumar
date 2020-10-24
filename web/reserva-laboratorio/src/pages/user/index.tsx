@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import Sidebar from "../../components/sidebar"
 import Panel from '../../components/panel'
 import AdminPanelSidebar from '../../components/admin-panel-sidebar'
+import UserTable from '../../components/user-table/'
 import 'semantic-ui-css/semantic.min.css'
 import { Icon, Menu, Table } from 'semantic-ui-react'
 import './styles.css'
 function User() {
 
-    const [page, pageState] = useState(1)
+    const [page, pageState] = useState(0)
+    const [maxPages, maxPagesState] = useState(0)
     const token = localStorage.getItem("sessionToken") || ''
     const user = localStorage.getItem("userId") || ''
     const [tableData, tableDataState] = useState([])
@@ -25,12 +27,18 @@ function User() {
         }
         await fetch(data.url, data.options)
             .then(response => {
-                response.json().then(async data => {
-                    tableDataState(data)
-                    data.map((data: any) => {
-                        console.log(data)
-                    })
+                response.json().then(async resData => {
+                    const { numberofPages, data } = resData
+                    if (data) {
+                        maxPagesState(numberofPages - 1)
+                        tableDataState(data)
+                    }
+                }).catch(err => {
+                    tableDataState([])
                 })
+            })
+            .catch(e => {
+                tableDataState([])
             })
     }
 
@@ -38,9 +46,13 @@ function User() {
         pageState(page + 1)
     }
 
+    function handlePreviousPage() {
+        pageState(page - 1)
+    }
+
     useEffect(() => {
         handleWithPageLoad()
-    }, ['loading', page])
+    }, [page])
 
     return (
         <>
@@ -52,35 +64,23 @@ function User() {
                         <div className="row">
                             <h2 className="page-name">Usuários</h2>
                         </div>
-                        <Table celled>
-                            <Table.Header>
+                        <UserTable data={tableData} >
+                            <Table.Footer>
                                 <Table.Row>
-                                    <Table.HeaderCell>Usuario</Table.HeaderCell>
-                                    <Table.HeaderCell>Opções</Table.HeaderCell>
+                                    <Table.HeaderCell colSpan='3'>
+                                        <Menu floated='right' pagination>
+                                            <Menu.Item as='a' icon onClick={handlePreviousPage} disabled={page === 0}>
+                                                <Icon name='chevron left' />
+                                            </Menu.Item>
+                                            <Menu.Item as='a'>{page + 1}</Menu.Item>
+                                            <Menu.Item as='a' icon onClick={handleNextPage} disabled={maxPages <= page}>
+                                                <Icon name='chevron right' />
+                                            </Menu.Item>
+                                        </Menu>
+                                    </Table.HeaderCell>
                                 </Table.Row>
-                            </Table.Header>
-                            <Table.Body>
-                                {() => {
-                                    if (tableData[0] !== null) {
-                                        tableData.map((data: any) => {
-                                            console.log(data)
-                                            return (
-                                                <Table.Row>
-                                                    <Table.Cell>{data.name}</Table.Cell>
-                                                    <Table.Cell>Cell</Table.Cell>
-                                                </Table.Row>
-                                            )
-
-                                        })
-                                    }else{
-                                        return(
-                                            <Table.Cell rowSpan='2'>Nenhum Usuario Encontado</Table.Cell>
-                                        )
-                                    }
-                                }}
-                            </Table.Body>
-                        </Table>
-                        <a onClick={handleNextPage}>Proximo</a>
+                            </Table.Footer>
+                        </UserTable>
                     </div>
                 </Panel>
             </div>
