@@ -83,7 +83,7 @@ function User() {
                             </Table.Footer>
                         </UserTable>
                         <div className="row text-center">
-                            <Link to="/users/add">
+                            <Link to="/user/add">
                                 <button className="btn btn-success">
                                     <i className="fas fa-plus-circle"></i>
                                     Adicionar Usuário
