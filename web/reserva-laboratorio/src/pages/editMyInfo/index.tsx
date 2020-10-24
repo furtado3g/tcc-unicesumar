@@ -14,6 +14,7 @@ function EditMyInfo() {
     const [username, usernameState] = useState('')
     const [user_type, user_typeState] = useState('')
 
+    
     async function handleWithSubmit(){
         const data = {
             url : "http://localhost:3333/user",
@@ -39,7 +40,8 @@ function EditMyInfo() {
         })
         .then((res)=>{
             alert(res.message);
-        }).catch((err)=>{alert(err)})
+        })
+        .catch((err)=>{console.log(err)})
     }
 
     async function handleWithPageLoad() {
