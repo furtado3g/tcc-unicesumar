@@ -6,6 +6,7 @@ import UserTable from '../../components/user-table/'
 import 'semantic-ui-css/semantic.min.css'
 import { Icon, Menu, Table } from 'semantic-ui-react'
 import './styles.css'
+import { Link } from "react-router-dom";
 function User() {
 
     const [page, pageState] = useState(0)
@@ -71,7 +72,7 @@ function User() {
                                         <Menu floated='right' pagination>
                                             <Menu.Item as='a' icon onClick={handlePreviousPage} disabled={page === 0}>
                                                 <Icon name='chevron left' />
-                                            </Menu.Item> 
+                                            </Menu.Item>
                                             <Menu.Item as='a'>{page + 1}</Menu.Item>
                                             <Menu.Item as='a' icon onClick={handleNextPage} disabled={maxPages <= page}>
                                                 <Icon name='chevron right' />
@@ -81,6 +82,14 @@ function User() {
                                 </Table.Row>
                             </Table.Footer>
                         </UserTable>
+                        <div className="row text-center">
+                            <Link to="/users/add">
+                                <button className="btn btn-success">
+                                    <i className="fas fa-plus-circle"></i>
+                                    Adicionar Usuário
+                                </button>
+                            </Link>
+                        </div>
                     </div>
                 </Panel>
             </div>
