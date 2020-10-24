@@ -63,7 +63,7 @@ function User() {
                     <AdminPanelSidebar />
                     <div className="panel-content">
                         <div className="row">
-                            <h2 className="page-name">Usuários</h2>
+                            <h2 className="page-name">Usuários Cadastrados</h2>
                         </div>
                         <UserTable data={tableData} >
                             <Table.Footer>
