@@ -31,11 +31,10 @@ function EditUser() {
     const data = {
       url: "http://localhost:3333/user/",
       options: {
-        method: "post",
+        method: "put",
         body: JSON.stringify({
           name,
           username,
-          password,
           email,
           userType,
         }),
@@ -53,7 +52,7 @@ function EditUser() {
           handleWithAlerts();
           responseTypeState(message);
           setTimeout(() => {
-            window.location.replace("/admin");
+            window.location.replace("/users/");
           }, 5000);
         } else {
           handleWithAlerts();

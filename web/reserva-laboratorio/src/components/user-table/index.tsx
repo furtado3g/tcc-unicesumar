@@ -4,6 +4,33 @@ import {Link} from 'react-router-dom';
 import './styles.css'
 function UserTable(props: any){
     const tableData = props.data
+    const token:any  = localStorage.getItem("sessionToken")
+    const user :any  = localStorage.getItem("userId")
+
+    async function handleWithDeleteUser(userId:number){
+        const data = {
+            url : "http://localhost:3333/user/"+userId,
+            options : {
+                method: "delete",
+                body : JSON.stringify({
+                    action : "delete"
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization : token,
+                    userId: user
+                }
+            }
+        }
+        await fetch(data.url, data.options)
+        .then(response =>{
+            return response.json()
+        })
+        .then(json=>{
+            alert(json)
+        })
+    }
+
     return (
         <Table celled>
             <Table.Header>
@@ -26,7 +53,7 @@ function UserTable(props: any){
                                                 Editar
                                             </Button>
                                         </Link>
-                                        <Button color='black'>
+                                        <Button color='black' onClick={()=>{handleWithDeleteUser(data.id)}}>
                                             <i className="fas fa-user-minus"></i>
                                             Excluir
                                         </Button>

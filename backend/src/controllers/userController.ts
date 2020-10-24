@@ -81,7 +81,7 @@ export default class userController {
   }
 
   async update(req:Request,res:Response){
-    const {name,username,email,user_type} = req.body
+    const {name,username,email,userType} = req.body
     const {authorization} = req.headers
     if(!verifier.verifyNullIncommingFields({name,username,email,authorization})) return res.status(404).json({"error":"Campo obrigatório"});
     //Checks whether the session is valid
@@ -92,7 +92,7 @@ export default class userController {
       name,
       username,
       email,
-      user_type
+      user_type:userType
     })
     if(created != null){
       return res.json({"message":"Dados atualizados com sucesso"})
@@ -160,10 +160,11 @@ export default class userController {
 
   async disableUser(req:Request,res:Response){
     const {userid,authorization} = req.headers
-    const {user,action} = req.body 
+    const {action} = req.body 
+    const {user} = req.params
     if(!verifier.verifyNullIncommingFields({userid,authorization,user,action})) return res.status(404).json({"message":"Campo obrigatório"});
     const userModel = new UserModel()
-    const response = await userModel.deactivate(user)||''
+    const response = await userModel.deactivate(Number(user))||''
     if(response.includes('Erro') || response === ''){
       return res.status(404).json({"error":response})
     }
