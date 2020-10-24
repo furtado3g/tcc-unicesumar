@@ -65,51 +65,10 @@ function User() {
                             <h2 className="page-name">Usuários</h2>
                         </div>
                         <UserTable data={tableData} >
-                            <Table.Footer>
-                                <Table.Row>
-<<<<<<< HEAD
-                                    <Table.HeaderCell colSpan='3'>
-                                        <Menu floated='right' pagination>
-                                            <Menu.Item as='a' icon onClick={handlePreviousPage} disabled={page === 0}>
-                                                <Icon name='chevron left' />
-                                            </Menu.Item>
-                                            <Menu.Item as='a'>{page + 1}</Menu.Item>
-                                            <Menu.Item as='a' icon onClick={handleNextPage} disabled={maxPages <= page}>
-                                                <Icon name='chevron right' />
-                                            </Menu.Item>
-                                        </Menu>
-                                    </Table.HeaderCell>
-                                </Table.Row>
-                            </Table.Footer>
-                        </UserTable>
-=======
-                                    <Table.HeaderCell>Usuário</Table.HeaderCell>
-                                    <Table.HeaderCell>Opções</Table.HeaderCell>
-                                </Table.Row>
-                            </Table.Header>
-                            <Table.Body>
-                                {() => {
-                                    if (tableData[0] !== null) {
-                                        tableData.map((data: any) => {
-                                            console.log(data)
-                                            return (
-                                                <Table.Row>
-                                                    <Table.Cell>{data.name}</Table.Cell>
-                                                    <Table.Cell>Cell</Table.Cell>
-                                                </Table.Row>
-                                            )
 
-                                        })
-                                    }else{
-                                        return(
-                                            <Table.Cell rowSpan='2'>Nenhum Usuário Encontado</Table.Cell>
-                                        )
-                                    }
-                                }}
-                            </Table.Body>
-                        </Table>
+                               
+                        </UserTable>
                         <a onClick={handleNextPage}>Próximo</a>
->>>>>>> dca7d32e4dfe3ecfb83acd04ff072e6c84261ba2
                     </div>
                 </Panel>
             </div>
