@@ -105,7 +105,7 @@ export default class UserModel{
         })
     }
 
-    async deactivate(userId:number){
+    async deactivate(userId:any){
         let returnable
         await db('users')
         .update({
@@ -116,6 +116,7 @@ export default class UserModel{
             returnable = "Usuário desativado com sucesso"
         })
         .catch(e=>{
+            console.log(e)
             returnable = "Erro ao desativar usuário"
         })
         return returnable

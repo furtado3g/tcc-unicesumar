@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Panel from "../../components/panel";
-import PanelSidebar from "../../components/panel-sidebar";
-import PanelSidebarItem from "../../components/panel-sidebar-item";
 import Sidebar from "../../components/sidebar";
 import moment from 'moment'
-import toastr from 'toastr'
+import { useToasts } from 'react-toast-notifications';
 import "./styles.css";
 import AdminPanelSidebar from "../../components/admin-panel-sidebar";
+import {useHistory} from 'react-router-dom';
 function NewUser() {
   const sessionToken = localStorage.getItem("sessionToken")
   const expires_at = localStorage.getItem("expires_at")
-  const [loggedUsername, loggedUsernameState] = useState("");
   const [name, nameState] = useState("");
   const [username, usernameState] = useState("");
   const [password, passwordState] = useState("");
@@ -19,7 +17,8 @@ function NewUser() {
   const [email, emailState] = useState("");
   const [userType, userTypeState] = useState("");
   const [response, responseTypeState] = useState("");
-
+  const {addToast} = useToasts()
+  const history = useHistory()
   async function handleWithAlerts() {
     document.querySelector(".alert")?.classList.toggle('hidden')
   }
@@ -72,17 +71,22 @@ function NewUser() {
 
   useEffect(() => {
     if (sessionToken == null) {
-      alert("É necessário estar logado para obter acesso ao sistema")
-      window.location.replace('/')
+      addToast("É necessário estar logado para obter acesso ao sistema",{
+        appearance: 'warning',
+        autoDismiss: true,
+      })
+      history.push('/')
     }
     if (moment(expires_at) < moment()) {
-      alert("Sessão expirada")
-      window.location.replace('/')
+      addToast("Sessão expirada",{
+        appearance: 'warning',
+        autoDismiss: true,
+      })
+      history.push('/')
     }
   }, [])
 
   return (
-    <>
       <div className="container-admin">
         <Sidebar />
         <Panel title="Administrador">
@@ -178,7 +182,6 @@ function NewUser() {
           </div>
         </Panel>
       </div>
-    </>
   );
 }
 

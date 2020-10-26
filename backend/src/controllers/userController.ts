@@ -161,10 +161,10 @@ export default class userController {
   async disableUser(req:Request,res:Response){
     const {userid,authorization} = req.headers
     const {action} = req.body 
-    const {user} = req.params
-    if(!verifier.verifyNullIncommingFields({userid,authorization,user,action})) return res.status(404).json({"message":"Campo obrigatório"});
+    const {id} = req.params
+    if(!verifier.verifyNullIncommingFields({userid,authorization})) return res.status(404).json({"message":"Campo obrigatório"});
     const userModel = new UserModel()
-    const response = await userModel.deactivate(Number(user))||''
+    const response = await userModel.deactivate(id)||''
     if(response.includes('Erro') || response === ''){
       return res.status(404).json({"error":response})
     }
