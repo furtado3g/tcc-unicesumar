@@ -19,13 +19,13 @@ function AdminPanelSidebar(props:any) {
           <PanelSidebarItem className="newUser">
             <Link to="/users/">
               <i className="fas fa-users"></i>
-              Usuários
+              Usuário
             </Link>
           </PanelSidebarItem>
           <PanelSidebarItem className="newLocation">
             <Link to="/location/add">
               <i className="fas fa-map-marker-alt"></i>
-              Cadastrar Espaço
+              Espaço
             </Link>
           </PanelSidebarItem>
           <PanelSidebarItem className="editLocation">

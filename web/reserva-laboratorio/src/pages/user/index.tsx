@@ -5,6 +5,8 @@ import AdminPanelSidebar from '../../components/admin-panel-sidebar'
 import UserTable from '../../components/user-table/'
 import 'semantic-ui-css/semantic.min.css'
 import { Icon, Menu, Table } from 'semantic-ui-react'
+import { ToastProvider } from 'react-toast-notifications';
+
 import './styles.css'
 import { Link } from "react-router-dom";
 function User() {
@@ -56,14 +58,14 @@ function User() {
     }, [page])
 
     return (
-        <>
+        <ToastProvider>
             <div className="container-admin">
                 <Sidebar />
                 <Panel title="Painel Administrativo">
                     <AdminPanelSidebar />
                     <div className="panel-content">
                         <div className="row">
-                            <h2 className="page-name">Usuários</h2>
+                            <h2 className="page-name">Usuários Cadastrados</h2>
                         </div>
                         <UserTable data={tableData} >
                             <Table.Footer>
@@ -93,7 +95,8 @@ function User() {
                     </div>
                 </Panel>
             </div>
-        </>
+       
+    </ToastProvider>
     );
 }
 
