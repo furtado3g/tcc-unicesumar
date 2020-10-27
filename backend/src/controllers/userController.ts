@@ -162,7 +162,7 @@ export default class userController {
     const {userid,authorization} = req.headers
     const {action} = req.body 
     const {user} = req.params
-    if(!verifier.verifyNullIncommingFields({userid,authorization,user,action})) return res.status(404).json({"message":"Campo obrigatório"});
+    if(!verifier.verifyNullIncommingFields({userid,authorization,user,action})) return res.status(404).json({"message":"Campo obrigatório não Informado"});
     const userModel = new UserModel()
     const response = await userModel.deactivate(Number(user))||''
     if(response.includes('Erro') || response === ''){
