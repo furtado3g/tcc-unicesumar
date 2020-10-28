@@ -48,7 +48,7 @@ class LocationUserModel{
         return returnable
     }
 
-    async list(id:string){
+    async listPerUser(id:string){
         let returnable
         const listOfUserLocatios = await db('user_location')
         .where('user_id',id)

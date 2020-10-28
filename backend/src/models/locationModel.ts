@@ -60,9 +60,20 @@ class LocationModel{
         return  returnable
     }
 
-    async getList(sql:string){
-        const response = await db.raw(sql)
-        return response
+    async getList(perPage:number,page:number){
+        let returnable 
+        const numberofPages =  await db('locations')
+        .select('id')
+        await db('locations')
+        .select('*')
+        .limit(perPage || 10)
+        .offset((page*perPage) || 1)
+        .then(data=>{
+            returnable = {
+                numberofPages : numberofPages.length/(perPage||10),
+                data
+            } 
+        })
     }
 
     async detail(locationId:any){
@@ -111,6 +122,7 @@ class LocationModel{
         }
         return returnable
     }
+
 }
 
 export default LocationModel

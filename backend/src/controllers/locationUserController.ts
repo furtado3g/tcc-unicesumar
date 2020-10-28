@@ -55,7 +55,7 @@ class LocationUserController{
         if(!grant.granted){
         return res.status(404).json({error:"Você não possui permissão para acesso"})
         }
-        return res.json(await model.list(userId))
+        return res.json(await model.listPerUser(userId))
     }
 }
 
