@@ -74,6 +74,7 @@ class LocationModel{
                 data
             } 
         })
+        return returnable
     }
 
     async detail(locationId:any){
