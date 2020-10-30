@@ -64,16 +64,16 @@ class LocationController{
     async list(req:Request,res:Response){
         const {path} = req.route
         const {user_id,authorization} = req.headers
-        const {term,type} = req.query
+        const {perPage,page} = req.query
         //Checks whether the session is valid
         const logged = await session.verify(authorization)
         if(!logged.is_valid)return res.status(404).json({error:"Sessão inválida"});
         //checks if the user has permission to access the endpoint
-        const grant:any = await permission.verify(user_id,path);
-        if(!grant.granted){
-        return res.status(404).json({error:"Você não possui permissão para acesso"})
-        }
-        return res.json(await model.search(term,type))
+        //const grant:any = await permission.verify(user_id,path);
+        //if(!grant.granted){
+        //    return res.status(404).json({error:"Você não possui permissão para acesso"})
+        //}
+        return res.json(await model.getList(Number(perPage),Number(page)))
     }
 
     async detail(req:Request,res:Response){
