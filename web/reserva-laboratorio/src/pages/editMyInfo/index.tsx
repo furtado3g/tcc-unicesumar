@@ -106,7 +106,7 @@ function EditMyInfo() {
                     </div>
                     <div className="row">
                         <div className="col-12">
-                            <label htmlFor="username">Usuario</label>
+                            <label htmlFor="username">Usuário</label>
                             <input 
                                 type="username"
                                 value={username}
@@ -126,6 +126,7 @@ function EditMyInfo() {
                     </div>
                     <div className="row">
                         <div className="col-12">
+                        <label htmlFor="email">Tipo de Usuário</label>
                             <select
                             className="form-control"
                             id="userType"

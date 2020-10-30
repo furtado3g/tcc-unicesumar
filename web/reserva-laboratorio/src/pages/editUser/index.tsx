@@ -6,6 +6,8 @@ import PanelSidebarItem from "../../components/panel-sidebar-item";
 import Sidebar from "../../components/sidebar/index";
 import moment from "moment";
 import AdminPanelSidebar from "../../components/admin-panel-sidebar";
+import { useToasts } from 'react-toast-notifications'
+
 function EditUser() {
   const sessionToken = localStorage.getItem("sessionToken");
   const expires_at = localStorage.getItem("expires_at");
@@ -17,6 +19,8 @@ function EditUser() {
   const [userType, userTypeState] = useState("");
   const [response, responseTypeState] = useState("");
   const { id } = useParams(); // eslint-disable-line no-eval
+  const { addToast } = useToasts()
+
   async function handleWithPageLoad() {
     handleWithUserSelected(id)
   }
@@ -95,11 +99,11 @@ function EditUser() {
   useEffect(() => {
     handleWithPageLoad();
     if (sessionToken == null) {
-      alert("É necessário estar logado para obter acesso ao sistema");
+      addToast("É necessário estar logado para obter acesso ao sistema", {appearance:'warning', autoDismiss: true});
       window.location.replace("/");
     }
     if (moment(expires_at) < moment()) {
-      alert("Sessão expirada");
+      addToast("Sessão expirada", {appearance:'warning', autoDismiss:true});
       window.location.replace("/");
     }
   }, ["loading"]);

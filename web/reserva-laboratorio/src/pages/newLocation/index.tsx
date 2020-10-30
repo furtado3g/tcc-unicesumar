@@ -26,7 +26,7 @@ function NewLocation() {
           </div>
           <div className="row">
             <div className="col-6">
-              <label htmlFor="description">Descricao</label>
+              <label htmlFor="description">Descrição</label>
               <input type="text" className="form-control" id="description" />
             </div>
             <div className="col-6">

@@ -2,11 +2,14 @@ import React,{useState}from "react";
 import { Link } from "react-router-dom";
 import logo from './assets/img/logo.png'
 import "./styles.css";
+import { useToasts } from 'react-toast-notifications'
+
 function Login() {
   
   const [username, usernameState] = useState('');
   const [password, passwordState] = useState('');
   const [error, errorState] = useState('');
+  const { addToast } = useToasts()
 
   function handleWithAlert(){
     document.querySelector(".alert")?.classList.toggle('hidden')
@@ -48,7 +51,7 @@ function Login() {
 
     })
     .catch(e=>{
-      alert(e)
+      addToast(e,{appearance:'warning', autoDismiss: true})
     })
   }
 

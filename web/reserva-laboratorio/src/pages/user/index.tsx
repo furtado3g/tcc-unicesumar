@@ -87,7 +87,7 @@ function User() {
                         <div className="row text-center">
                             <Link to="/user/add">
                                 <button className="btn btn-success">
-                                    <i className="fas fa-plus-circle"></i>
+                                <i className="fas fa-user-plus margin-icon"></i>
                                     Adicionar Usuário
                                 </button>
                             </Link>

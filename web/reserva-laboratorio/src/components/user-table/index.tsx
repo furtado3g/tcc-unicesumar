@@ -40,7 +40,7 @@ function UserTable(props: any) {
       <Table celled>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Usuario</Table.HeaderCell>
+            <Table.HeaderCell>Usuário</Table.HeaderCell>
             <Table.HeaderCell>Opções</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -54,7 +54,7 @@ function UserTable(props: any) {
                     <Table.Cell textAlign="center">
                       <Link to={`/users/${data.id}`}>
                         <Button color="grey">
-                          <i className="fas fa-user-edit"></i>
+                          <i className="fas fa-user-edit margin-icon"></i>
                           Editar
                         </Button>
                       </Link>
@@ -64,7 +64,7 @@ function UserTable(props: any) {
                           handleWithDeleteUser(data.id);
                         }}
                       >
-                        <i className="fas fa-user-minus"></i>
+                        <i className="fas fa-user-times margin icon"></i>
                         Excluir
                       </Button>
                     </Table.Cell>

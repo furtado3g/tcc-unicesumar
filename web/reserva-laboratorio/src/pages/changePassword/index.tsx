@@ -5,21 +5,24 @@ import Panel from '../../components/panel';
 import Sidebar from '../../components/sidebar'
 import PanelSidebar from '../../components/panel-sidebar'
 import PanelSidebarItem from '../../components/panel-sidebar-item'
+import { useToasts } from 'react-toast-notifications'
+
 function ChangePassword(props: any) {
 
     const [actualPassword, actualPasswordState] = useState('')
     const [newPassword, newPasswordState] = useState('')
     const [redundacy, redundacyState] = useState('')
+    const { addToast } = useToasts()
 
     const sessionToken = localStorage.getItem("sessionToken")
     const expires_at = localStorage.getItem("expires_at")
     useEffect(()=>{
         if (sessionToken == null) {
-          alert("É necessário estar logado para obter acesso ao Sistema")
+          addToast("É necessário estar logado para obter acesso ao Sistema", {appearance: 'warning', autoDismiss: true})
           window.location.replace('/')
         }
         if (moment(expires_at) < moment()) {
-          alert("Sua Sessão expirou")
+          addToast("Sua Sessão expirou", {appearance:'info', autoDismiss: true})
           window.location.replace('/')
         }
       },[])
@@ -28,9 +31,9 @@ function ChangePassword(props: any) {
         const token: any = localStorage.getItem("sessionToken")
         const user: any = localStorage.getItem("userId")
         if (actualPassword === '' || newPassword === '' || redundacy === '') 
-            return alert("Campos obrigatórios não preenchidos")
-        if (newPassword !== redundacy) return alert("As senhas não correspondem")
-        if (actualPassword === newPassword) return alert("Nova senha corresponde a senha atual")
+            return addToast("Campos obrigatórios não preenchidos", {appearance: 'warning', autoDismiss: true})
+        if (newPassword !== redundacy) return addToast("As senhas não correspondem", {appearance: 'error', autoDismiss: true})
+        if (actualPassword === newPassword) return addToast("Nova senha corresponde a senha atual", {appearance: 'error', autoDismiss: true})
         const data = {
             url: "http://localhost:3333/user/changePassword",
             options: {
@@ -52,10 +55,10 @@ function ChangePassword(props: any) {
                 return message
             })
             .then(response=>{
-                alert(response)
+                addToast(response, {appearance: 'success', autoDismiss: true})
                 window.location.replace('/home')
             })
-            .catch(e => alert(e))
+            .catch(e => addToast("Erro na requisição. Por favor tente novamente mais tarde.", {appearance: 'warning', autoDismiss: true}))
     }
     return (
         <div className="container-admin">
