@@ -5,7 +5,6 @@ import Panel from "../../components/panel";
 
 function NewLocationType() {
   
-  
   const [description, descriptionState] = useState("");
   const token = localStorage.getItem("sessionToken")||'';
   const user = localStorage.getItem("userId")||'';
