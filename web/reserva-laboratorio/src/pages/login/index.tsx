@@ -43,7 +43,8 @@ function Login() {
       if(data.status === 200){
         const {message,auth,token} = await data.json()
         const{authToken,sessionToken,expires_at} = token 
-        if(!auth||auth !== null)handleWithInsertLocalStorage({auth,authToken,sessionToken,expires_at}){
+        handleWithInsertLocalStorage({auth,authToken,sessionToken,expires_at})
+        if(!auth||auth !== null){
           History.push('/home')
         }
       }else{
