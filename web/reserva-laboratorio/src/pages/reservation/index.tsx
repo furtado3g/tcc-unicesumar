@@ -3,6 +3,7 @@ import Panel from "../../components/panel";
 import PanelSidebar from "../../components/panel-sidebar";
 import PanelSidebarItem from "../../components/panel-sidebar-item";
 import Sidebar from "../../components/sidebar/index";
+
 function Reservation() {
   return (
     <div className="container-admin">

@@ -6,6 +6,7 @@ import Sidebar from '../../components/sidebar'
 import PanelSidebar from '../../components/panel-sidebar'
 import PanelSidebarItem from '../../components/panel-sidebar-item'
 import { useToasts } from 'react-toast-notifications'
+import {useHistory} from 'react-router-dom'
 
 function ChangePassword(props: any) {
 
@@ -13,17 +14,18 @@ function ChangePassword(props: any) {
     const [newPassword, newPasswordState] = useState('')
     const [redundacy, redundacyState] = useState('')
     const { addToast } = useToasts()
+    const History = useHistory();
 
     const sessionToken = localStorage.getItem("sessionToken")
     const expires_at = localStorage.getItem("expires_at")
     useEffect(()=>{
         if (sessionToken == null) {
           addToast("É necessário estar logado para obter acesso ao Sistema", {appearance: 'warning', autoDismiss: true})
-          window.location.replace('/')
+          History.push('/')
         }
         if (moment(expires_at) < moment()) {
           addToast("Sua Sessão expirou", {appearance:'info', autoDismiss: true})
-          window.location.replace('/')
+          History.push('/')
         }
       },[])
 
@@ -56,7 +58,7 @@ function ChangePassword(props: any) {
             })
             .then(response=>{
                 addToast(response, {appearance: 'success', autoDismiss: true})
-                window.location.replace('/home')
+                History.push('/home')
             })
             .catch(e => addToast("Erro na requisição. Por favor tente novamente mais tarde.", {appearance: 'warning', autoDismiss: true}))
     }

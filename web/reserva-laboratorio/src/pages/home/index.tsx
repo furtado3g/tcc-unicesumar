@@ -1,31 +1,22 @@
 import React, { useEffect } from 'react'
 import Sidebar from '../../components/sidebar/index'
 import moment from 'moment'
-import toastr from 'toastr'
+import {useHistory} from 'react-router-dom'
+import { useToasts } from 'react-toast-notifications'
+
 function Home() {
   const sessionToken = localStorage.getItem("sessionToken")
   const expires_at = localStorage.getItem("expires_at")
+  const{addToast} = useToasts();
+  const History = useHistory();
   useEffect(() => {
     if (sessionToken == null) {
-      toastr.options = {
-        "positionClass": "toast-top-right",
-        "preventDuplicates": false,
-        "showDuration": 5000,
-        "timeOut": 5000,
-      }
-      toastr.error("É necessário estar logado para obter acesso ao sistema")
-      window.location.replace('/')
+      addToast("É necessário estar logado para obter acesso ao sistema", {appearance: 'warning', autoDismiss: true})
+      History.push('/')
     }
     if (moment(expires_at) < moment()) {
-      toastr.options = {
-        "positionClass": "toast-top-right",
-        "preventDuplicates": false,
-        "progressBar": false,
-        "showDuration": 5000,
-        "timeOut": 5000,
-      }
-      toastr.warning("Sessão expirada")
-      window.location.replace('/')
+      addToast("Sessão expirada", {appearance: 'warning', autoDismiss: true})
+      History.push('/')
     }
   }, [])
   return (

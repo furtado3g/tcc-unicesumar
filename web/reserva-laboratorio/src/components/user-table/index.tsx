@@ -3,6 +3,7 @@ import { Table, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import {  useToasts } from "react-toast-notifications";
 import "./styles.css";
+
 function UserTable(props: any) {
   const tableData = props.data;
   const token: any = localStorage.getItem("sessionToken");

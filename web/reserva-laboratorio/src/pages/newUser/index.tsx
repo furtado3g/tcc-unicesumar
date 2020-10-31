@@ -7,6 +7,7 @@ import { useToasts } from 'react-toast-notifications';
 import "./styles.css";
 import AdminPanelSidebar from "../../components/admin-panel-sidebar";
 import {useHistory} from 'react-router-dom';
+
 function NewUser() {
   const sessionToken = localStorage.getItem("sessionToken")
   const expires_at = localStorage.getItem("expires_at")
@@ -18,7 +19,7 @@ function NewUser() {
   const [userType, userTypeState] = useState("");
   const [response, responseTypeState] = useState("");
   const {addToast} = useToasts()
-  const history = useHistory()
+  const History = useHistory()
   async function handleWithAlerts() {
     document.querySelector(".alert")?.classList.toggle('hidden')
   }
@@ -54,7 +55,7 @@ function NewUser() {
           handleWithAlerts()
           responseTypeState(message)
           setTimeout(() => {
-            window.location.replace('/admin')
+            History.push('/admin')
           }, 5000)
         } else {
           handleWithAlerts()
@@ -75,14 +76,14 @@ function NewUser() {
         appearance: 'warning',
         autoDismiss: true,
       })
-      history.push('/')
+      History.push('/')
     }
     if (moment(expires_at) < moment()) {
       addToast("Sessão expirada",{
         appearance: 'warning',
         autoDismiss: true,
       })
-      history.push('/')
+      History.push('/')
     }
   }, [])
 

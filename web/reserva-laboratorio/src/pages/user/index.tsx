@@ -6,9 +6,9 @@ import UserTable from '../../components/user-table/'
 import 'semantic-ui-css/semantic.min.css'
 import { Icon, Menu, Table } from 'semantic-ui-react'
 import { ToastProvider } from 'react-toast-notifications';
-
 import './styles.css'
 import { Link } from "react-router-dom";
+
 function User() {
 
     const [page, pageState] = useState(0)

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Panel from "../../components/panel";
-import PanelSidebar from "../../components/panel-sidebar";
-import PanelSidebarItem from "../../components/panel-sidebar-item";
 import Sidebar from "../../components/sidebar/index";
 import moment from "moment";
 import AdminPanelSidebar from "../../components/admin-panel-sidebar";
 import { useToasts } from 'react-toast-notifications'
+import { useHistory } from 'react-router-dom'
 
 function EditUser() {
   const sessionToken = localStorage.getItem("sessionToken");
@@ -20,6 +19,7 @@ function EditUser() {
   const [response, responseTypeState] = useState("");
   const { id } = useParams(); // eslint-disable-line no-eval
   const { addToast } = useToasts()
+  const History = useHistory();
 
   async function handleWithPageLoad() {
     handleWithUserSelected(id)
@@ -56,7 +56,7 @@ function EditUser() {
           handleWithAlerts();
           responseTypeState(message);
           setTimeout(() => {
-            window.location.replace("/users/");
+            History.push('/users/')
           }, 5000);
         } else {
           handleWithAlerts();
@@ -100,11 +100,11 @@ function EditUser() {
     handleWithPageLoad();
     if (sessionToken == null) {
       addToast("É necessário estar logado para obter acesso ao sistema", {appearance:'warning', autoDismiss: true});
-      window.location.replace("/");
+      History.push("/")
     }
     if (moment(expires_at) < moment()) {
       addToast("Sessão expirada", {appearance:'warning', autoDismiss:true});
-      window.location.replace("/");
+      History.push("/")
     }
   }, ["loading"]);
 

@@ -1,10 +1,8 @@
 import React from "react";
 import Panel from "../../components/panel";
-import PanelSidebar from "../../components/panel-sidebar";
-import PanelSidebarItem from "../../components/panel-sidebar-item";
 import Sidebar from "../../components/sidebar";
-import { Link } from "react-router-dom";
 import AdminPanelSidebar from "../../components/admin-panel-sidebar";
+
 function EditLocation() {
   return (
     <div className="container-admin">

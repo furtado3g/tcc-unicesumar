@@ -5,10 +5,13 @@ import Panel from '../../components/panel'
 import PanelSidebar from '../../components/panel-sidebar'
 import PanelSidebarItem from '../../components/panel-sidebar-item'
 import { Link } from 'react-router-dom'
+import { useToasts } from 'react-toast-notifications'
+
 function EditMyInfo() {
     const token:any  = localStorage.getItem("sessionToken")
     const user :any  = localStorage.getItem("userId")
     
+    const {addToast} = useToasts()
     const [name, nameState] = useState('')
     const [email, emailState] = useState('')
     const [username, usernameState] = useState('')
@@ -33,13 +36,12 @@ function EditMyInfo() {
                 }
             }
         }
-        alert(JSON.stringify(data));
         await fetch(data.url, data.options)
         .then((response) =>{
             return response.json();
         })
         .then((res)=>{
-            alert(res.message);
+            addToast(res.message,{appearance: 'success', autoDismiss: true});
         })
         .catch((err)=>{console.log(err)})
     }

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import logo from './assets/img/logo.png'
 import "./styles.css";
 import { useToasts } from 'react-toast-notifications'
+import {useHistory} from 'react-router-dom'
 
 function Login() {
   
@@ -10,6 +11,7 @@ function Login() {
   const [password, passwordState] = useState('');
   const [error, errorState] = useState('');
   const { addToast } = useToasts()
+  const History = useHistory();
 
   function handleWithAlert(){
     document.querySelector(".alert")?.classList.toggle('hidden')
@@ -41,8 +43,9 @@ function Login() {
       if(data.status === 200){
         const {message,auth,token} = await data.json()
         const{authToken,sessionToken,expires_at} = token 
-        if(!auth||auth !== null)handleWithInsertLocalStorage({auth,authToken,sessionToken,expires_at})
-        window.location.replace('/home')
+        if(!auth||auth !== null)handleWithInsertLocalStorage({auth,authToken,sessionToken,expires_at}){
+          History.push('/home')
+        }
       }else{
         const {message} = await data.json()
         errorState(message)
