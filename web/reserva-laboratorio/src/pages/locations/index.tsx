@@ -1,21 +1,21 @@
-import React, { useEffect , useState} from "react";
+import React, { useEffect, useState } from "react";
 import AdminPanelSidebar from "../../components/admin-panel-sidebar";
 import Panel from "../../components/panel";
 import Sidebar from "../../components/sidebar";
+import LocationTable from "../../components/location-table";
+import { useToasts } from "react-toast-notifications";
+import { useHistory } from "react-router-dom";
 import { Table } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import "./styles.css";
-import LocationTable from "../../components/location-table";
-import { useToasts } from "react-toast-notifications";
-import { useHistory} from "react-router-dom";
 
 function Locations() {
     const { addToast } = useToasts();
-    const [pageNumber,pageNumberState] = useState('')
+    const [pageNumber, pageNumberState] = useState('')
     const History = useHistory();
-    const token = localStorage.getItem("sessionToken")||'';
-    const user = localStorage.getItem("userId")||'';
-    let tableData : any 
+    const token = localStorage.getItem("sessionToken") || '';
+    const user = localStorage.getItem("userId") || '';
+    let tableData: any
     async function handleWithPageLoad() {
         const data = {
             url: "http://localhost:3333/locations",
@@ -30,9 +30,9 @@ function Locations() {
 
         await fetch(data.url, data.options).then((response) => {
             if (response.status >= 200 && response.status < 300) {
-                response.json().then((data) => { 
-                  tableData = data.data
-                  pageNumberState(data.numberofPages)
+                response.json().then((data) => {
+                    tableData = data.data
+                    pageNumberState(data.numberofPages)
                 });
             } else {
                 response.json().then((data) => {
@@ -83,7 +83,7 @@ function Locations() {
                         </div>
                         <div className="row">
                             <div className="col-12 text-center">
-                                <button className="btn btn-primary" onClick={e=>{History.push('/location/add')}}>
+                                <button className="btn btn-primary" onClick={e => { History.push('/location/add') }}>
                                     <i className="fas fa-plus-circle"></i>
                                     Adicionar Local
                                 </button>
