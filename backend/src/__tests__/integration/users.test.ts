@@ -1,5 +1,3 @@
-import fetch from   'node-fetch'
-
 jest.mock('fetch')
 
 describe('Entrar e recuperar os tokens da aplicação',()=>{

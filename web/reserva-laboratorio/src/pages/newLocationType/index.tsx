@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Sidebar } from "semantic-ui-react";
+import Sidebar from "../../components/sidebar"
 import AdminPanelSidebar from "../../components/admin-panel-sidebar";
 import Panel from "../../components/panel";
 import { useToasts } from 'react-toast-notifications'

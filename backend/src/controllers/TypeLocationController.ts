@@ -31,31 +31,31 @@ class TypeLocationController{
     async delete(req:Request,res:Response){
         const {path} = req.route
         const {id} = req.params
-        const {user_id,authorization} = req.headers
-        if(!verifier.verifyNullIncommingFields({user_id,authorization,id})) return res.status(404).json({"message":"Campo obrigatório"});
+        const {userid,authorization} = req.headers
+        if(!verifier.verifyNullIncommingFields({userid,authorization,id})) return res.status(404).json({"message":"Campo obrigatório"});
         //Checks whether the session is valid
         const logged = await session.verify(authorization)
         if(!logged.is_valid)return res.status(404).json({error:"Sessão inválida"});
         //checks if the user has permission to access the endpoint
-        const grant:any = await permission.verify(user_id,path);
-        if(!grant.granted){
-        return res.status(404).json({error:"Você não possui permissão para acesso"})
-        }
-        return res.json(await model.delete(Number(id)))
+        //const grant:any = await permission.verify(userid,path);
+        //if(!grant.granted){
+        //    return res.status(404).json({error:"Você não possui permissão para acesso"})
+        //}
+        return res.json(await model.delete(id))
     }
     
     async list(req:Request,res:Response){
         const {path} = req.route
-        const {user_id,authorization} = req.headers
-        if(!verifier.verifyNullIncommingFields({user_id,authorization})) return res.status(404).json({"message":"Campo obrigatório"});
+        const {userid,authorization} = req.headers
+        if(!verifier.verifyNullIncommingFields({userid,authorization})) return res.status(404).json({"message":"Campo obrigatório"});
         //Checks whether the session is valid
         const logged = await session.verify(authorization)
         if(!logged.is_valid)return res.status(404).json({error:"Sessão inválida"});
         //checks if the user has permission to access the endpoint
-        const grant:any = await permission.verify(user_id,path);
-        if(!grant.granted){
-        return res.status(404).json({error:"Você não possui permissão para acesso"})
-        }
+        //const grant:any = await permission.verify(userid,path);
+        //if(!grant.granted){
+        //    return res.status(404).json({error:"Você não possui permissão para acesso"})
+        //}
         const list = await model.list()
         return res.json(list)
     }
