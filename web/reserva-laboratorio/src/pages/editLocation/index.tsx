@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import Panel from "../../components/panel";
 import Sidebar from "../../components/sidebar";
 import AdminPanelSidebar from "../../components/admin-panel-sidebar";
 
 function EditLocation() {
+
+  const[description, descriptionState] = useState("");
+
   return (
     <div className="container-admin">
       <Sidebar />
@@ -27,7 +30,8 @@ function EditLocation() {
           <div className="row">
             <div className="col-6">
               <label htmlFor="description">Descricao</label>
-              <input type="text" className="form-control" id="description" />
+              <input type="text" className="form-control" id="description" 
+              onChange={(e) => descriptionState(e.target.value)}/>
             </div>
             <div className="col-6">
               <label htmlFor="capacity">Capacidade</label>

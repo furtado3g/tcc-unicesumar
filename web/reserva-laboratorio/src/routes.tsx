@@ -15,7 +15,9 @@ import NewLocation from './pages/newLocation'
 import EditLocation from './pages/editLocation'
 import User from './pages/user'
 import Locations from './pages/locations'
-import TypeLocation from './pages/LocationType'
+import LocationType from './pages/locationType'
+import EditTypeLocation from './pages/editTypeLocation'
+import UserLocation from './pages/userLocation'
 import NewLocationType from './pages/newLocationType'
 function Routes (){
     return(
@@ -36,7 +38,9 @@ function Routes (){
                 <Route exact={true} path="/locations/" component={Locations}/>
                 <Route exact={true} path="/location/add" component={NewLocation}/>
                 <Route exact={true} path="/location/:id" component={EditLocation}/>
-                <Route exact={true} path="/locationTypes" component={TypeLocation}/>
+                <Route exact={true} path="/locationTypes/" component={LocationType}/>
+                <Route exact={true} path="/locationType/:id" component={EditTypeLocation}/>
+                <Route exact={true} path="/userLocation" component={UserLocation}/>
                 <Route exact={true} path="/locationType/add" component={NewLocationType}/>
                 
             </Switch>

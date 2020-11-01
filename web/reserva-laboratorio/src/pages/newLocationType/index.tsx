@@ -6,6 +6,10 @@ import { useToasts } from 'react-toast-notifications'
 import { useHistory } from "react-router-dom";
 
 function NewLocationType() {
+<<<<<<< HEAD
+  
+=======
+>>>>>>> 7d6712aa476c9869983557f5188550170d3051f9
   const [description, descriptionState] = useState("");
   const token = localStorage.getItem("sessionToken") || '';
   const user = localStorage.getItem("userId") || '';
