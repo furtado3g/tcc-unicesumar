@@ -40,12 +40,13 @@ class TypeLocationModel{
         return returnable
     }
 
-    async delete (id:number){
+    async delete (id:string){
         let returnable 
         const idExists = await db('type_location')
         .where('id',id)
         .select('*')
-        if(idExists[0]){
+        console.log(idExists)
+        if(!idExists[0]){
             return {
                 message : "Espaço não cadastrado"
             }

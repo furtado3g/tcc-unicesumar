@@ -1,12 +1,72 @@
 import React, { memo } from 'react'
 import { useHistory } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
 import { Table } from 'semantic-ui-react'
 function LocationTypeTable(props: any) {
-    const  data = props.data
+    const data = props.data
     const History = useHistory()
-    
-    function handleWithDetail(id: number) {
-        History.push(`/locationType/${id}`)
+    const { addToast } = useToasts()
+
+    async function handleWithDelete(id: number) {
+        const data = {
+            url: `http://localhost:3333/location/type/${id}`,
+            options: {
+                method: "delete",
+                headers: {
+                    authorization: localStorage.getItem("sessionToken") || '',
+                    userId: localStorage.getItem("userId") || '',
+                }
+            }
+        }
+        await fetch(data.url, data.options)
+            .then(response => {
+                if (response.status == 200) {
+                    response.json().then(data => {
+                        const { message } = data
+                        addToast(message,
+                            {
+                                appearance: "success",
+                                autoDismiss: true,
+                            }
+                        )
+                        History.go(0)
+                    }
+                    ).catch(err => {
+                        addToast("Erro ao Processar Requisição",
+                            {
+                                appearance: "error",
+                                autoDismiss: true,
+                            }
+                        )
+                    })
+                } else {
+                    response.json().then(data => {
+                        const { error, message } = data
+                        if (message) {
+                            addToast("Erro ao Processar Requisição",
+                                {
+                                    appearance: "warning",
+                                    autoDismiss: true,
+                                }
+                            )
+                        } else if (error) {
+                            addToast(error,
+                                {
+                                    appearance: "error",
+                                    autoDismiss: true,
+                                }
+                            )
+                        }
+                    }).catch(err => {
+                        addToast("Erro ao Processar Requisição",
+                            {
+                                appearance: "error",
+                                autoDismiss: true,
+                            }
+                        )
+                    })
+                }
+            })
     }
 
     return (
@@ -19,39 +79,32 @@ function LocationTypeTable(props: any) {
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                {(() => {
-                    if (data[0]) {
-                        data.map((item: any) => {
+                    {(() => {
+                        if (data[0]) {
+
+                            return data.map((item: any) => {
+                                return (
+                                    <Table.Row key={item.id}>
+                                        <Table.Cell>{item.description}</Table.Cell>
+                                        <Table.Cell textAlign="center">
+                                            <button className="btn btn-light" onClick={e=>handleWithDelete(item.id)}>
+                                                <i className="far fa-trash-alt"></i>
+                                            Excluir
+                                        </button>
+                                        </Table.Cell>
+                                    </Table.Row>
+                                )
+                            })
+                        } else {
                             return (
                                 <Table.Row>
-                                    <Table.Cell>{item.description}</Table.Cell>
-                                    <Table.Cell textAlign="center">
-                                        <button
-                                            className="btn btn-light"
-                                            onClick={(e) => {
-                                                handleWithDetail(item.id);
-                                            }}
-                                        >
-                                        <i className="far fa-edit"></i>
-                                        Editar
-                                        </button>
-                                        <button className="btn btn-light">
-                                                <i className="far fa-trash-alt"></i>
-                                        Excluir
-                                        </button>
-                                    </Table.Cell>
+                                    <Table.Cell colSpan="2">Nenhum Local Cadastrado</Table.Cell>
                                 </Table.Row>
-                            )
-                        })
-                    } else {
-                        return (
-                            <Table.Row>
-                                <Table.Cell colSpan="2">Nenhum Local Cadastrado</Table.Cell>
-                            </Table.Row>
-                        );
-                    }
-                })()}
+                            );
+                        }
+                    })()}
                 </Table.Body>
+                {props.children}
             </Table>
         </>
     )
