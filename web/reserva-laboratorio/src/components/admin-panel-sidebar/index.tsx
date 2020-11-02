@@ -23,9 +23,15 @@ function AdminPanelSidebar(props:any) {
             </Link>
           </PanelSidebarItem>
           <PanelSidebarItem className="newLocation">
-            <Link to="/location/add">
+            <Link to="/locations">
               <i className="fas fa-map-marker-alt"></i>
               Espaço
+            </Link>
+          </PanelSidebarItem>
+          <PanelSidebarItem className="editLocation">
+            <Link to="/locationTypes">
+              <i className="fas fa-map-marker-alt"></i>
+              Tipo de Locais
             </Link>
           </PanelSidebarItem>
           <PanelSidebarItem className="editLocation">

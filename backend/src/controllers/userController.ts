@@ -106,6 +106,7 @@ export default class userController {
     if(!verifier.verifyNullIncommingFields({email})) return res.status(404).json({"message":"Campo obrigatório"});
     const userModel = new UserModel()
     const recovered = await userModel.recoveryPassword(email)
+    console.log(recovered)
     if(recovered){
       return res.json({"message":"Verifique sua caixa de email com senha temporária"})
     }else{

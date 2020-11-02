@@ -5,7 +5,6 @@ import Sidebar from "../../components/sidebar";
 import LocationTable from "../../components/location-table";
 import { useToasts } from "react-toast-notifications";
 import { useHistory } from "react-router-dom";
-import { Table } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import "./styles.css";
 
@@ -15,7 +14,7 @@ function Locations() {
     const History = useHistory();
     const token = localStorage.getItem("sessionToken") || '';
     const user = localStorage.getItem("userId") || '';
-    let tableData: any
+    const [tableData, tableDataState] = useState([])
     async function handleWithPageLoad() {
         const data = {
             url: "http://localhost:3333/locations",
@@ -30,8 +29,8 @@ function Locations() {
 
         await fetch(data.url, data.options).then((response) => {
             if (response.status >= 200 && response.status < 300) {
-                response.json().then((data) => {
-                    tableData = data.data
+                response.json().then((data:any) => {
+                    tableDataState(data.data)
                     pageNumberState(data.numberofPages)
                 });
             } else {
@@ -66,19 +65,7 @@ function Locations() {
                         </div>
                         <div className="row">
                             <div className="col-12">
-                                <Table celled inverted selectable>
-                                    <Table.Header>
-                                        <Table.Row>
-                                            <Table.HeaderCell>Name</Table.HeaderCell>
-                                            <Table.HeaderCell>Tipo</Table.HeaderCell>
-                                            <Table.HeaderCell>Capacidade</Table.HeaderCell>
-                                            <Table.HeaderCell>Opções</Table.HeaderCell>
-                                        </Table.Row>
-                                    </Table.Header>
-                                    <Table.Body>
-                                        <LocationTable data={tableData} />
-                                    </Table.Body>
-                                </Table>
+                                <LocationTable data={tableData} />
                             </div>
                         </div>
                         <div className="row">
