@@ -6,18 +6,20 @@ import LocationTable from "../../components/location-table";
 import { useToasts } from "react-toast-notifications";
 import { useHistory } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
+import {Table,Menu,Icon} from 'semantic-ui-react'
 import "./styles.css";
 
 function Locations() {
     const { addToast } = useToasts();
-    const [pageNumber, pageNumberState] = useState('')
+    const [page, pageState] = useState(0)
+    const [maxPages, maxPagesState] = useState(0)
     const History = useHistory();
     const token = localStorage.getItem("sessionToken") || '';
     const user = localStorage.getItem("userId") || '';
     const [tableData, tableDataState] = useState([])
     async function handleWithPageLoad() {
         const data = {
-            url: "http://localhost:3333/locations",
+            url: `http://localhost:3333/locations?page=${page}&perPage=5`,
             options: {
                 method: "GET",
                 headers: {
@@ -31,7 +33,7 @@ function Locations() {
             if (response.status >= 200 && response.status < 300) {
                 response.json().then((data:any) => {
                     tableDataState(data.data)
-                    pageNumberState(data.numberofPages)
+                    maxPagesState(data.numberofPages - 1)
                 });
             } else {
                 response.json().then((data) => {
@@ -49,9 +51,18 @@ function Locations() {
         })
     }
 
+    function handleWithNextPage(){
+        pageState(page+1)
+    }
+
+    function handleWithPreviousPages(){
+        pageState(page-1)
+    }
+
     useEffect(() => {
+        console.log(page)
         handleWithPageLoad()
-    }, ['loading'])
+    }, ['loading',page])
 
     return (
         <>
@@ -65,7 +76,23 @@ function Locations() {
                         </div>
                         <div className="row">
                             <div className="col-12">
-                                <LocationTable data={tableData} />
+                                <LocationTable data={tableData}>
+                                    <Table.Footer>
+                                        <Table.Row>
+                                            <Table.HeaderCell colSpan='3'>
+                                                <Menu floated='right' pagination>
+                                                    <Menu.Item as='a' icon onClick={handleWithPreviousPages} disabled={page === 0}>
+                                                        <Icon name='chevron left' />
+                                                    </Menu.Item>
+                                                    <Menu.Item as='a'>{page + 1}</Menu.Item>
+                                                    <Menu.Item as='a' icon onClick={handleWithNextPage} disabled={maxPages <= page}>
+                                                        <Icon name='chevron right' />
+                                                    </Menu.Item>
+                                                </Menu>
+                                            </Table.HeaderCell>
+                                        </Table.Row>
+                                    </Table.Footer>
+                                </LocationTable>
                             </div>
                         </div>
                         <div className="row">

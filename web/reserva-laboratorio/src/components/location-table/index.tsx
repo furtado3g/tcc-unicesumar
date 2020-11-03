@@ -65,7 +65,7 @@ function LocationTable(props: any) {
 
   return (
     <>
-      <Table celled inverted selectable>
+      <Table celled >
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Nome</Table.HeaderCell>
@@ -115,6 +115,7 @@ function LocationTable(props: any) {
             }
           })()}
         </Table.Body>
+        {props.children}
       </Table>
     </>
   )

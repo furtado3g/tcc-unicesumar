@@ -26,7 +26,9 @@ function Menu() {
         localStorage.clear()
     }
 
-    useEffect(()=>{toggleState(false)},[])
+    useEffect(()=>{
+        toggleState(false)
+    },['loading'])
 
     return (
         <>
