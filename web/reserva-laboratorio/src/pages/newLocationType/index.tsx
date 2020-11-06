@@ -63,7 +63,7 @@ function NewLocationType() {
           </div>
           <div className="row">
             <div className="col-12">
-              <label htmlFor="description">Denominação do Espaço</label>
+              <label htmlFor="description">Descrição</label>
               <input
                 type="text"
                 className="form-control"

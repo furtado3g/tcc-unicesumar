@@ -88,7 +88,7 @@ function LocationTypeTable(props: any) {
                                         <Table.Cell>{item.description}</Table.Cell>
                                         <Table.Cell textAlign="center">
                                             <button className="btn btn-light" onClick={e=>handleWithDelete(item.id)}>
-                                                <i className="far fa-trash-alt"></i>
+                                                <i className="far fa-trash-alt margin-icon"></i>
                                             Excluir
                                         </button>
                                         </Table.Cell>
@@ -98,7 +98,7 @@ function LocationTypeTable(props: any) {
                         } else {
                             return (
                                 <Table.Row>
-                                    <Table.Cell colSpan="2">Nenhum Local Cadastrado</Table.Cell>
+                                    <Table.Cell colSpan="2">Nenhum Espaço Cadastrado</Table.Cell>
                                 </Table.Row>
                             );
                         }

@@ -72,7 +72,7 @@ function Locations() {
                     <AdminPanelSidebar />
                     <div className="panel-content">
                         <div className="row">
-                            <h2 className="page-name">Locais</h2>
+                            <h2 className="page-name">Espaços Cadastrados</h2>
                         </div>
                         <div className="row">
                             <div className="col-12">
@@ -98,8 +98,8 @@ function Locations() {
                         <div className="row">
                             <div className="col-12 text-center">
                                 <button className="btn btn-primary" onClick={e => { History.push('/location/add') }}>
-                                    <i className="fas fa-plus-circle"></i>
-                                    Adicionar Local
+                                    <i className="fas fa-plus-circle margin-icon"></i>
+                                    Adicionar Espaço
                                 </button>
                             </div>
                         </div>

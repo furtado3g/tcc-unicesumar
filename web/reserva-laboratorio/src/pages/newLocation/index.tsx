@@ -145,7 +145,7 @@ function NewLocation() {
           </div>
           <div className="row">
             <div className="col-12">
-              <label htmlFor="userType">Tipo de Localização</label>
+              <label htmlFor="userType">Tipo de Espaço</label>
               <select className="form-control" onChange={e => { selectedTypeState(e.target.value) }}>
                 {locationTypes.map((item: any) => {
                   return (

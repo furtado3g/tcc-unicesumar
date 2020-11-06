@@ -68,7 +68,7 @@ function LocationTable(props: any) {
       <Table celled >
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Nome</Table.HeaderCell>
+            <Table.HeaderCell>Nome</Table.HeaderCell> 
             <Table.HeaderCell>Tipo</Table.HeaderCell>
             <Table.HeaderCell>Capacidade</Table.HeaderCell>            
             <Table.HeaderCell>Opções</Table.HeaderCell>
@@ -80,7 +80,7 @@ function LocationTable(props: any) {
             if (!data) {
               return (
                 <Table.Row>
-                  <Table.Cell colSpan="4">Nenhum Local Cadastrado</Table.Cell>
+                  <Table.Cell colSpan="4">Nenhum Espaço Cadastrado</Table.Cell>
                 </Table.Row>
               );
 
@@ -98,14 +98,14 @@ function LocationTable(props: any) {
                           handleWithDetail(item.id);
                         }}
                       >
-                        <i className="far fa-edit"></i>
+                        <i className="far fa-edit margin-icon"></i>
                         Editar
                       </button>
                       <button 
                         className="btn btn-light"
                         onClick={e=>{handleWithDelete(item.id)}}
                       >
-                        <i className="far fa-trash-alt"></i>
+                        <i className="far fa-trash-alt margin-icon"></i>
                         Excluir
                       </button>
                     </Table.Cell>
