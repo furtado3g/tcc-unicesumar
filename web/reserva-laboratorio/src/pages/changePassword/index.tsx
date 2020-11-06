@@ -7,7 +7,7 @@ import PanelSidebar from '../../components/panel-sidebar'
 import PanelSidebarItem from '../../components/panel-sidebar-item'
 import { useToasts } from 'react-toast-notifications'
 import {useHistory} from 'react-router-dom'
-
+import {baseUrl} from '../../config/url.json'
 function ChangePassword(props: any) {
 
     const [actualPassword, actualPasswordState] = useState('')
