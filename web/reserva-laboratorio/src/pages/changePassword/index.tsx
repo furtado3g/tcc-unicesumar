@@ -37,7 +37,7 @@ function ChangePassword(props: any) {
         if (newPassword !== redundacy) return addToast("As senhas não correspondem", {appearance: 'error', autoDismiss: true})
         if (actualPassword === newPassword) return addToast("Nova senha corresponde a senha atual", {appearance: 'error', autoDismiss: true})
         const data = {
-            url: "https://rlab-backend.herokuapp.com/user/changePassword",
+            url: `${baseUrl}/user/changePassword`,
             options: {
                 method: "PUT",
                 body: JSON.stringify({ 
