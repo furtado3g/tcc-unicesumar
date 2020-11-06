@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
 import {Table,Menu,Icon} from 'semantic-ui-react'
 import "./styles.css";
+import {baseUrl} from '../../config/url.json'
 
 function Locations() {
     const { addToast } = useToasts();
@@ -19,7 +20,7 @@ function Locations() {
     const [tableData, tableDataState] = useState([])
     async function handleWithPageLoad() {
         const data = {
-            url: `http://localhost:3333/locations?page=${page}&perPage=5`,
+            url: `${baseUrl}/locations?page=${page}&perPage=5`,
             options: {
                 method: "GET",
                 headers: {

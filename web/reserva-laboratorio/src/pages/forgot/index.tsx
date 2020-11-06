@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Logo from './assets/img/logo.png'
 import './styles.css'
+import {baseUrl} from '../../config/url.json'
+
 function ForgotPassword() {
 
     const [email, emailState] = useState('')
@@ -16,7 +18,7 @@ function ForgotPassword() {
 
     async function handleSendMail(event: any) {
         const data = {
-            url: "http://localhost:3333/recovery",
+            url: `${baseUrl}/recovery`,
             options: {
                 method: "POST",
                 headers: {

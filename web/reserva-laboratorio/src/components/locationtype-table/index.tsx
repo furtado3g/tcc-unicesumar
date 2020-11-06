@@ -2,6 +2,8 @@ import React, { memo } from 'react'
 import { useHistory } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { Table } from 'semantic-ui-react'
+import {baseUrl} from '../../config/url.json'
+
 function LocationTypeTable(props: any) {
     const data = props.data
     const History = useHistory()
@@ -9,7 +11,7 @@ function LocationTypeTable(props: any) {
 
     async function handleWithDelete(id: number) {
         const data = {
-            url: `http://localhost:3333/location/type/${id}`,
+            url: `${baseUrl}/location/type/${id}`,
             options: {
                 method: "delete",
                 headers: {

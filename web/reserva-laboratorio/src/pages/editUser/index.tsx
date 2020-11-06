@@ -6,6 +6,7 @@ import moment from "moment";
 import AdminPanelSidebar from "../../components/admin-panel-sidebar";
 import { useToasts } from 'react-toast-notifications'
 import { useHistory } from 'react-router-dom'
+import {baseUrl} from '../../config/url.json'
 
 function EditUser() {
   const sessionToken = localStorage.getItem("sessionToken");
@@ -33,7 +34,7 @@ function EditUser() {
     const token: any = localStorage.getItem("sessionToken");
     const user: any = localStorage.getItem("userId");
     const data = {
-      url: "http://localhost:3333/user/",
+      url: `${baseUrl}/user/`,
       options: {
         method: "put",
         body: JSON.stringify({
@@ -73,7 +74,7 @@ function EditUser() {
 
   async function handleWithUserSelected(userId: string) {
     const data = {
-      url: "http://localhost:3333/user/" + userId,
+      url: `${baseUrl}/user/` + userId,
       options: {
         method: "get",
         headers: {
