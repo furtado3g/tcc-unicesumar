@@ -41,7 +41,7 @@ function EditUser() {
           name,
           username,
           email,
-          userType,
+          user_type : userType ,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -62,9 +62,6 @@ function EditUser() {
         } else {
           handleWithAlerts();
           responseTypeState(error || message);
-          setTimeout(() => {
-            handleWithAlerts();
-          }, 5000);
         }
       })
       .catch((e) => {

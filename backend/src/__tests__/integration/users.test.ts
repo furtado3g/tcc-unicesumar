@@ -5,7 +5,7 @@ const headers = {
   authorization: "",
   userId: "",
 };
-describe("Entrar e recuperar os tokens da aplicação", () => {
+describe("Login e gerenciamento de usuarios", () => {
   it("Logar na aplicação", async (done) => {
     const body = {
       username: "Furts3g",
@@ -67,6 +67,15 @@ describe("Entrar e recuperar os tokens da aplicação", () => {
       email: "lucas_shiguioka@hotmail.com",
       password: "Therev a7x",
     };
+    request
+    .put('/user')
+    .send(body)
+    .end((err, res) => {
+      if (err) throw done(err);
+      expect(res.status).toEqual(200);
+      expect(res.body).toHaveProperty('message')
+      done();
+    });
   });
   it("Esqueci minha Senha", async (done) => {
     const body = {
@@ -78,6 +87,7 @@ describe("Entrar e recuperar os tokens da aplicação", () => {
       .end((err, res) => {
         if (err) throw done(err);
         expect(res.status).toEqual(200);
+        expect(res.body).toHaveProperty('message')
         done();
       });
   });

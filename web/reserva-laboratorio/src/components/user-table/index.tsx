@@ -12,7 +12,7 @@ function UserTable(props: any) {
   const { addToast } = useToasts();
   async function handleWithDeleteUser(userId: number) {
     const data = {
-      url: `${baseUrl}host:3333/user/"` + userId,
+      url: `${baseUrl}/user/` + userId,
       options: {
         method: "delete",
         body: JSON.stringify({
