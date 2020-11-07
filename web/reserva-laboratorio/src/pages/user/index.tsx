@@ -3,7 +3,7 @@ import Sidebar from "../../components/sidebar"
 import Panel from '../../components/panel'
 import AdminPanelSidebar from '../../components/admin-panel-sidebar'
 import UserTable from '../../components/user-table/'
-import 'semantic-ui-css/semantic.min.css'
+import '../locationType/node_modules/semantic-ui-css/semantic.min.css'
 import { Icon, Menu, Table } from 'semantic-ui-react'
 import { ToastProvider } from 'react-toast-notifications';
 import './styles.css'

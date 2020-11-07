@@ -15,7 +15,7 @@ import NewLocation from './pages/newLocation'
 import EditLocation from './pages/editLocation'
 import User from './pages/user'
 import Locations from './pages/locations'
-import LocationType from './pages/LocationType'
+import LocationType from './pages/locationType/locationtype'
 import UserLocation from './pages/userLocation'
 import NewLocationType from './pages/newLocationType'
 function Routes (){

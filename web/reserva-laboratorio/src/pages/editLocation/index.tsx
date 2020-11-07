@@ -111,7 +111,7 @@ function EditLocation() {
 
   async function handleWithPageLoad(){
     const data = {
-      url: `${baseUrl}host:3333/location/${params.id}`,
+      url: `${baseUrl}/location/${params.id}`,
       options: {
         method : "get",
         headers: {
@@ -189,6 +189,7 @@ function EditLocation() {
                 className="form-control"
                 id="typeLocation"
                 value={type}
+                disabled
               >
                 {locationTypes.map((item: any)=>{
                   return (

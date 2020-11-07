@@ -2,9 +2,10 @@ import React, { memo } from 'react'
 import { useHistory } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { Table } from 'semantic-ui-react'
-import {baseUrl} from '../../config/url.json'
+import { baseUrl } from '../../config/url.json'
 
 function LocationTypeTable(props: any) {
+
     const data = props.data
     const History = useHistory()
     const { addToast } = useToasts()
@@ -25,47 +26,22 @@ function LocationTypeTable(props: any) {
                 if (response.status == 200) {
                     response.json().then(data => {
                         const { message } = data
-                        addToast(message,
-                            {
-                                appearance: "success",
-                                autoDismiss: true,
-                            }
-                        )
+                        addToast(message,{appearance: "success",autoDismiss: true,})
                         History.go(0)
                     }
                     ).catch(err => {
-                        addToast("Erro ao Processar Requisição",
-                            {
-                                appearance: "error",
-                                autoDismiss: true,
-                            }
-                        )
+                        addToast("Erro ao Processar Requisição",{appearance: "error",autoDismiss: true,})
                     })
                 } else {
                     response.json().then(data => {
                         const { error, message } = data
                         if (message) {
-                            addToast("Erro ao Processar Requisição",
-                                {
-                                    appearance: "warning",
-                                    autoDismiss: true,
-                                }
-                            )
+                            addToast("Erro ao Processar Requisição",{appearance: "warning", autoDismiss: true,})
                         } else if (error) {
-                            addToast(error,
-                                {
-                                    appearance: "error",
-                                    autoDismiss: true,
-                                }
-                            )
+                            addToast(error,{appearance: "error",autoDismiss: true,})
                         }
                     }).catch(err => {
-                        addToast("Erro ao Processar Requisição",
-                            {
-                                appearance: "error",
-                                autoDismiss: true,
-                            }
-                        )
+                        addToast("Erro ao Processar Requisição",{appearance: "error",autoDismiss: true,})
                     })
                 }
             })
@@ -89,7 +65,7 @@ function LocationTypeTable(props: any) {
                                     <Table.Row key={item.id}>
                                         <Table.Cell>{item.description}</Table.Cell>
                                         <Table.Cell textAlign="center">
-                                            <button className="btn btn-light" onClick={e=>handleWithDelete(item.id)}>
+                                            <button className="btn btn-light" onClick={e => handleWithDelete(item.id)}>
                                                 <i className="far fa-trash-alt margin-icon"></i>
                                             Excluir
                                         </button>

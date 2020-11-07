@@ -5,7 +5,7 @@ import Sidebar from "../../components/sidebar";
 import LocationTable from "../../components/location-table";
 import { useToasts } from "react-toast-notifications";
 import { useHistory } from "react-router-dom";
-import "semantic-ui-css/semantic.min.css";
+import "../locationType/node_modules/semantic-ui-css/semantic.min.css";
 import {Table,Menu,Icon} from 'semantic-ui-react'
 import "./styles.css";
 import {baseUrl} from '../../config/url.json'

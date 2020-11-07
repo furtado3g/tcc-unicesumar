@@ -5,13 +5,15 @@ import Sidebar from "../../components/sidebar";
 import LocationTypeTable from "../../components/locationtype-table"
 import { useHistory} from "react-router-dom"
 import "semantic-ui-css/semantic.min.css";
+import {baseUrl} from '../../config/url.json'
+
 function TypeLocation() {
   const History = useHistory()
   const [tableData, tableDataState] = useState([])
 
   async function handleWithPageLoad(){
     const data = {
-      url : "http://localhost:3333/location/type",
+      url : `${baseUrl}/location/type`,
       options : {
         method: "get",
         headers : {
