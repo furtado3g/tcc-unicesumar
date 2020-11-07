@@ -47,7 +47,7 @@ function NewUser() {
       },
     };
     if (password !== redundacy) {
-      return responseTypeState("Senhas não correspondem")
+      return addToast("Senhas não correspondem",{appearance: 'warning', autoDismiss: true})
     }
     await fetch(data.url, data.options)
       .then(async (data) => {
