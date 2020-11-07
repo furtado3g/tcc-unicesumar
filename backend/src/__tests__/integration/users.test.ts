@@ -1,40 +1,84 @@
-jest.mock('fetch')
-
-describe('Entrar e recuperar os tokens da aplicação',()=>{
-    it('Logar na aplicação', async()=>{
-        const data = {
-            url : "http://localhost:3333/session",
-            options : {
-                method:"post",
-                headers :{
-                    'Content-Type': 'application/json',
-                },
-                body : JSON.stringify({
-                    username : "lfurtado",
-                    password : "Therev a7x"
-                })
-            }
-        }
-        const request = await fetch(data.url,data.options)
-        const response = await request.json()
-        expect(request.status).toEqual(200)
-        //verifica se os campos esperados no json de retorno estão corretos
-        expect(response.auth).not.toBeUndefined()
-        expect(response.token).not.toBeUndefined()
-        expect(response.token.auth_token).not.toBeUndefined()
-        expect(response.token.session_token).not.toBeUndefined()
-        expect(response.token.expires_at).not.toBeUndefined()
-        //verifica se os campos não estão nulos
-        expect(response.auth).not.toBeNull()
-        expect(response.token).not.toBeNull()
-        expect(response.token.auth_token).not.toBeNull()
-        expect(response.token.session_token).not.toBeNull()
-        expect(response.token.expires_at).not.toBeNull()
-        //verifica se os campos possuem o tipo correto
-        expect(response.auth).not.toBeNaN()
-        expect(response.token).not.toBeNaN()
-        expect(response.token.auth_token).not.toBeNaN()
-        expect(response.token.session_token).not.toBeNaN()
-        expect(response.token.expires_at).not.toBeNaN()
-    })
-})
+import app from "../../configs/serverTest";
+import supertest from "supertest";
+const request = supertest(app);
+const headers = {
+  authorization: "",
+  userId: "",
+};
+describe("Entrar e recuperar os tokens da aplicação", () => {
+  it("Logar na aplicação", async (done) => {
+    const body = {
+      username: "Furts3g",
+      password: "Therev a7x",
+    };
+    request
+      .post("/session")
+      .send(body)
+      .end(function (err, res) {
+        if (err) throw done(err);
+        expect(res.status).toEqual(200);
+        expect(res.body.token).toHaveProperty("authToken");
+        expect(res.body.token).toHaveProperty("sessionToken");
+        expect(res.body.token).toHaveProperty("expires_at");
+        headers["authorization"] = res.body.token.sessionToken;
+        headers["userId"] = res.body.userId;
+        done();
+      });
+  });
+  it("Criar novo Usuario", async (done) => {
+    const body = {
+      name: "Lucas Furtado",
+      username: "furtado",
+      email: "lucas_shiguioka@hotmail.com",
+      password: "Therev a7x",
+    };
+    request
+      .post("/user")
+      .send(body)
+      .set("authorization", headers.authorization)
+      .set("authorization", headers.userId)
+      .end((err, res) => {
+        if (err) throw done(err);
+        expect(res.status).toEqual(200);
+        expect(res.body).toHaveProperty("message");
+        done();
+      });
+  });
+  it("Trocar senha do usuario logado", async (done) => {
+    const body = {
+      password: "Therev a7x",
+      actualPassword: "Eusouumguaxinin",
+    };
+    request
+      .put("/user/changePassword")
+      .send(body)
+      .set("authorization", headers.authorization)
+      .set("authorization", headers.userId)
+      .end((err, res) => {
+        if (err) throw done(err);
+        expect(res.status).toEqual(200);
+        done();
+      });
+  });
+  it("Editar um usuario", async (done) => {
+    const body = {
+      name: "Lucas Furtado",
+      username: "furtado",
+      email: "lucas_shiguioka@hotmail.com",
+      password: "Therev a7x",
+    };
+  });
+  it("Esqueci minha Senha", async (done) => {
+    const body = {
+      email: "lucas_shiguioka@hotmail.com",
+    };
+    request
+      .post("/recovery")
+      .send(body)
+      .end((err, res) => {
+        if (err) throw done(err);
+        expect(res.status).toEqual(200);
+        done();
+      });
+  });
+});
