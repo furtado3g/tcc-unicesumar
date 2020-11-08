@@ -47,7 +47,7 @@ function TypeLocation() {
         <AdminPanelSidebar className="typeLocation" />
         <div className="panel-content">
           <div className="row">
-            <h2 className="page-name">Tipos de Espaço</h2>
+            <h2 className="page-name">Tipos de Espaços Cadastrados</h2>
           </div>
           <div className="row">
             <div className="col-12">
@@ -57,8 +57,8 @@ function TypeLocation() {
           <div className="row">
             <div className="col-12 text-center">
               <button className="btn btn-success" onClick={handleWithAddTypeLocation}>
-                <i className="fas fa-user-plus margin-icon"></i>
-                Adicionar Tipo de Localização
+                <i className="fas fa-plus-circle margin-icon"></i>
+                Adicionar Tipo de Espaço
               </button>
             </div>
           </div>
