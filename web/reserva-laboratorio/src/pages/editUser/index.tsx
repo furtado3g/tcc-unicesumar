@@ -41,7 +41,7 @@ function EditUser() {
           name,
           username,
           email,
-          user_type : userType ,
+          userType ,
         }),
         headers: {
           "Content-Type": "application/json",
