@@ -21,7 +21,7 @@ function EditMyInfo() {
     
     async function handleWithSubmit(){
         const data = {
-            url : `${baseUrl}host:3333/user`,
+            url : `${baseUrl}/user`,
             options: {
                 method : "put",
                 body : JSON.stringify({
@@ -49,7 +49,7 @@ function EditMyInfo() {
 
     async function handleWithPageLoad() {
         const data = {
-            url : `${baseUrl}/user`+user,
+            url : `${baseUrl}/user/`+user,
             options: {
                 method : "get",
                 headers: {
@@ -73,6 +73,7 @@ function EditMyInfo() {
     }
 
     useEffect(()=>{
+        console.log(1)
         handleWithPageLoad()
     },['loading'])
 

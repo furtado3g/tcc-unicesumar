@@ -6,7 +6,7 @@ import moment from "moment";
 import AdminPanelSidebar from "../../components/admin-panel-sidebar";
 import { useToasts } from 'react-toast-notifications'
 import { useHistory } from 'react-router-dom'
-import {baseUrl} from '../../config/url.json'
+import { baseUrl } from '../../config/url.json'
 
 function EditUser() {
   const sessionToken = localStorage.getItem("sessionToken");
@@ -30,6 +30,10 @@ function EditUser() {
     document.querySelector(".alert")?.classList.toggle("hidden");
   }
 
+  function isEmpty(obj: any) {
+    return Object.keys(obj).length === 0;
+  }
+
   async function handleWithSubmit() {
     const token: any = localStorage.getItem("sessionToken");
     const user: any = localStorage.getItem("userId");
@@ -41,7 +45,8 @@ function EditUser() {
           name,
           username,
           email,
-          userType ,
+          userid: id,
+          type: userType,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -57,7 +62,7 @@ function EditUser() {
           handleWithAlerts();
           responseTypeState(message);
           setTimeout(() => {
-            History.push('/users/')
+            History.go(-1)
           }, 5000);
         } else {
           handleWithAlerts();
@@ -97,11 +102,11 @@ function EditUser() {
   useEffect(() => {
     handleWithPageLoad();
     if (sessionToken == null) {
-      addToast("É necessário estar logado para obter acesso ao sistema", {appearance:'warning', autoDismiss: true});
+      addToast("É necessário estar logado para obter acesso ao sistema", { appearance: 'warning', autoDismiss: true });
       History.push("/")
     }
     if (moment(expires_at) < moment()) {
-      addToast("Sessão expirada", {appearance:'warning', autoDismiss:true});
+      addToast("Sessão expirada", { appearance: 'warning', autoDismiss: true });
       History.push("/")
     }
   }, ["loading"]);
