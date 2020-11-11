@@ -80,7 +80,7 @@ function Locations() {
                                 <LocationTable data={tableData}>
                                     <Table.Footer>
                                         <Table.Row>
-                                            <Table.HeaderCell colSpan='3'>
+                                            <Table.HeaderCell colSpan='4'>
                                                 <Menu floated='right' pagination>
                                                     <Menu.Item as='a' icon onClick={handleWithPreviousPages} disabled={page === 0}>
                                                         <Icon name='chevron left' />
