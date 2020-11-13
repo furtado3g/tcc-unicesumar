@@ -7,7 +7,7 @@ import PanelSidebar from '../../components/panel-sidebar'
 import PanelSidebarItem from '../../components/panel-sidebar-item'
 import { useToasts } from 'react-toast-notifications'
 import {useHistory} from 'react-router-dom'
-
+import {baseUrl} from '../../config/url.json'
 function ChangePassword(props: any) {
 
     const [actualPassword, actualPasswordState] = useState('')
@@ -37,7 +37,7 @@ function ChangePassword(props: any) {
         if (newPassword !== redundacy) return addToast("As senhas não correspondem", {appearance: 'error', autoDismiss: true})
         if (actualPassword === newPassword) return addToast("Nova senha corresponde a senha atual", {appearance: 'error', autoDismiss: true})
         const data = {
-            url: "http://localhost:3333/user/changePassword",
+            url: `${baseUrl}/user/changePassword`,
             options: {
                 method: "PUT",
                 body: JSON.stringify({ 

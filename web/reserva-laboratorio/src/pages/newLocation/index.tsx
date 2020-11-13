@@ -4,6 +4,7 @@ import Panel from "../../components/panel";
 import Sidebar from "../../components/sidebar";
 import { useToasts } from 'react-toast-notifications'
 import { useHistory } from 'react-router-dom'
+import {baseUrl} from '../../config/url.json'
 
 function NewLocation() {
 
@@ -16,7 +17,7 @@ function NewLocation() {
 
   async function getLocationTypeList() {
     const data = {
-      url: "http://localhost:3333/location/type",
+      url: `${baseUrl}/location/type`,
       options: {
         method: "get",
         headers: {
@@ -51,7 +52,7 @@ function NewLocation() {
 
   async function handleWithSubmit() {
     const data = {
-      url: "http://localhost:3333/location",
+      url: `${baseUrl}/location`,
       options: {
         method: "post",
         body: JSON.stringify({
@@ -145,7 +146,7 @@ function NewLocation() {
           </div>
           <div className="row">
             <div className="col-12">
-              <label htmlFor="userType">Tipo de Localização</label>
+              <label htmlFor="userType">Tipo de Espaço</label>
               <select className="form-control" onChange={e => { selectedTypeState(e.target.value) }}>
                 {locationTypes.map((item: any) => {
                   return (

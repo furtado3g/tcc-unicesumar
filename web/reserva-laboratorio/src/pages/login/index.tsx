@@ -4,6 +4,7 @@ import logo from './assets/img/logo.png'
 import "./styles.css";
 import { useToasts } from 'react-toast-notifications'
 import {useHistory} from 'react-router-dom'
+import {baseUrl} from '../../config/url.json'
 
 function Login() {
   
@@ -29,7 +30,7 @@ function Login() {
 
   async function handleLoginForm(){
     const data = {
-      url : "http://localhost:3333/session",
+      url : `${baseUrl}/session`,
       options:{
         method : "post",
         body : JSON.stringify({username,password}),

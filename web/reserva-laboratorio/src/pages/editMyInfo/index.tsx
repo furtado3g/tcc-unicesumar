@@ -6,6 +6,7 @@ import PanelSidebar from '../../components/panel-sidebar'
 import PanelSidebarItem from '../../components/panel-sidebar-item'
 import { Link } from 'react-router-dom'
 import { useToasts } from 'react-toast-notifications'
+import {baseUrl} from '../../config/url.json'
 
 function EditMyInfo() {
     const token:any  = localStorage.getItem("sessionToken")
@@ -20,14 +21,15 @@ function EditMyInfo() {
     
     async function handleWithSubmit(){
         const data = {
-            url : "http://localhost:3333/user",
+            url : `${baseUrl}/user`,
             options: {
                 method : "put",
                 body : JSON.stringify({
                     name,
                     email,
                     username,
-                    user_type
+                    user_type,
+                    userid : user
                 }),
                 headers: {
                     'Content-Type' : 'application/json',
@@ -48,7 +50,7 @@ function EditMyInfo() {
 
     async function handleWithPageLoad() {
         const data = {
-            url : "http://localhost:3333/user/"+user,
+            url : `${baseUrl}/user/`+user,
             options: {
                 method : "get",
                 headers: {
@@ -72,6 +74,7 @@ function EditMyInfo() {
     }
 
     useEffect(()=>{
+        console.log(1)
         handleWithPageLoad()
     },['loading'])
 

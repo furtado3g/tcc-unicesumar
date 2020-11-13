@@ -3,6 +3,7 @@ import { Table, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import {  useToasts } from "react-toast-notifications";
 import "./styles.css";
+import {baseUrl} from '../../config/url.json'
 
 function UserTable(props: any) {
   const tableData = props.data;
@@ -11,7 +12,7 @@ function UserTable(props: any) {
   const { addToast } = useToasts();
   async function handleWithDeleteUser(userId: number) {
     const data = {
-      url: "http://localhost:3333/user/" + userId,
+      url: `${baseUrl}/user/` + userId,
       options: {
         method: "delete",
         body: JSON.stringify({

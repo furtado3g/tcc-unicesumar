@@ -4,7 +4,7 @@ import AdminPanelSidebar from "../../components/admin-panel-sidebar";
 import Panel from "../../components/panel";
 import { useToasts } from 'react-toast-notifications'
 import { useHistory } from "react-router-dom";
-
+import {baseUrl} from '../../config/url.json'
 function NewLocationType() {
   
   const [description, descriptionState] = useState("");
@@ -16,7 +16,7 @@ function NewLocationType() {
   async function handleWithSubmit() {
 
     const data = {
-      url: "http://localhost:3333/location/type",
+      url: `${baseUrl}/location/type`,
       options: {
         method: "post",
         body: JSON.stringify({ description }),
@@ -63,7 +63,7 @@ function NewLocationType() {
           </div>
           <div className="row">
             <div className="col-12">
-              <label htmlFor="description">Denominação do Espaço</label>
+              <label htmlFor="description">Descrição</label>
               <input
                 type="text"
                 className="form-control"

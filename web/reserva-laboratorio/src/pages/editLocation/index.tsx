@@ -4,7 +4,7 @@ import Sidebar from "../../components/sidebar";
 import AdminPanelSidebar from "../../components/admin-panel-sidebar";
 import {useToasts} from 'react-toast-notifications'
 import { useHistory,useParams } from 'react-router-dom'
-
+import {baseUrl} from '../../config/url.json'
 
 function EditLocation() {
 
@@ -18,7 +18,7 @@ function EditLocation() {
 
   async function getLocationTypeList() {
     const data = {
-      url: "http://localhost:3333/location/type",
+      url: `${baseUrl}/location/type`,
       options: {
         method: "get",
         headers: {
@@ -49,7 +49,7 @@ function EditLocation() {
 
   async function handleWithSubmit() {
     const data = {
-      url: `http://localhost:3333/location/${params.id}`,
+      url: `${baseUrl}/location/${params.id}`,
       options: {
         method: "put",
         body: JSON.stringify({
@@ -111,7 +111,7 @@ function EditLocation() {
 
   async function handleWithPageLoad(){
     const data = {
-      url: `http://localhost:3333/location/${params.id}`,
+      url: `${baseUrl}/location/${params.id}`,
       options: {
         method : "get",
         headers: {
@@ -189,6 +189,7 @@ function EditLocation() {
                 className="form-control"
                 id="typeLocation"
                 value={type}
+                disabled
               >
                 {locationTypes.map((item: any)=>{
                   return (

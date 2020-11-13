@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
 import {Table,Menu,Icon} from 'semantic-ui-react'
 import "./styles.css";
+import {baseUrl} from '../../config/url.json'
 
 function Locations() {
     const { addToast } = useToasts();
@@ -19,7 +20,7 @@ function Locations() {
     const [tableData, tableDataState] = useState([])
     async function handleWithPageLoad() {
         const data = {
-            url: `http://localhost:3333/locations?page=${page}&perPage=5`,
+            url: `${baseUrl}/locations?page=${page}&perPage=5`,
             options: {
                 method: "GET",
                 headers: {
@@ -72,14 +73,14 @@ function Locations() {
                     <AdminPanelSidebar />
                     <div className="panel-content">
                         <div className="row">
-                            <h2 className="page-name">Locais</h2>
+                            <h2 className="page-name">Espaços Cadastrados</h2>
                         </div>
                         <div className="row">
                             <div className="col-12">
                                 <LocationTable data={tableData}>
                                     <Table.Footer>
                                         <Table.Row>
-                                            <Table.HeaderCell colSpan='3'>
+                                            <Table.HeaderCell colSpan='4'>
                                                 <Menu floated='right' pagination>
                                                     <Menu.Item as='a' icon onClick={handleWithPreviousPages} disabled={page === 0}>
                                                         <Icon name='chevron left' />
@@ -98,8 +99,8 @@ function Locations() {
                         <div className="row">
                             <div className="col-12 text-center">
                                 <button className="btn btn-primary" onClick={e => { History.push('/location/add') }}>
-                                    <i className="fas fa-plus-circle"></i>
-                                    Adicionar Local
+                                    <i className="fas fa-plus-circle margin-icon"></i>
+                                    Adicionar Espaço
                                 </button>
                             </div>
                         </div>

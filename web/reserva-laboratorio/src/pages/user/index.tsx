@@ -8,6 +8,7 @@ import { Icon, Menu, Table } from 'semantic-ui-react'
 import { ToastProvider } from 'react-toast-notifications';
 import './styles.css'
 import { Link } from "react-router-dom";
+import {baseUrl} from '../../config/url.json'
 
 function User() {
 
@@ -19,7 +20,7 @@ function User() {
 
     async function handleWithPageLoad() {
         const data = {
-            url: "http://localhost:3333/users?page=" + page + "&perPage=5",
+            url: `${baseUrl}/users?page=` + page + "&perPage=5",
             options: {
                 method: "get",
                 headers: {

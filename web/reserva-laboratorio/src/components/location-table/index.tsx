@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import { Table } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import {useToasts} from 'react-toast-notifications'
+import {baseUrl} from '../../config/url.json'
 
 function LocationTable(props: any) {
   const History = useHistory();
@@ -10,7 +11,7 @@ function LocationTable(props: any) {
   
   async function handleWithDelete(locationId: string){
     const data = {
-      url : `http://localhost:3333/location/${locationId}`,
+      url : `${baseUrl}/location/${locationId}`,
       options : {
         method: "delete",
         headers: {
@@ -68,7 +69,7 @@ function LocationTable(props: any) {
       <Table celled >
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Nome</Table.HeaderCell>
+            <Table.HeaderCell>Nome</Table.HeaderCell> 
             <Table.HeaderCell>Tipo</Table.HeaderCell>
             <Table.HeaderCell>Capacidade</Table.HeaderCell>            
             <Table.HeaderCell>Opções</Table.HeaderCell>
@@ -80,7 +81,7 @@ function LocationTable(props: any) {
             if (!data) {
               return (
                 <Table.Row>
-                  <Table.Cell colSpan="4">Nenhum Local Cadastrado</Table.Cell>
+                  <Table.Cell colSpan="4">Nenhum Espaço Cadastrado</Table.Cell>
                 </Table.Row>
               );
 
@@ -98,14 +99,14 @@ function LocationTable(props: any) {
                           handleWithDetail(item.id);
                         }}
                       >
-                        <i className="far fa-edit"></i>
+                        <i className="far fa-edit margin-icon"></i>
                         Editar
                       </button>
                       <button 
                         className="btn btn-light"
                         onClick={e=>{handleWithDelete(item.id)}}
                       >
-                        <i className="far fa-trash-alt"></i>
+                        <i className="far fa-trash-alt margin-icon"></i>
                         Excluir
                       </button>
                     </Table.Cell>

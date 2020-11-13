@@ -5,13 +5,15 @@ import Sidebar from "../../components/sidebar";
 import LocationTypeTable from "../../components/locationtype-table"
 import { useHistory} from "react-router-dom"
 import "semantic-ui-css/semantic.min.css";
+import {baseUrl} from '../../config/url.json'
+
 function TypeLocation() {
   const History = useHistory()
   const [tableData, tableDataState] = useState([])
 
   async function handleWithPageLoad(){
     const data = {
-      url : "http://localhost:3333/location/type",
+      url : `${baseUrl}/location/type`,
       options : {
         method: "get",
         headers : {
@@ -45,7 +47,7 @@ function TypeLocation() {
         <AdminPanelSidebar className="typeLocation" />
         <div className="panel-content">
           <div className="row">
-            <h2 className="page-name">Tipos de Espaço</h2>
+            <h2 className="page-name">Tipos de Espaços Cadastrados</h2>
           </div>
           <div className="row">
             <div className="col-12">
@@ -55,8 +57,8 @@ function TypeLocation() {
           <div className="row">
             <div className="col-12 text-center">
               <button className="btn btn-success" onClick={handleWithAddTypeLocation}>
-                <i className="fas fa-user-plus margin-icon"></i>
-                Adicionar Tipo de Localização
+                <i className="fas fa-plus-circle margin-icon"></i>
+                Adicionar Tipo de Espaço
               </button>
             </div>
           </div>

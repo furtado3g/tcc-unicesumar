@@ -6,6 +6,7 @@ import moment from "moment";
 import AdminPanelSidebar from "../../components/admin-panel-sidebar";
 import { useToasts } from 'react-toast-notifications'
 import { useHistory } from 'react-router-dom'
+import { baseUrl } from '../../config/url.json'
 
 function EditUser() {
   const sessionToken = localStorage.getItem("sessionToken");
@@ -17,7 +18,7 @@ function EditUser() {
   const [email, emailState] = useState("");
   const [userType, userTypeState] = useState("");
   const [response, responseTypeState] = useState("");
-  const { id } = useParams(); // eslint-disable-line no-eval
+  const { id }:any = useParams(); // eslint-disable-line no-eval
   const { addToast } = useToasts()
   const History = useHistory();
 
@@ -29,18 +30,23 @@ function EditUser() {
     document.querySelector(".alert")?.classList.toggle("hidden");
   }
 
+  function isEmpty(obj: any) {
+    return Object.keys(obj).length === 0;
+  }
+
   async function handleWithSubmit() {
     const token: any = localStorage.getItem("sessionToken");
     const user: any = localStorage.getItem("userId");
     const data = {
-      url: "http://localhost:3333/user/",
+      url: `${baseUrl}/user/`,
       options: {
         method: "put",
         body: JSON.stringify({
           name,
           username,
           email,
-          userType,
+          userid: id,
+          type: userType,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -56,14 +62,11 @@ function EditUser() {
           handleWithAlerts();
           responseTypeState(message);
           setTimeout(() => {
-            History.push('/users/')
+            History.go(-1)
           }, 5000);
         } else {
           handleWithAlerts();
           responseTypeState(error || message);
-          setTimeout(() => {
-            handleWithAlerts();
-          }, 5000);
         }
       })
       .catch((e) => {
@@ -73,7 +76,7 @@ function EditUser() {
 
   async function handleWithUserSelected(userId: string) {
     const data = {
-      url: "http://localhost:3333/user/" + userId,
+      url: `${baseUrl}/user/` + userId,
       options: {
         method: "get",
         headers: {
@@ -99,11 +102,11 @@ function EditUser() {
   useEffect(() => {
     handleWithPageLoad();
     if (sessionToken == null) {
-      addToast("É necessário estar logado para obter acesso ao sistema", {appearance:'warning', autoDismiss: true});
+      addToast("É necessário estar logado para obter acesso ao sistema", { appearance: 'warning', autoDismiss: true });
       History.push("/")
     }
     if (moment(expires_at) < moment()) {
-      addToast("Sessão expirada", {appearance:'warning', autoDismiss:true});
+      addToast("Sessão expirada", { appearance: 'warning', autoDismiss: true });
       History.push("/")
     }
   }, ["loading"]);

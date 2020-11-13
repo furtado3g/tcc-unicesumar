@@ -7,6 +7,7 @@ import { useToasts } from 'react-toast-notifications';
 import "./styles.css";
 import AdminPanelSidebar from "../../components/admin-panel-sidebar";
 import {useHistory} from 'react-router-dom';
+import {baseUrl} from '../../config/url.json'
 
 function NewUser() {
   const sessionToken = localStorage.getItem("sessionToken")
@@ -28,7 +29,7 @@ function NewUser() {
     const token: any = localStorage.getItem("sessionToken")
     const user: any = localStorage.getItem("userId")
     const data = {
-      url: "http://localhost:3333/user/",
+      url: `${baseUrl}/user/`,
       options: {
         method: "post",
         body: JSON.stringify({
@@ -46,7 +47,7 @@ function NewUser() {
       },
     };
     if (password !== redundacy) {
-      return responseTypeState("Senhas não correspondem")
+      return addToast("Senhas não correspondem",{appearance: 'warning', autoDismiss: true})
     }
     await fetch(data.url, data.options)
       .then(async (data) => {
