@@ -28,7 +28,8 @@ function EditMyInfo() {
                     name,
                     email,
                     username,
-                    user_type
+                    user_type,
+                    userid : user
                 }),
                 headers: {
                     'Content-Type' : 'application/json',
