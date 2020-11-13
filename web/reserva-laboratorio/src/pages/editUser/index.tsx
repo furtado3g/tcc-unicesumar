@@ -18,7 +18,7 @@ function EditUser() {
   const [email, emailState] = useState("");
   const [userType, userTypeState] = useState("");
   const [response, responseTypeState] = useState("");
-  const { id } = useParams(); // eslint-disable-line no-eval
+  const { id }:any = useParams(); // eslint-disable-line no-eval
   const { addToast } = useToasts()
   const History = useHistory();
 
