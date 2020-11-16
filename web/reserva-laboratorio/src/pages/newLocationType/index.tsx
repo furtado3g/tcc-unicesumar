@@ -52,6 +52,10 @@ function NewLocationType() {
       })
   }
 
+  function handleWithBackButton() {
+    History.go(-1)
+  }
+
   return (
     <div className="container-admin">
       <Sidebar />
@@ -75,7 +79,7 @@ function NewLocationType() {
           <div className="row">
             <div className="col-12 text-center">
               <button className="btn btn-success" onClick={handleWithSubmit}>Salvar</button>
-              <button className="btn btn-danger">Voltar</button>
+              <button className="btn btn-danger" onClick={handleWithBackButton}>Voltar</button>
             </div>
           </div>
         </div>

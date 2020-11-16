@@ -18,6 +18,7 @@ import Locations from './pages/locations'
 import LocationType from './pages/locationType/locationtype'
 import UserLocation from './pages/userLocation'
 import NewLocationType from './pages/newLocationType'
+import EditTypeLocation from './pages/editTypeLocation'
 function Routes (){
     return(
         <BrowserRouter>
@@ -37,9 +38,10 @@ function Routes (){
                 <Route exact={true} path="/locations/" component={Locations}/>
                 <Route exact={true} path="/location/add" component={NewLocation}/>
                 <Route exact={true} path="/location/:id" component={EditLocation}/>
+                <Route exact={true} path="/locationType/add" component={NewLocationType}/>
+                <Route exact={true} path="/locationType/:id" component={EditTypeLocation}/>
                 <Route exact={true} path="/locationTypes/" component={LocationType}/>
                 <Route exact={true} path="/userLocation" component={UserLocation}/>
-                <Route exact={true} path="/locationType/add" component={NewLocationType}/>
                 
             </Switch>
         </BrowserRouter>

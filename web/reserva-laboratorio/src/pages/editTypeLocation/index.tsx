@@ -13,6 +13,7 @@ function EditTypeLocation() {
   const user = localStorage.getItem("userId") || '';
   const { id }: any = useParams();
   const [description, descriptionState] = useState("");
+
   async function handleWithPageLoad() {
     const data = {
       url: `${baseUrl}/location/type/${id}`,
@@ -29,13 +30,13 @@ function EditTypeLocation() {
       .then(response => {
         if (response.status == 200) {
           response.json().then(data => {
-            const { description } = data
+            const { description } = data[0]
             descriptionState(description)
           })
         } else {
           response.json().then(data => {
             const { error } = data
-            addToast(error, { appearance: error, autoDismiss: true })
+            addToast(error, { appearance: 'error', autoDismiss: true })
           })
         }
       })
@@ -57,17 +58,26 @@ function EditTypeLocation() {
       .then(response => {
         if (response.status == 200) {
           response.json().then(data => {
-            const { description } = data
-            descriptionState(description)
+            const { message } = data
+            addToast(message, {
+              appearance: 'success',
+              autoDismiss: true
+            })
+            History.go(-1)
           })
         } else {
           response.json().then(data => {
             const { error } = data
-            addToast(error, { appearance: error, autoDismiss: true })
+            addToast(error, { appearance: 'error', autoDismiss: true })
           })
         }
       })
   }
+
+  function handleWithBackButton() {
+    History.go(-1)
+  }
+
   useEffect(() => {
     handleWithPageLoad()
   }, ['loading'])
@@ -82,7 +92,7 @@ function EditTypeLocation() {
             <h2 className="page-name">Editar Tipo de Espaço</h2>
           </div>
           <div className="row">
-            <div className="col-6">
+            <div className="col-12">
               <label htmlFor="description">Descrição</label>
               <input
                 type="text"
@@ -95,8 +105,14 @@ function EditTypeLocation() {
           </div>
           <div className="row">
             <div className="col-12 text-center">
-              <button className="btn btn-success">Salvar</button>
-              <button className="btn btn-danger">Voltar</button>
+              <button
+                className="btn btn-success"
+                onClick={handleWithSubmit}
+              >Salvar</button>
+              <button
+                className="btn btn-danger"
+                onClick={handleWithBackButton}
+              >Voltar</button>
             </div>
           </div>
         </div>

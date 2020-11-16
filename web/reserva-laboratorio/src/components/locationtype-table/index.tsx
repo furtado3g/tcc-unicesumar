@@ -10,6 +10,10 @@ function LocationTypeTable(props: any) {
     const History = useHistory()
     const { addToast } = useToasts()
 
+    async function handleWithEdit(id:string){
+        History.push(`/locationType/${id}`)
+    }
+
     async function handleWithDelete(id: number) {
         const data = {
             url: `${baseUrl}/location/type/${id}`,
@@ -65,6 +69,10 @@ function LocationTypeTable(props: any) {
                                     <Table.Row key={item.id}>
                                         <Table.Cell>{item.description}</Table.Cell>
                                         <Table.Cell textAlign="center">
+                                            <button className="btn btn-light" onClick={e => handleWithEdit(item.id)}>
+                                                <i className="far fa-edit margin-icon"></i>
+                                            Editar
+                                        </button>
                                             <button className="btn btn-light" onClick={e => handleWithDelete(item.id)}>
                                                 <i className="far fa-trash-alt margin-icon"></i>
                                             Excluir
