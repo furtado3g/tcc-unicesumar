@@ -90,7 +90,7 @@ function LocationTable(props: any) {
                 return (
                   <Table.Row key={item.id}>
                     <Table.Cell>{item.comments}</Table.Cell>
-                    <Table.Cell>{item.type}</Table.Cell>
+                    <Table.Cell>{item.ds_location_type}</Table.Cell>
                     <Table.Cell textAlign="right">{item.capacity}</Table.Cell>
                     <Table.Cell textAlign="center">
                       <button
