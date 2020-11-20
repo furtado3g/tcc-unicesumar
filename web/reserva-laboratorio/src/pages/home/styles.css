@@ -4,6 +4,10 @@
     background-color: black;
 }
 
+#calendar{ 
+    height: 400px !important;
+}
+
 .container-admin {
     max-width: 100%;
     background-color: transparent;

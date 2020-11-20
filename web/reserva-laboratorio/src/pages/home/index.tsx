@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react'
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
 import Sidebar from '../../components/sidebar/index'
 import moment from 'moment'
 import { useHistory } from 'react-router-dom'
@@ -27,10 +25,7 @@ function Home() {
     <div className="container-admin">
       <Sidebar />
       <div className="panel">
-        <FullCalendar
-          plugins={[dayGridPlugin]}
-          initialView="dayGridMonth"
-        />
+        
       </div>
 
     </div>
