@@ -11,6 +11,7 @@ import { useToasts } from 'react-toast-notifications'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import { Button, Icon, Modal, Container, Header } from 'semantic-ui-react'
+import History from "../history";
 function Reservation() {
 
   const { addToast } = useToasts()
@@ -127,8 +128,10 @@ function Reservation() {
       <Panel title="Reservas">
         <PanelSidebar>
           <PanelSidebarItem>
+            <a onClick={()=>{History.push('/reserves/add')}}>
             <i className="far fa-calendar-check"></i>
-            Realizar Agendamento
+              Realizar Agendamento
+            </a>
           </PanelSidebarItem>
         </PanelSidebar>
         <div className="row">
@@ -175,10 +178,10 @@ function Reservation() {
         </Modal.Content>
         <Modal.Actions>
           <Button negative onClick={() => dispatch({ type: 'close' })}>
-            No
+            Sair
           </Button>
-          <Button positive onClick={() => dispatch({ type: 'close' })}>
-            Yes
+          <Button positive onClick={() => History.push(`/reserves/${eventModal.id}`)}>
+            Editar Reserva
           </Button>
         </Modal.Actions>
       </Modal>

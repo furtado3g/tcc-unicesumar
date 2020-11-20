@@ -20,6 +20,8 @@ import UserLocation from './pages/userLocation'
 import NewLocationType from './pages/newLocationType'
 import EditTypeLocation from './pages/editTypeLocation'
 import userLocations from './pages/userLocations'
+import EditReserve from './pages/editReseve'
+
 function Routes (){
     return(
         <BrowserRouter>
@@ -33,6 +35,7 @@ function Routes (){
                 <Route exact={true} path="/editMyInfo" component={EditMyInfo} />
                 <Route exact={true} path="/reserves" component={Reservation}/>
                 <Route exact={true} path="/reserves/add" component={NewReserve}/>
+                <Route exact={true} path="/reserves/:id" component={EditReserve}/>
                 <Route exact={true} path="/history" component={History}/>
                 <Route exact={true} path="/users/" component={User}/>
                 <Route exact={true} path="/users/:id" component={EditUser}/>

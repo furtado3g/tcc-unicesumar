@@ -21,7 +21,7 @@ function NewReserve() {
   const format = 'HH:mm';
   const dateFormat = 'DD/MM/YYYY';
   const History = useHistory()
-  const [startDate, startDateState] = useState(moment())
+  const [startDate, startDateState] = useState(moment().add(1,'M'))
   const [startTime, startTimeState] = useState('11:00')
   const [classes, classesState] = useState('')
   const [discipline, disciplineState] = useState('')
@@ -110,6 +110,12 @@ function NewReserve() {
       })
   }
 
+  function disabledDate(current: any) {
+    const start = moment().add(1, 'M');
+    return !(start.isSameOrBefore(current));
+  }
+
+
   React.useEffect(() => {
     handleWithPageLoad()
   }, ['loading'])
@@ -178,6 +184,7 @@ function NewReserve() {
                 className="form-control"
                 locale={locale}
                 format={dateFormat}
+                disabledDate={disabledDate}
                 onChange={(date: any) => { startDateState(date) }}
                 value={startDate}
               />
