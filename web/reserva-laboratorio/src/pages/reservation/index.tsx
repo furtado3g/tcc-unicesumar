@@ -12,24 +12,38 @@ import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import { Button, Icon, Modal, Container, Header } from 'semantic-ui-react'
 import History from "../history";
-import events from "events";
+
+interface reserveInterface {
+  id: string
+  date: string
+  time_start: string
+  time_end: string
+  class: string
+  discipline: string
+  comments: string
+  location_id: string
+  teacher_id: string
+  location_name: string
+  user_name: string
+}
+
 function Reservation() {
 
   const { addToast } = useToasts()
   const History = useHistory()
   const [event, eventState] = React.useState([])
-  const [eventModal, eventModalState] = React.useState({
-    "id": 1,
-    "date": "2020-11-19T00:00:00.000Z",
-    "time_start": "11:00:00",
-    "time_end": "11:00:00",
-    "class": "ads 3",
-    "discipline": "sistemas operacionais",
-    "comments": "teste de ",
-    "location_id": 4,
-    "teacher_id": 1,
-    "location_name": "Auditório Ultimo Andar",
-    "user_name": "Lucas Furtado"
+  const [eventModal, eventModalState] = React.useState<reserveInterface>({
+    id: 'number',
+    date: 'string',
+    time_start: 'string',
+    time_end: 'string',
+    class: 'string',
+    discipline: 'string',
+    comments: 'string',
+    location_id: 'string',
+    teacher_id: 'string',
+    location_name: 'string',
+    user_name: 'string'
   })
 
   async function handleWithPageLoad() {
@@ -50,7 +64,7 @@ function Reservation() {
             const events = data.map((item: any) => {
               return {
                 title: item.class + ' - ' + item.discipline,
-                date: moment(item.date,'YYYY-MM-DD').format('YYYY-MM-DD'),
+                date: moment(item.date, 'YYYY-MM-DD').format('YYYY-MM-DD'),
                 id: item.id
               }
             })
@@ -69,6 +83,43 @@ function Reservation() {
         }
       })
   }
+
+  async function handleWithDelete(id:string){
+    const data = {
+      url: `${baseUrl}/reserve/${id}`,
+      options : {
+        method : 'delete',
+        headers: {
+          authorization : localStorage.getItem("sessionToken") || '',
+          userId: localStorage.getItem("userId") || '',
+        }
+      }
+    }
+    await fetch(data.url, data.options)
+    .then(response=>{
+      if(response.status == 200){
+        response.json().then(data => {
+          const { error, message } = data
+          if (error && !message) {
+            addToast(error, { appearance: 'error', autoDismiss: true })
+          } else {
+            addToast(message, { appearance: 'success', autoDismiss: true })
+            History.go(0)
+          }
+        })
+      }else{
+        response.json().then(data => {
+          const { error, message } = data
+          if (error && !message) {
+            addToast(error, { appearance: 'error', autoDismiss: true })
+          } else {
+            addToast(message, { appearance: 'warning', autoDismiss: true })
+          }
+        })
+      }
+    })
+  }
+
 
   async function handleWithModalOpen(id: string) {
     const data = {
@@ -129,8 +180,8 @@ function Reservation() {
       <Panel title="Reservas">
         <PanelSidebar>
           <PanelSidebarItem>
-            <a onClick={()=>{History.push('/reserves/add')}}>
-            <i className="far fa-calendar-check"></i>
+            <a onClick={() => { History.push('/reserves/add') }}>
+              <i className="far fa-calendar-check"></i>
               Realizar Agendamento
             </a>
           </PanelSidebarItem>
@@ -164,7 +215,7 @@ function Reservation() {
             <h5>
               Turma : <b>{eventModal.class}</b> <br />
               Disciplina : {eventModal.discipline} <br />
-              Data : {moment(eventModal.date,'YYYY-MM-DD').calendar()} <br />
+              Data : {moment(eventModal.date, 'YYYY-MM-DD').calendar()} <br />
               Inicio : {eventModal.time_start} <br />
               Termino : {eventModal.time_end} <br />
               Local : {eventModal.location_id} - {eventModal.location_name} <br />
@@ -178,6 +229,9 @@ function Reservation() {
         <Modal.Actions>
           <Button negative onClick={() => dispatch({ type: 'close' })}>
             Sair
+          </Button>
+          <Button negative onClick={() => handleWithDelete(eventModal.id)}>
+            Excluir
           </Button>
           <Button positive onClick={() => History.push(`/reserves/${eventModal.id}`)}>
             Editar Reserva
