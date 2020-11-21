@@ -139,7 +139,7 @@ function Reservation() {
           <div className="col-12" id="calendar">
             <FullCalendar
               plugins={[dayGridPlugin]}
-              initialView="dayGridWeek"
+              initialView="dayGridMonth"
               locale="pt-Br"
               height="100%"
               events={event}
