@@ -12,6 +12,7 @@ import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import { Button, Icon, Modal, Container, Header } from 'semantic-ui-react'
 import History from "../history";
+import events from "events";
 function Reservation() {
 
   const { addToast } = useToasts()
@@ -49,12 +50,12 @@ function Reservation() {
             const events = data.map((item: any) => {
               return {
                 title: item.class + ' - ' + item.discipline,
-                date: moment(item.date).format('YYYY-MM-DD'),
+                date: moment(item.date,'YYYY-MM-DD').format('YYYY-MM-DD'),
                 id: item.id
               }
             })
+            console.log(events)
             eventState(events)
-            console.log(JSON.stringify(events))
           })
         } else {
           response.json().then(data => {
@@ -141,15 +142,13 @@ function Reservation() {
               initialView="dayGridWeek"
               locale="pt-Br"
               height="100%"
-              weekends={false}
               events={event}
               eventClick={async e => {
                 const { id }: any = JSON.parse(JSON.stringify(e.event))
                 await handleWithModalOpen(id)
                   .then(e => { dispatch({ type: 'open', size: 'tiny', id: id }) })
                   .catch(e => { addToast('Ocorreu um erro ao tentar buscar dados do evento', { appearance: 'error', autoDismiss: true }) })
-              }
-              }
+              }}
             />
           </div>
         </div>
@@ -165,7 +164,7 @@ function Reservation() {
             <h5>
               Turma : <b>{eventModal.class}</b> <br />
               Disciplina : {eventModal.discipline} <br />
-              Data : {moment(eventModal.date).format('DD/MM/YYYY')} <br />
+              Data : {moment(eventModal.date,'YYYY-MM-DD').calendar()} <br />
               Inicio : {eventModal.time_start} <br />
               Termino : {eventModal.time_end} <br />
               Local : {eventModal.location_id} - {eventModal.location_name} <br />

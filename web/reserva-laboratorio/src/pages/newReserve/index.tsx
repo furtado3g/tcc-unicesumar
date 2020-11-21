@@ -74,14 +74,14 @@ function NewReserve() {
           userid: localStorage.getItem("userId") || '',
         },
         body: JSON.stringify({
-          userId: localStorage.getItem("userId") || '',
-          locationId: location,
-          date: startDate,
-          time_start: startTime,
-          time_end: endTime,
-          classes: classes,
-          discipline: discipline,
-          comments: comments,
+          'userId': localStorage.getItem("userId") || '',
+          'locationId': location,
+          'date': moment(startDate).add(3,'h').format('DD/MM/YYYY'),
+          'time_start': moment(startTime,format).format(format),
+          'time_end':  moment(endTime,format).format(format),
+          'classes': classes,
+          'discipline': discipline,
+          'comments': comments,
         })
       },
     }

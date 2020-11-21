@@ -48,7 +48,7 @@ function EditReserve() {
                     response.json().then(data => {
                         console.log(JSON.stringify(data))
                         commentsState(data[0].comments)
-                        startDateState(moment(data[0].date))
+                        startDateState(moment(data[0].date,'YYYY-MM-DD'))
                         classesState(data[0].class)
                         disciplineState(data[0].discipline)
                         locationState(data[0].location_id)
@@ -112,7 +112,7 @@ function EditReserve() {
                 body: JSON.stringify({
                     userId: userId,
                     locationId: location,
-                    date: startDate,
+                    date: moment(startDate).add(3,'h'),
                     time_start: startTime.format(format),
                     time_end: endTime.format(format),
                     classes: classes,

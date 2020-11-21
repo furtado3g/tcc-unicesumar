@@ -33,7 +33,7 @@ function Home() {
             const events = data.map((item: any) => {
               return {
                 title: item.class + ' - ' + item.discipline,
-                date: moment(item.date).format('YYYY-MM-DD'),
+                date: moment(item.date,'YYYY-MM-DD').format('YYYY-MM-DD'),
                 id: item.id
               }
             })
