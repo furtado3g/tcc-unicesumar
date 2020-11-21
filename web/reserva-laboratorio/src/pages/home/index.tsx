@@ -32,7 +32,7 @@ function Home() {
           response.json().then(data => {
             const events = data.map((item: any) => {
               return {
-                title: item.class + ' - ' + item.discipline,
+                title: item.class + ' - ' + item.time_start,
                 date: moment(item.date,'YYYY-MM-DD').format('YYYY-MM-DD'),
                 id: item.id
               }

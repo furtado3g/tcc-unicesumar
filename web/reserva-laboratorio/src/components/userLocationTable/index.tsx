@@ -1,8 +1,8 @@
 import React, { memo } from 'react'
-import { Table, Button } from 'semantic-ui-react'
 import { Link, useHistory } from 'react-router-dom'
 import { baseUrl } from '../../config/url.json'
 import { useToasts } from 'react-toast-notifications'
+import { Table,Button, Icon, Modal } from 'semantic-ui-react'
 
 function UserLocationTable(props: any) {
 
@@ -10,6 +10,8 @@ function UserLocationTable(props: any) {
     const { userId } = props
     const History = useHistory();
     const { addToast } = useToasts()
+    const [modal, modalState] = React.useState(false)
+    const [userLocationId, userLocationIdState] = React.useState('')
     function handleWithEdit(userLocationId: string) {
         History.push(`${baseUrl}/user/${userId}/location/${userLocationId}`)
     }
@@ -66,7 +68,8 @@ function UserLocationTable(props: any) {
                                             <Button
                                                 color="black"
                                                 onClick={() => {
-                                                    handleWithDelete(data.id);
+                                                    userLocationIdState(data.id)
+                                                    modalState(true)
                                                 }}
                                             >
                                                 <i className="fas fa-user-times margin icon"></i>
@@ -86,6 +89,23 @@ function UserLocationTable(props: any) {
                 </Table.Body>
                 {props.children}
             </Table>
+            <Modal
+                centered={false}
+                open={modal}
+                onClose={() => modalState(false)}
+                onOpen={() => modalState(true)}
+            >
+                <Modal.Header>Excluir Espaço</Modal.Header>
+                <Modal.Content>
+                <Modal.Description>
+                    Deseja realmente excluir o Local?
+                </Modal.Description>
+                </Modal.Content>
+                <Modal.Actions>
+                <Button onClick={() => {handleWithDelete(userLocationId);modalState(false)}}>Confirmar</Button>
+                <Button color="black" onClick={() => modalState(false)}>Sair</Button>
+                </Modal.Actions>
+            </Modal>
         </>
     )
 }
