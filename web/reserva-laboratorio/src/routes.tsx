@@ -11,6 +11,7 @@ import Reservation from './pages/reservation'
 import NewReserve from './pages/newReserve'
 import reports from './pages/Reports/main'
 import perUser from './pages/Reports/perUser'
+import perLocation from './pages/Reports/perLocation'
 import EditUser from "./pages/editUser";
 import NewLocation from './pages/newLocation'
 import EditLocation from './pages/editLocation'
@@ -39,6 +40,7 @@ function Routes() {
                 <Route exact={true} path="/reserves/:id" component={EditReserve} />
                 <Route exact={true} path="/reports" component={reports} />
                 <Route exact={true} path="/reports/users" component={perUser} />
+                <Route exact={true} path="/reports/locations" component={perLocation} />
                 <Route exact={true} path="/users/" component={User} />
                 <Route exact={true} path="/users/:id" component={EditUser} />
                 <Route exact={true} path="/locations/" component={Locations} />
