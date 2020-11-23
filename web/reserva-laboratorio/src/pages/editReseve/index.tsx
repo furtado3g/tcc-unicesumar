@@ -239,7 +239,7 @@ function EditReserve() {
                                 className="form-control"
                                 value={moment(startTime,format)}
                                 format={format}
-                                onChange={startTimeState}
+                                onChange={(data: any)=>startTimeState(data)}
                             />
                         </div>
                         <div className="col-6">
@@ -248,7 +248,7 @@ function EditReserve() {
                                 className="form-control"
                                 value={moment(endTime,format)}
                                 format={format}
-                                onChange={endTimeState}
+                                onChange={(data: any)=>endTimeState(data)}
                             />
                         </div>
                     </div>

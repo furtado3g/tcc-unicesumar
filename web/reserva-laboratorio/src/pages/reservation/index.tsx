@@ -11,7 +11,6 @@ import { useToasts } from 'react-toast-notifications'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import { Button, Icon, Modal, Container, Header } from 'semantic-ui-react'
-import History from "../history";
 
 interface reserveInterface {
   id: string

@@ -21,7 +21,7 @@ function NewReserve() {
   const format = 'HH:mm';
   const dateFormat = 'DD/MM/YYYY';
   const History = useHistory()
-  const [startDate, startDateState] = useState(moment().add(1,'M'))
+  const [startDate, startDateState] = useState(moment().add(1, 'M'))
   const [startTime, startTimeState] = useState('11:00')
   const [classes, classesState] = useState('')
   const [discipline, disciplineState] = useState('')
@@ -76,9 +76,9 @@ function NewReserve() {
         body: JSON.stringify({
           'userId': localStorage.getItem("userId") || '',
           'locationId': location,
-          'date': moment(startDate).add(3,'h').format('DD/MM/YYYY'),
-          'time_start': moment(startTime,format).format(format),
-          'time_end':  moment(endTime,format).format(format),
+          'date': moment(startDate).add(3, 'h').format('DD/MM/YYYY'),
+          'time_start': moment(startTime, format).format(format),
+          'time_end': moment(endTime, format).format(format),
           'classes': classes,
           'discipline': discipline,
           'comments': comments,
@@ -195,18 +195,18 @@ function NewReserve() {
               <label htmlFor="data">Inicio</label>
               <TimePicker
                 className="form-control"
-                defaultValue={moment(startTime, format)}
+                value={moment(startTime, format)}
                 format={format}
-                onChange={startTimeState}
+                onChange={(data: any) => startTimeState(data)}
               />
             </div>
             <div className="col-6">
               <label htmlFor="data">Termino</label>
               <TimePicker
                 className="form-control"
-                defaultValue={moment(endTime, format)}
+                value={moment(endTime, format)}
                 format={format}
-                onChange={endTimeState}
+                onChange={(data: any) => endTimeState(data)}
               />
             </div>
           </div>
