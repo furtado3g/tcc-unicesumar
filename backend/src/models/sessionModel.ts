@@ -11,6 +11,8 @@ interface responseObject {
   message: string;
 }
 
+
+
 export default class SessionModel {
   /*
     Saves section and user tokens to verify that the section is valid
@@ -25,8 +27,8 @@ export default class SessionModel {
       "auth_token":userToken.authToken,
       "session_token":userToken.sessionToken,
     });
-    // tslint:disable-next-line
-    if (insertedSession['rowCount'] > 0) {
+    const rowCount = insertedSession.rowCount
+    if (rowCount > 0) {
       response.message = "Erro ao Autenticar, Tente Novamente Mais Tarde";
     }
     return response;
