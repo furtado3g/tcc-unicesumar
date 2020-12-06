@@ -15,7 +15,7 @@ interface authUser{
 
 export default class UserModel{
     async create(user:userInterface){
-        const insertedRows = await db.insert(user).table('users')
+        const insertedRows = await db('users').insert(user)
         return insertedRows
     }
     async verifyUser(user:authUser){

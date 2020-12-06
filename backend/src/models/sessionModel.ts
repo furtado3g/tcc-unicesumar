@@ -11,8 +11,6 @@ interface responseObject {
   message: string;
 }
 
-
-
 export default class SessionModel {
   /*
     Saves section and user tokens to verify that the section is valid
