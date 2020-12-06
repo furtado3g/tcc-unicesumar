@@ -21,9 +21,9 @@ import Knex from "knex";
 */
 
 export async function up(knex: Knex) {
-  return knex.schema.createTable("access", (table) => {
+  return knex.schema.createTable("sessions", (table) => {
     table.increments("id").primary();
-    table.dateTime("access_at").defaultTo('now')
+    table.dateTime("access_at").defaultTo('now()')
     table.dateTime("expires_at").defaultTo(knex.raw("now() + '1 hour'::interval"))
     table.string("session_token").notNullable()
     table.string("auth_token").notNullable()
@@ -37,5 +37,5 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
-  return knex.schema.dropTable("access");
+  return knex.schema.dropTable("sessions");
 }

@@ -4,8 +4,8 @@ import { attachPaginate } from 'knex-paginate' ;
 
 
 interface reserveInterface{
-    "userId":number,
-    "locationId":number,
+    "teacher_id":number,
+    "location_id":number,
     "date":string,
     "time_start":string,
     "time_end":string,
@@ -17,55 +17,59 @@ interface reserveInterface{
 class ReserveModel{
     
     async insert (reserve:reserveInterface){
-        const insertedRows = await db('reserve').insert(reserve)
-        const rowCount:any = insertedRows.rowCount
-        if(rowCount > 0){
-            return {
-                message:"Reserva efetuada com sucesso"
+        let returnable
+        const insertedRows = await db('reservations').insert(reserve)
+        .then(data=>{
+            console.log(data)
+            returnable = {
+                message:"Successful booking"
             }
-        }else{
-            return {
+        }).catch(e=>{
+            //traduzir retorno a baixo
+            returnable = {
                 error : "Erro ao reservar o espaço"
             }
-        }
-
+        })
+        return returnable
     }
 
     async update (reserve:reserveInterface,reserveId:number){
-        const insertedRows = await db('reserve')
-            .where('id',reserveId)
-            .update(reserve); 
-        const rowCount:any = insertedRows.rowCount
-        if(rowCount > 0){
-            return {
-                message:"Reserva atualizada com sucesso"
+        let returnable        
+        const insertedRows = await db('reservations')
+        .where('id',reserveId)
+        .update(reserve)
+        .then(data=>{
+            returnable = {
+                message:"Reservation updated successfully"
             }
-        }else{
-            return {
-                error : "Erro ao atualizar reserva"
+        }).catch(()=>{
+            returnable = {
+                error : "Error updating booking"
             }
-        }
+        }) 
+        return returnable
     }
 
     async delete(reserveId:any){
-        const deletedRows = await db('reserve')
-            .where('id','=',reserveId)
-            .delete();
-        const rowCount:any = deletedRows.rowCount
-        if(rowCount > 0){
-            return {
-                message : "Reserva excluida com sucesso"
+        let returnable 
+        const deletedRows = await db('reservations')
+        .where('id','=',reserveId)
+        .delete()
+        .then(data=>{
+            returnable = {
+                message : "Reservation successfully deleted"
             }
-        }else{
-            return {
-                error : "Erro ao excluir reserva"
+        }).catch(e=>{
+            returnable = {
+                error : "Error deleting reservation"
             }
-        }
+        })
+        return returnable 
     }
 
     async list(page:any,perPage:any){
         attachPaginate();
-        const itens = await db('reserve').paginate({
+        const itens = await db('reservations').paginate({
             perPage : perPage || 10,
             currentPage : page || 1
         })
@@ -73,7 +77,7 @@ class ReserveModel{
     }
 
     async detail(reserveId:any){
-        const reserve = db('reserve').select('*').where('id',reserveId)
+        const reserve = db('reservations').select('*').where('id',reserveId)
         return reserve
     }
 }

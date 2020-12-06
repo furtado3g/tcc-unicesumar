@@ -1,14 +1,14 @@
 import db from "../database/connection";
-import knex from "knex";
-
+import moment, { now } from 'moment'
 interface authTokens {
   userId: string;
-  authToken: string;
-  sessionToken: string;
+  authToken: any;
+  sessionToken: any;
 }
 
 interface responseObject {
   message: string;
+  token : any
 }
 
 export default class SessionModel {
@@ -17,51 +17,60 @@ export default class SessionModel {
   */
 
   async create(userToken: authTokens) {
-    let response: responseObject = {
-      message: "Sessão Autenicada Com Sucesso",
+    let response:responseObject = {
+      message: "Session successfully authenticated",
+      token : {},
     };
-    const insertedSession = await db("access").insert({
-      "user_id":userToken.userId,
-      "auth_token":userToken.authToken,
-      "session_token":userToken.sessionToken,
-    });
-    const rowCount = insertedSession.rowCount
-    if (rowCount > 0) {
-      response.message = "Erro ao Autenticar, Tente Novamente Mais Tarde";
-    }
+    console.log(userToken)
+    const insertedSession = await db("sessions").insert({
+      user_id:userToken.userId,
+      auth_token :userToken.authToken,
+      session_token:userToken.sessionToken
+    })
+    .then(data=>{
+      response.token = data
+    }).catch(e=>{
+      response.message = "Authentication error! Try again later"
+    })
     return response;
   }
 
   async renew(userToken: authTokens) {
-    const sql = "update access"+
-                "set expires_at = expires_at + '5 minutes'::interval "+
-                "where username = '"+userToken.userId+"' "+
-                "and auth_token = '"+userToken.authToken+"' "+
-                "and session_token = '"+userToken.sessionToken+"' "+
-                "and datetime('now','localtime') between access_at and expires_at"
-    const updatedSession = await db.raw(sql)    
-    if(updatedSession.rowCount > 0){
-      return {status:"updated"}
-    }else{
-      return {status:"fail"}
-    }
+    let returnable
+    const getValues = await db('sessions')
+      .where('session_token',userToken.sessionToken)
+      .select("expires_at")
+    console.log(getValues)
+    const updatedSession = await db('sessions')
+    .where('session_token',userToken.sessionToken)
+    .where('expires_at','>=',moment(getValues[0].expires_at).toISOString())
+    .update({
+      expires_at : moment(getValues[0].expires_at).add(5,'minutes').toISOString()
+    })
+    .then(data=>{
+      console.log(data)
+      returnable = {status:"updated"}
+    })
+    //.catch(e=>{
+    //  returnable = {status:e}
+    //})
+    return returnable
   }
 
   async verify(userToken: authTokens) {
+    let response: responseObject = {
+      message: "Session successfully authenticated",
+      token : {}
+    };
     let is_valid: boolean
-    const session = await db("access")
-      .whereRaw("`access`.`username` = ?", userToken.userId)
-      .whereRaw("`access`.`auth_token` = ?", userToken.authToken)
-      .whereRaw("`access`.`session_token` = ?", userToken.sessionToken)
-      .whereRaw(
-        "datetime('now','localtime') between `access`.`access_at` and `access`.`expires_at`"
-      );
-    
-    if(session.length > 0 ){
-        is_valid = true
-    }else{
-        is_valid = false
-    }
-    return is_valid
+    const session = await db("sessions")
+    .whereRaw("`sessions`.`session_token` = ?", userToken.sessionToken)
+    .whereRaw(" now() between `sessions`.`access_at` and `sessions`.`expires_at`")
+    .then(data=>{
+      response.message = "Valid session"
+    }).catch(e=>{
+      response.message = "Invalid session"
+    })
+    return response;
   }
 }

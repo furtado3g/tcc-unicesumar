@@ -3,13 +3,36 @@ import { Link } from "react-router-dom";
 import './styles.css'
 function ForgotPassword(){
 
-    const [email,emailState] = useState('')
+    const [username,usernameState] = useState('')
 
-    function handleSendMail(event:any){
+    function showMessage(){
         const element:any = document.querySelector("#critica")
-        const eventElement:any = event.target
+        const eventElement:any = document.querySelector('#username')
         element.classList.toggle('hide')
         eventElement.classList.toggle('hide')
+    }
+
+    async function handleSendMail(event:any){
+        const data = {
+            url :"http://localhost:3333/recovery",
+            options : {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body : JSON.stringify({"username":username})
+            }
+        }
+        await fetch(data.url,data.options)
+        .then(response =>{
+            const rjson:any= response.json()
+            alert(JSON.stringify(rjson))
+            showMessage()
+        })
+        .catch(e=>{
+            alert(e)
+        })
     }
 
     return (
@@ -20,11 +43,11 @@ function ForgotPassword(){
                 </Link>
             </header>
             <main>
-                <label htmlFor="mail">Informe Seu Email</label>
+                <label htmlFor="username">Informe Seu Login</label>
                 <input 
                     type="text"
-                    id="mail"
-                    onChange={e=>emailState(e.target.value)}
+                    id="username"
+                    onChange={e=>usernameState(e.target.value)}
                 />
             </main>
             <footer>
