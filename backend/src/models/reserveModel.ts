@@ -18,33 +18,45 @@ class ReserveModel{
     
     async insert (reserve:reserveInterface){
         let returnable
+        const labIsTaken = await db('reservations')
+        .where('location_id',reserve.location_id)
+        .where('date',reserve.date)
+        .whereBetween('time_start',[reserve.time_end,reserve.time_start])
+        .whereBetween('time_end',[reserve.time_end,reserve.time_start])
+        if(labIsTaken[0]){
+            return {
+                message : "Espaço já reservado"
+            }
+        }
         const insertedRows = await db('reservations').insert(reserve)
         .then(data=>{
             console.log(data)
             returnable = {
-                message:"Successful booking"
+                message:"Reserva efetuada com sucesso"
             }
-        }).catch(e=>{
+        })
+        .catch(e=>{
             //traduzir retorno a baixo
             returnable = {
-                error : "Erro ao reservar o espaço"
+                error : "Erro ao realizar reserva"
             }
         })
         return returnable
     }
 
     async update (reserve:reserveInterface,reserveId:number){
-        let returnable        
+        let returnable 
+        console.log(reserve)
         const insertedRows = await db('reservations')
         .where('id',reserveId)
         .update(reserve)
         .then(data=>{
             returnable = {
-                message:"Reservation updated successfully"
+                message:"Reserva atualizada com sucesso"
             }
         }).catch(()=>{
             returnable = {
-                error : "Error updating booking"
+                error : "Erro ao atualizar reserva"
             }
         }) 
         return returnable
@@ -57,11 +69,11 @@ class ReserveModel{
         .delete()
         .then(data=>{
             returnable = {
-                message : "Reservation successfully deleted"
+                message : "Reserva excluída com sucesso"
             }
         }).catch(e=>{
             returnable = {
-                error : "Error deleting reservation"
+                error : "Erro ao excluir reserva"
             }
         })
         return returnable 
@@ -69,11 +81,11 @@ class ReserveModel{
 
     async list(page:any,perPage:any){
         attachPaginate();
-        const itens = await db('reservations').paginate({
-            perPage : perPage || 10,
-            currentPage : page || 1
-        })
-        return itens.data
+        const itens = await db('reservations')
+        .limit(perPage || 10)
+        .offset((page*perPage) || 1)
+        .select('*')
+        return itens
     }
 
     async detail(reserveId:any){

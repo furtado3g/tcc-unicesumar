@@ -1,68 +1,78 @@
-import React, { useState } from  'react'
-import { Link } from "react-router-dom";
+import React, { useState } from 'react'
+import Logo from './assets/img/logo.png'
 import './styles.css'
-function ForgotPassword(){
+import {baseUrl} from '../../config/url.json'
 
-    const [username,usernameState] = useState('')
+function ForgotPassword() {
 
-    function showMessage(){
-        const element:any = document.querySelector("#critica")
-        const eventElement:any = document.querySelector('#username')
-        element.classList.toggle('hide')
-        eventElement.classList.toggle('hide')
+    const [email, emailState] = useState('')
+
+    function showMessage() {
+        const element: any = document.querySelector("#critica")
+        const eventElement: any = document.querySelector('main')
+        const btnElement: any = document.querySelector('.btn')
+        element?.classList.toggle('hide')
+        eventElement?.classList.toggle('hide')
+        btnElement?.classList.toggle('hide')
     }
 
-    async function handleSendMail(event:any){
+    async function handleSendMail(event: any) {
         const data = {
-            url :"http://localhost:3333/recovery",
-            options : {
+            url: `${baseUrl}/recovery`,
+            options: {
                 method: "POST",
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body : JSON.stringify({"username":username})
+                body: JSON.stringify({ "email": email })
             }
         }
-        await fetch(data.url,data.options)
-        .then(response =>{
-            const rjson:any= response.json()
-            alert(JSON.stringify(rjson))
-            showMessage()
-        })
-        .catch(e=>{
-            alert(e)
-        })
+        await fetch(data.url, data.options)
+            .then(async response => {
+                showMessage()
+            })
+    }
+
+    function handleWithBackButton() {
+        window.location.href = '/'
     }
 
     return (
         <div id="forgot-box" className="container">
             <header>
-                <Link to="/">
-                    Voltar
-                </Link>
+                <img src={Logo} alt="Logo"/>
             </header>
             <main>
-                <label htmlFor="username">Informe Seu Login</label>
-                <input 
+                <label htmlFor="email">Informe seu Email (Institucional)</label>
+                <input
                     type="text"
-                    id="username"
-                    onChange={e=>usernameState(e.target.value)}
+                    id="email"
+                    onChange={e => emailState(e.target.value)}
                 />
             </main>
-            <footer>
+            <div className="footer">
                 <div id="critica" className="hide">
-                    Enviamos um email contendo uma senha provisoria,
-                    em seu proximo login efetue a troca de sua senha, 
-                    a validade de suasenha provisória é de 1 login
+                    Enviamos um email com sua senha provisória,<br />
+                    para sua própria segurança, em seu próximo acesso efetue a alteração de senha!<br />
                 </div>
-                <button
-                    type="button"
-                    onClick={e => handleSendMail(e)}
-                >
-                    Recuperar Senha
-                </button>
-            </footer>
+                <div id="button-container">
+                    <button
+                        type="button"
+                        className="btn"
+                        onClick={e => handleSendMail(e)}
+                        >
+                        Recuperar Senha
+                    </button>
+                    <button
+                        type="button"
+                        className="btn"
+                        onClick={handleWithBackButton}
+                    >
+                        Voltar
+                    </button>
+                </div>
+            </div>
         </div>
     )
 }

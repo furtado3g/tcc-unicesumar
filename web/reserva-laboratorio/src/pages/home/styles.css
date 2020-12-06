@@ -1,5 +1,11 @@
-.sidebar{
-    min-height: 100vw;
-    min-width:30vh;
-    background-color: black;
+
+#calendar-home{ 
+    height: 500px !important;
+    
 }
+
+#calendar-home > fc{
+    margin: 2rem !important;
+}
+
+  

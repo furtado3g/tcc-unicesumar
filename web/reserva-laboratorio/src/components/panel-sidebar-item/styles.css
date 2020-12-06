@@ -1,0 +1,38 @@
+.panel-sidebar-item{
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    font-family: sans-serif;
+    border-bottom:1px solid #666666;
+    background-color: #666666;
+    color: whitesmoke;
+}
+
+.panel-sidebar-item i {
+    margin: 0.5rem;
+}
+
+.panel-sidebar-item > a{
+    text-decoration: none;
+    cursor: pointer;
+    color : whitesmoke
+}
+
+.active {
+    background-color: whitesmoke;
+    color: #666666;
+}
+
+.active > a{
+    color : #666666 !important;
+}
+
+#active {
+    background-color: whitesmoke;
+    color: #666666;
+}
+
+#active > a{
+    color : #666666 !important;
+}

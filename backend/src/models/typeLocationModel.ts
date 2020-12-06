@@ -4,16 +4,24 @@ class TypeLocationModel{
     
     async create(description:string){
         let returnable
+        const typeExists = await db('type_location')
+        .select('*')
+        .where('description',description)
+        if(typeExists[0]){
+            return {
+                message : "Tipo de espaço já cadastrado"
+            }
+        }
         await db('type_location')
         .insert({description})
         .then(data=>{
             returnable ={
-                message : "location type has been created"
+                message : "Tipo de espaço cadastrado"
             }
         })
         .catch(e=>{
             return returnable ={
-                message: "error at create new location type"
+                message: "Erro ao criar novo tipo de espaço"
             }
         })
         return returnable
@@ -32,19 +40,28 @@ class TypeLocationModel{
         return returnable
     }
 
-    async delete (id:number){
+    async delete (id:string){
         let returnable 
+        const idExists = await db('type_location')
+        .where('id',id)
+        .select('*')
+        console.log(idExists)
+        if(!idExists[0]){
+            return {
+                message : "Espaço não cadastrado"
+            }
+        }
         await db('type_location')
         .where('id',id)
         .delete()
         .then(data =>{
             returnable = {
-                message : "location type has been deleted"
+                message : "Tipo de espaço excluído com sucesso"
             }
         })
         .catch(e=>{
             returnable = {
-                message : "error when trying to delete a location type"
+                message : "Erro ao excluir tipo de espaço"
             }
         })
         return returnable

@@ -1,5 +1,6 @@
 import db from "../database/connection";
-import moment, { now } from 'moment'
+import moment from "moment";
+
 interface authTokens {
   userId: string;
   authToken: any;
@@ -8,7 +9,7 @@ interface authTokens {
 
 interface responseObject {
   message: string;
-  token : any
+  token: any;
 }
 
 export default class SessionModel {
@@ -17,60 +18,83 @@ export default class SessionModel {
   */
 
   async create(userToken: authTokens) {
-    let response:responseObject = {
-      message: "Session successfully authenticated",
-      token : {},
+    let response: responseObject = {
+      message: "Sessão autenticada com sucesso",
+      token: {},
     };
-    console.log(userToken)
-    const insertedSession = await db("sessions").insert({
-      user_id:userToken.userId,
-      auth_token :userToken.authToken,
-      session_token:userToken.sessionToken
-    })
-    .then(data=>{
-      response.token = data
-    }).catch(e=>{
-      response.message = "Authentication error! Try again later"
-    })
+    const insertedSession = await db("sessions")
+      .insert({
+        user_id: userToken.userId,
+        auth_token: userToken.authToken,
+        session_token: userToken.sessionToken,
+      })
+      .then((data) => {
+        response.token = userToken;
+      })
+      .catch((e) => {
+        response.message = "Erro de autenticação! Tente novamente mais tarde.";
+      });
     return response;
   }
 
   async renew(userToken: authTokens) {
-    let returnable
-    const getValues = await db('sessions')
-      .where('session_token',userToken.sessionToken)
-      .select("expires_at")
-    console.log(getValues)
-    const updatedSession = await db('sessions')
-    .where('session_token',userToken.sessionToken)
-    .where('expires_at','>=',moment(getValues[0].expires_at).toISOString())
-    .update({
-      expires_at : moment(getValues[0].expires_at).add(5,'minutes').toISOString()
-    })
-    .then(data=>{
-      console.log(data)
-      returnable = {status:"updated"}
-    })
-    //.catch(e=>{
-    //  returnable = {status:e}
-    //})
-    return returnable
+    let returnable;
+    const getValues = await db("sessions")
+      .where("session_token", userToken.sessionToken)
+      .select("expires_at");
+    if (moment(getValues[0].expires_at) < moment()) {
+      return {
+        message: "Token inválido",
+      };
+    }
+    const updatedSession = await db("sessions")
+      .where("session_token", userToken.sessionToken)
+      .where("expires_at", ">=", moment(getValues[0].expires_at).toISOString())
+      .update({
+        expires_at: moment(getValues[0].expires_at)
+          .add(5, "minutes")
+          .toISOString(),
+      })
+      .then((data) => {
+        console.log(data);
+        returnable = { status: "updated" };
+      })
+      .catch((e) => {
+        returnable = { status: e };
+      });
+    return returnable;
   }
 
-  async verify(userToken: authTokens) {
-    let response: responseObject = {
-      message: "Session successfully authenticated",
-      token : {}
+  async verify(sessionToken: any) {
+    let returnable  = {
+      message: "Token inválido",
+      is_valid: false,
     };
-    let is_valid: boolean
-    const session = await db("sessions")
-    .whereRaw("`sessions`.`session_token` = ?", userToken.sessionToken)
-    .whereRaw(" now() between `sessions`.`access_at` and `sessions`.`expires_at`")
+    let is_valid: boolean;
+    await db("sessions")
+    .where("session_token", sessionToken)
+    .select("expires_at")
     .then(data=>{
-      response.message = "Valid session"
-    }).catch(e=>{
-      response.message = "Invalid session"
+      if (moment(data[0].expires_at) > moment()) {
+        returnable =  {
+          message: "Token válido",
+          is_valid: true,
+        };
+      } else {
+        returnable = {
+          message: "Token inválido",
+          is_valid: false,
+        };
+      }
     })
-    return response;
+    .catch(e=>{
+      returnable = {
+        message: "Erro durante a transação de informações",
+        is_valid: false,
+      };
+      console.log(e)
+      
+    })
+    return returnable
   }
 }

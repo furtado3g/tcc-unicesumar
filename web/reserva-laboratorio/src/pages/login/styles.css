@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    width: 90vw;
+    width: 80vw;
     background : whitesmoke;
     border-radius: 1.4rem;
     border-color:transparent;    
@@ -32,20 +32,20 @@ header p{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 3.2rem;
+    margin-top: 1.8rem;
     width: 90%;
 }
 
 .form-group label{
     font:300 2rem sans-serif;
     align-self: flex-start;
-    color:#7a4dee;
-    margin-left: 2.4rem ;
+    color:#666666;
+    margin-left: 0rem ;
 }
 
 .form-control{
-    border: 1px solid #7a4dee;
-    width: 90%;
+    border: 1px solid #666666;
+    width: 80%;
     line-height: 3rem;
     border-radius: 0.5rem;
     transform: 0.2s;
@@ -60,13 +60,13 @@ header p{
 }
 
 .form-control:focus{
-    border: 2px solid #7a4dee;
+    border: 2px solid #000000;
 }
 
-footer {
+#footer {
     margin:3.2rem 0;
     display: flex;
-    flex-direction: row;
+    flex-direction: row !important;
     justify-content: center;
     align-self: center;
     width: 100%;
@@ -80,7 +80,7 @@ footer {
 }
 
 .btn-login{
-    background-color: #7a4dee;
+    background-color: #424242;
     color:whitesmoke;
     transition: 0.5s;
 }
@@ -90,7 +90,7 @@ footer {
 }
 
 .btn-forgot{
-    background-color:blueviolet;
+    background-color:#141414;
     margin-left:5px;
     margin-top: 10px;
     color: whitesmoke;
@@ -102,50 +102,19 @@ footer {
     opacity: 70%;
 }
 
-@media (min-width:900px){
-    #page-landing-content{
-        max-width: 900px;
-
-        display:grid;
-        grid-template-rows: 350px 1fr;
-        grid-template-columns: 2fr 1fr,1fr;
-        grid-template-areas: 
-            "logo form form"
-            "buttons buttons total"
-        ;
-        
-    }
-
-    .logo-container{
-        grid-area: logo;
-        text-align: left;
-        align-self: center;
-        margin: 0;
-    }
-
-    .logo-container h2{
-        text-align: initial;
-        font-size: 3.6rem;
-    }
-
-    .logo-container img{
-        height: 100%;
-    }
-
-    .hero-image{
-        grid-area: hero;
-        justify-self: end;
-    }
-
-    .buttons-container{
-        grid-area: buttons;
-        justify-self: flex-start;
-    }
-    .buttons-container a{
-        font-size: 2.4rem;
-    }
-    .total-connections{
-        grid-area: total;
-        justify-self: end;
-    }
+.alert {
+    min-height: 5rem;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #666666;
+    border-radius: 10px;
+    color:#666666;
+    width:90%;
+    margin:1rem !important;
 }
+
+.hidden{
+    display: none;
+}
+

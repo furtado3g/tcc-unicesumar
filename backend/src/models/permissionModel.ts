@@ -6,13 +6,16 @@ class PermissionModel{
         const tp_user = await this.getUserType(idUser);
         const id_permission = await this.getEndPointId(url);
         let returnable 
+        const permissionExists = await db('type_user_permisions')
+        .where('tp_user',tp_user[0].user_type)
+        .where('id_permission',id_permission[0].id)
+        if(permissionExists[0]) return {error:"Permissão já atribuída"};
         const insertedRows = await db('type_user_permisions')
         .insert({
             id_permission : id_permission[0].id,
             tp_user : tp_user[0].user_type
         })
         .then((data)=>{
-            console.log(data.values)
             returnable = data
         }).catch((e)=>{
             returnable = {error:e}
@@ -20,23 +23,39 @@ class PermissionModel{
         return returnable
     }
 
-    async verify(idUser:number,idPermission:number){
+    async verify(idUser:any,url:any){
         let returnable
+        const endpoint = await db('permissions')
+        .where('endpoint',url)
+        .select('id')
+        if(!endpoint[0]){
+            return {
+                error : "Endpoint não cadastrado"
+            }
+        }
+        const user = await db.from('users')
+        .where('id',idUser)
+        .select('*')
+        if(!endpoint[0]){
+            return{
+                "error" : "Usuário inexistente"
+            }
+        }
         const result = await db('type_user_permisions')
-        .where("id_permission",idPermission)
-        .join("users","users.user_type","type_user_permisions.tp_user")
-        .where("users.id",idUser)
+        .where("id_permission",endpoint[0].id)
+        .where('tp_user',user[0].user_type)
         .select('*')
         .then(data=>{
             returnable =  {
                 granted: true,
-                result : result
+                result : data
             }
 
         })
         .catch(e=>{
+            console.log(e)
             returnable = {
-                granted: false
+                granted: true
             }
         })
         return returnable
@@ -44,12 +63,20 @@ class PermissionModel{
 
     async newEndPoint(url:string){
         let returnable
+        const endpointExists = await db('permissions')
+        .where('endpoint',url)
+        .select('*')
+        if(endpointExists[0]){
+            return {
+                error : "Endpoint já cadastrado"
+            }
+        }
         const insertedRows = await db('permissions')
         .insert(
             {"endpoint":url}
         ).then(selectedTodo => {
             console.log(selectedTodo)
-            returnable = {message:"New endpoint successfully registered"}
+            returnable = {message:"Endpoint cadastrado com sucesso"}
         })
         .catch(e=>{
             returnable = {error:e}
@@ -59,9 +86,17 @@ class PermissionModel{
 
     async newUserType(description:string){
         let returnable
+        const userTypeExists = await db('user_type')
+        .where('description',description)
+        .select('*')
+        if(userTypeExists[0]){
+            return {
+                error : "Tipo de usuário já cadastrado"
+            }
+        }
         const insertedRows = await db('user_type')
         .insert({description})
-        .then(()=>{ returnable ={message:"Type of user successfully registered"} })
+        .then(()=>{ returnable ={message:"Tipo de usuário cadastrado com sucesso"} })
         .catch((e)=>{returnable= {error:e}})
         return returnable
     }
@@ -73,7 +108,8 @@ class PermissionModel{
         .where("users.id",idUser)
         .select(
             'permissions.id',
-            'permissions.endpoint'
+            'permissions.endpoint',
+            'users.name'
         )
         return result
     }

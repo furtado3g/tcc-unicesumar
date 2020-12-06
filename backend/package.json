@@ -1,34 +1,45 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "devDependencies": {
-    "@types/dotenv-safe": "^8.1.1",
-    "@types/express": "^4.17.7",
-    "@types/jsonwebtoken": "^8.5.0",
-    "@types/node": "^14.0.27",
-    "@types/swagger-ui-express": "^4.1.2",
-    "ts-node-dev": "^1.0.0-pre.56",
-    "typescript": "^3.9.7"
-  },
-  "dependencies": {
-    "@types/cors": "^2.8.7",
-    "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "dotenv-safe": "^8.2.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "knex": "^0.21.4",
-    "knex-paginate": "^1.2.3",
-    "moment": "^2.29.0",
-    "pg": "^8.3.0",
-    "sqlite3": "^5.0.0",
-    "swagger-ui-express": "^4.1.4"
-  },
-  "scripts": {
-    "start": "tsnd --transpile-only --ignore-watch node_modules --respawn src/server.ts",
-    "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
-    "knex:migrate:rollback": "knex --knexfile knexfile.ts migrate:rollback"
-  }
+    "name": "backend",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/dotenv-safe": "^8.1.1",
+        "@types/express": "^4.17.7",
+        "@types/jsonwebtoken": "^8.5.0",
+        "@types/node": "^14.11.2",
+        "@types/swagger-ui-express": "^4.1.2",
+        "jest": "^26.4.2",
+        "ts-jest": "^26.4.3",
+        "ts-node-dev": "^1.0.0-pre.56",
+        "typescript": "^3.9.7"
+    },
+    "dependencies": {
+        "@types/body-parser": "^1.19.0",
+        "@types/cors": "^2.8.7",
+        "@types/jest": "^26.0.14",
+        "@types/node-fetch": "^2.5.7",
+        "@types/nodemailer": "^6.4.0",
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "dotenv": "^8.2.0",
+        "dotenv-safe": "^8.2.0",
+        "express": "^4.17.1",
+        "jsonwebtoken": "^8.5.1",
+        "knex": "^0.21.4",
+        "knex-paginate": "^1.2.3",
+        "moment": "^2.29.0",
+        "node-fetch": "^2.6.1",
+        "nodemailer": "^6.4.13",
+        "pg": "^8.3.0",
+        "sqlite3": "^5.0.0",
+        "swagger-ui-express": "^4.1.4"
+    },
+    "scripts": {
+        "start": "tsnd --transpile-only --ignore-watch node_modules --respawn src/server.ts",
+        "startMail": "tsnd --transpile-only --ignore-watch node_modules --respawn src/maildummytest.ts",
+        "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
+        "knex:migrate:rollback": "knex --knexfile knexfile.ts migrate:rollback",
+        "test": "jest"
+    }
 }

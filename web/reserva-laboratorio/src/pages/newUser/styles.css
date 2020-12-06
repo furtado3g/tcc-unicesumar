@@ -1,0 +1,96 @@
+.container-admin {
+  max-width: 100%;
+  background-color: transparent;
+  align-self: center;
+  justify-self: center;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  display: grid;
+  grid-template-areas: "sidebar panel";
+  grid-template-columns: 22% 100vw;
+}
+
+.panel-body {
+  display: grid;
+  grid-template-areas: "panel-sidebar panel-body";
+  grid-template-columns: 20% 80%;
+  grid-template-rows: 100%;
+  overflow-y: scroll;
+}
+
+.panel-content {
+  grid-area: panel-body;
+  padding: 1rem;
+  background-color: #ffffff !important;
+}
+
+.row {
+  display: flex;
+  font-family: sans-serif;
+  margin: 1rem 0.5rem;
+}
+
+.row > .text-center {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-name {
+  align-self: center;
+}
+
+.col-6 {
+  padding: 0.5rem;
+  width: 50%;
+}
+
+.col-12 {
+  padding: 0.5rem;
+  width: 100%;
+}
+
+.form-control {
+  padding: 0.5rem 1rem;
+  font-family: sans-serif;
+  width: 100%;
+}
+
+select {
+  font-size: 1.5rem;
+  /* line-height: 3rem !important; */
+  height: 4.5rem;
+}
+
+.btn {
+  margin: 0.3rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-success {
+  background-color: #787877;
+  color: white;
+  transform: 2s;
+}
+
+.btn-success:hover {
+  opacity: 0.75;
+}
+
+.btn-danger {
+  background-color: #595959;
+  color: white;
+  transform: 2s;
+}
+
+.btn-danger:hover {
+  opacity: 0.75;
+}
+
+
+.hidden{
+  display : none;
+}
