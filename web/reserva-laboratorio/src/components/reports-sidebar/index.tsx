@@ -8,13 +8,19 @@ function ReportsSidebar() {
             <PanelSidebarItem>
                 <A color="whitesmoke" module="reports" url="users">
                     <i className="fas fa-users"></i>
-                Por Usuário
+                Usuário
             </A>
             </PanelSidebarItem>
             <PanelSidebarItem>
                 <A color="whitesmoke" module="reports" url="locations">
                     <i className="fas fa-location-arrow"></i>
-                Por Local
+                Local
+            </A>
+            </PanelSidebarItem>
+            <PanelSidebarItem>
+                <A color="whitesmoke" module="reports" url="period">
+                    <i className="fas fa-clock"></i>
+                Periodo
             </A>
             </PanelSidebarItem>
         </PanelSidebar>
